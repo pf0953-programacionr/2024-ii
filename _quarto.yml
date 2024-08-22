@@ -8,6 +8,7 @@ book:
   date: "2024-08-21"
   chapters:
     - index.qmd
+    - programa_curso.qmd
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl
