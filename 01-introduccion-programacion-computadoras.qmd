@@ -1,0 +1,146 @@
+# Introducción a la programación de computadoras
+
+## Introducción {.unnumbered}
+
+Una **computadora** es una máquina que ejecuta automáticamente secuencias de **instrucciones** tales como cálculos aritméticos y operaciones lógicas, entre otras. Un conjunto de instrucciones orientado a la resolución de un problema específico mediante una computadora se denomina **programa**. La programabilidad de las computadoras permite que su funcionamiento pueda modificarse sin alterar sus componentes físicos, lo que las hace mucho más versátiles que otros tipos de máquinas y posibilita que ayuden a resolver una gran variedad de problemas.
+
+Las computadoras se programan mediante lenguajes de dos niveles: **lenguajes de máquina** y **lenguajes de programación**. En este capítulo, se describe el papel de los lenguajes de programación y el modelo **Entrada - Procesamiento - Salida** en el que se basa la estructura de los programas. También se detallan los componentes principales de la **arquitectura de computadoras** más popular en la actualidad. 
+
+
+## Lenguajes para programar computadoras
+
+Las computadoras pueden programarse mediante lenguajes de varios niveles. En esta sección, se describen el lenguaje de máquina, el más cercano al *hardware* de la computadora, y los lenguajes de programación, los cuales abstraen detalles técnicos y de hardware para lograr que la programación sea más intuitiva, más rápida y menos propensa a errores.
+
+### Lenguajes de máquina
+
+Las computadoras modernas son electrónicas y utilizan [circuitos integrados](https://es.wikipedia.org/wiki/Circuito_integrado) para procesar y almacenar información en forma de señales eléctricas. Esta representación de la información se basa en un [sistema binario](https://es.wikipedia.org/wiki/Sistema_binario) (de dos estados): 0 (voltaje bajo) y 1 (voltaje alto).
+
+En el nivel más básico, las computadoras pueden programarse introduciendo directamente combinaciones de unos y ceros, conocidas como [lenguaje de máquina](https://es.wikipedia.org/wiki/Lenguaje_de_m%C3%A1quina) en la [Unidad Central de Procesamiento (CPU)](https://es.wikipedia.org/wiki/Unidad_central_de_procesamiento), el componente de hardware encargado de ejecutar las instrucciones.
+
+Por ejemplo, la @fig-helloworld-lenguajemaquina muestra el programa [Hola mundo (*Hello World*)](https://es.wikipedia.org/wiki/Hola_mundo) en lenguaje de máquina. Este programa simplemente imprime la hilera de texto “Hola mundo” en la pantalla. Suele ser usado como introducción al estudio de la programación de computadoras.
+
+![Lenguaje de máquina correspondiente a la implementación del programa "Hola mundo" en el lenguaje [C](https://es.wikipedia.org/wiki/C_(lenguaje_de_programaci%C3%B3n)) (mostrado abajo). Imagen de [Tanveer Salim](https://www.quora.com/What-does-a-machine-language-code-look-like).](img/helloworld-lenguajemaquina.jpeg){#fig-helloworld-lenguajemaquina .lightbox fig-alt="Imagen de lenguaje de máquina correspondiente a la implementación del programa Hola mundo en el lenguaje C" fig-align="center"}
+
+```c
+/* PROGRAMA "Hola mundo" EN LENGUAJE C */
+
+int main void()
+{
+  printf("hello, world\n");
+  return 0;
+}
+```
+
+Internamente, el lenguaje de máquina ejecuta un conjunto de instrucciones muy básicas como, por ejemplo:
+
+- Sumar dos números.
+- Comprobar si un número es igual a cero.
+- Copiar datos de una sección a otra de la memoria de la computadora.
+
+Los lenguajes de máquina son específicos para cada tipo de CPU. Así, por ejemplo, el lenguaje de máquina de un procesador Intel, uno de los más usados en computadoras personales, es diferente al lenguaje de máquina de un procesador PowerPC, utilizado tanto en computadoras personales (como antiguas Macintosh), como en consolas de videojuegos y sistemas incrustados (ej. en dispositivos electrónicos).
+
+
+### Lenguajes de programación
+
+Debido a que el lenguaje de máquina es poco amigable para las personas, actualmente es más común utilizar [lenguajes de programación](https://es.wikipedia.org/wiki/Lenguaje_de_programaci%C3%B3n) para resolver problemas mediante computadoras. Los lenguajes de programación consisten de instrucciones compuestas por palabras y expresiones similares a las de los lenguajes humanos como, por lo general, el idioma inglés. 
+
+Las instrucciones de los lenguajes de programación deben ser traducidas al lenguaje de máquina para que puedan ser ejecutados por la computadora. Esta traducción se realiza mediante programas llamados [compiladores](https://es.wikipedia.org/wiki/Compilador) (para lenguajes compilados como C y C++) o [interpretadores](https://es.wikipedia.org/wiki/Int%C3%A9rprete_(inform%C3%A1tica)) (para lenguajes interpretados como Python y R). Mientras que los lenguajes de máquina son específicos para cada CPU, algunos lenguajes de programación pueden ser ejecutados en diferentes plataformas, con el compilador o interpretador adecuado.
+
+Como ejemplo, considere problema del cálculo del [índice de masa corporal (IMC)](https://es.wikipedia.org/wiki/%C3%8Dndice_de_masa_corporal). El IMC indica si una persona tiene una masa (peso) saludable en relación con su estatura. Se obtiene mediante la fórmula: 
+
+$$
+imc = \frac{masa}{estatura^2}
+$$
+
+El resultado se interpreta de la siguiente manera:
+
+- IMC menor que 18.5: Peso bajo.
+- IMC mayor o igual que 18.5 y menor que 25: Peso normal.
+- IMC mayor o igual que 25: Sobrepeso.
+
+El siguiente programa en el lenguaje [Python](https://es.wikipedia.org/wiki/Python) calcula e interpreta el IMC de una persona.
+
+```python
+# CÁLCULO E INTERPRETACIÓN DEL IMC DE UNA PERSONA
+
+
+# ENTRADA
+
+# Datos de masa (kg) y estatura (m) de una persona
+masa = 65
+estatura = 1.7
+
+
+# PROCESAMIENTO
+
+# Cálculo del IMC
+imc = masa / estatura**2
+
+# Interpretación del IMC
+if (imc < 18.5):
+  interpretacion_imc = "Peso bajo"
+elif (imc < 25):
+  interpretacion_imc = "Peso normal"
+else:
+  interpretacion_imc = "Sobrepeso"
+
+
+# SALIDA
+
+# Impresión de los resultados
+print("El valor del IMC es:", imc)
+print("Corresponde a:", interpretacion_imc)
+```
+
+A manera de ejercicio, puede escribir y ejecutar el programa anterior en una [consola de Python](https://www.mycompiler.io/new/python). Modifique los datos de entrada de masa y estatura y observe los cambios en los resultados.
+
+En el ejemplo anterior puede observarse como el programa sigue un modelo conocido como "Entrada - Procesamiento - Salida", el cual se describe en detalle en la sección siguiente.
+
+
+## Modelo Entrada - Procesamiento - Salida
+
+Las computadoras trabajan con un modelo de "Entrada - Procesamiento - Salida": reciben datos de entrada (ej. números), los procesan (ej. realizan cálculos aritméticos) y generan salidas (ej. resultados de los cálculos).
+
+El modelo "Entrada - Procesamiento - Salida" es un concepto fundamental en análisis de sistemas de información y desarrollo de programas. Su esquema se presenta en la @fig-modelo-entrada-procesamiento-salida.
+
+![Modelo "Entrada - Procesamiento - Salida"](img/entrada-procesamiento-salida.png){#fig-modelo-entrada-procesamiento-salida .lightbox fig-alt="Imagen del modelo Entrada - Procesamiento - Salida" fig-align="center"}
+
+- La **Entrada** se refiere a los datos que se introducen en un sistema o programa para ser procesados. Pueden ingresarse a través de diferentes medios como teclados, ratones, cámaras, sensores, archivos y servicios web, entre otros.
+- El **Procesamiento** es el conjunto de instrucciones que generan salidas a partir de las entradas. Estas intrucciones pueden incluir cálculos matemáticos, operaciones lógicas y operaciones de control, entre muchas posibilidades.
+- Por último, la **Salida** es el resultado del procesamiento como, por ejemplo, resultado de cálculos aritméticos.
+
+El modelo "Entrada - Procesamiento - Salida" se implementa en los componentes físicos mediante la arquitectura de computadoras, como se explica a continuación. 
+
+
+## Arquitectura de computadoras
+
+La [arquitectura de computadoras](https://es.wikipedia.org/wiki/Arquitectura_de_computadoras) es un área de estudio enfocada en el diseño de los componentes principales de un sistema informático. 
+
+La arquitectura de las computadoras modernas es el resultado de un proceso que ha tomado varios siglos, incluyendo la fabricacióm de [calculadoras mecánicas](https://es.wikipedia.org/wiki/Calculadora_mec%C3%A1nica) desde el siglo XVII y los avances alcanzados durante la II Guerra Mundial y los años cercanos, como el diseño de la [máquina de Turing](https://es.wikipedia.org/wiki/M%C3%A1quina_de_Turing) en 1936 y la implementación de las computadoras [Bombe](https://es.wikipedia.org/wiki/Bombe), [Colossus](https://es.wikipedia.org/wiki/Colossus) y [ENIAC](https://es.wikipedia.org/wiki/ENIAC) durante el periodo de guerra y los años posteriores.
+
+
+### Arquitectura de von Neumann
+
+En 1945, el matemático húngaro-estadounidense [John von Neumann (1903-1957)](https://es.wikipedia.org/wiki/John_von_Neumann) propuso un concepto conocido como [programa almacenado](https://es.wikipedia.org/wiki/Computador_de_programa_almacenado), en el cual los datos y los programas se almacenan en una estructura llamada memoria, separada de los componentes físicos que ejecutan las instrucciones. Este modelo permite que las computadoras sean más fáciles de reprogramar y es conocido actualmente como [arquitectura de von Neumann](https://es.wikipedia.org/wiki/Arquitectura_de_Von_Neumann). La arquitectura de von Neumann se ilustra en la @fig-arquitectura-von-neumann.
+
+![Arquitectura de von Neumann. Imagen de David Strigoi compartida a través de [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Arquitecturaneumann.jpg).](img/arquitectura-vonneumann.jpg){#fig-arquitectura-von-neumann .lightbox fig-alt="Imagen de la arquitectura de von Neumann" fig-align="center"}
+
+
+#### Componentes de la arquitectura de von Neumann
+
+##### Memoria principal
+
+Almacena las instrucciones de los programas y los datos que utilizan estos programas. Es común denominarla como RAM (*Random Access Memory*, Memoria de Acceso Aleatorio), lo que significa que toma el mismo tiempo acceder a cualquier posición de la memoria. Cada posición de memoria tiene una dirección a la que se hace referencia cuando se desea leer o escribir.
+
+
+##### Unidad Central de Procesamiento
+
+También se le conoce como CPU (*Central Processing Unit*). Ejecuta las instrucciones de los programas en lenguaje de máquina. Está compuesta por dos partes:
+
+- **Unidad de Control**: determina cuál es la siguiente instrucción a ejecutar. Contiene memorias temporales de alta velocidad y poca capacidad llamadas registros, para almacenar los operandos y el resultado de las instrucciones.
+- **Unidad de Aritmética y Lógica o ALU (*Arithmetic and Logic Unit*)**: ejecuta las operaciones aritméticas y lógicas.
+
+
+##### Sistemas de entrada y salida
+
+Permiten que la computadora interactúe con el usuario y, en general, con el mundo exterior. Algunos ejemplos son el teclado y el ratón, como sistemas de entrada, y la pantalla y la impresora, como sistemas de salida.

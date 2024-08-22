@@ -1,0 +1,4 @@
+# I - Introducción a la programación de computadoras y a la ciencia de datos {.unnumbered}
+
+[1 Arquitectura de computadoras, pensamiento computacional y lenguajes de programación](01-arquitectura_computadoras-pensamiento_computacional-lenguajes_programacion.qmd)  
+[2 Introducción a la ciencia de datos](02-introduccion-ciencia-datos.qmd)  
