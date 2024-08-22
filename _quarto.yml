@@ -11,7 +11,8 @@ book:
     - programa_curso.qmd
     - part: parte-i-introduccion-programacion-computadoras-ciencia-datos.qmd
       chapters:
-        - 01-introduccion-programacion-computadoras.qmd    
+        - 01-introduccion-programacion-computadoras.qmd
+        - 02-introduccion-ciencia-datos.qmd
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl
