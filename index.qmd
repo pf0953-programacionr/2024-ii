@@ -1,0 +1,3 @@
+# Bienvenida {.unnumbered}
+
+Este es un curso introductorio a la programación de computadoras y al procesamiento de datos geoespaciales mediante el lenguaje de programación [R](https://www.r-project.org/).

@@ -1,0 +1,19 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "PF-0953 Programación en R 2024-II"
+  author: "Manuel Vargas"
+  date: "2024-08-21"
+  chapters:
+    - index.qmd
+
+bibliography: referencias.bib
+csl: apa-6th-edition.csl
+
+format:
+  html:
+    lang: es
+    theme: cosmo
+    toc-expand: 5
