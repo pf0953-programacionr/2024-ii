@@ -219,7 +219,8 @@ window.Quarto = {
   <li><a href="#modelo-entrada---procesamiento---salida" id="toc-modelo-entrada---procesamiento---salida" class="nav-link" data-scroll-target="#modelo-entrada---procesamiento---salida"><span class="header-section-number">1.2</span> Modelo Entrada - Procesamiento - Salida</a></li>
   <li><a href="#arquitectura-de-computadoras" id="toc-arquitectura-de-computadoras" class="nav-link" data-scroll-target="#arquitectura-de-computadoras"><span class="header-section-number">1.3</span> Arquitectura de computadoras</a>
   <ul class="collapse">
-  <li><a href="#arquitectura-de-von-neumann" id="toc-arquitectura-de-von-neumann" class="nav-link" data-scroll-target="#arquitectura-de-von-neumann"><span class="header-section-number">1.3.1</span> Arquitectura de von Neumann</a></li>
+  <li><a href="#evolución-histórica" id="toc-evolución-histórica" class="nav-link" data-scroll-target="#evolución-histórica"><span class="header-section-number">1.3.1</span> Evolución histórica</a></li>
+  <li><a href="#arquitectura-de-von-neumann" id="toc-arquitectura-de-von-neumann" class="nav-link" data-scroll-target="#arquitectura-de-von-neumann"><span class="header-section-number">1.3.2</span> Arquitectura de von Neumann</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -286,7 +287,7 @@ Figura&nbsp;1.1: Lenguaje de máquina correspondiente a la implementación del p
 </section>
 <section id="lenguajes-de-programación" class="level3" data-number="1.1.2">
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="lenguajes-de-programación"><span class="header-section-number">1.1.2</span> Lenguajes de programación</h3>
-<p>Debido a que el lenguaje de máquina es poco amigable para las personas, actualmente es más común utilizar <a href="https://es.wikipedia.org/wiki/Lenguaje_de_programaci%C3%B3n">lenguajes de programación</a> para resolver problemas mediante computadoras. Los lenguajes de programación consisten de instrucciones compuestas por palabras y expresiones similares a las de los lenguajes humanos como, por lo general, el idioma inglés.</p>
+<p>Debido a que el lenguaje de máquina es poco amigable para las personas, actualmente es más común utilizar <a href="https://es.wikipedia.org/wiki/Lenguaje_de_programaci%C3%B3n">lenguajes de programación</a> para resolver problemas mediante computadoras. Los lenguajes de programación consisten de instrucciones compuestas por palabras y expresiones similares a las de los lenguajes humanos como, por lo general, el idioma inglés. Existe una gran <a href="https://es.wikipedia.org/wiki/Anexo:Lenguajes_de_programaci%C3%B3n">variedad de lenguajes de programación</a>, debido a los diferentes fines para los que fueron creados y a su evolución histórica, entre otras razones.</p>
 <p>Las instrucciones de los lenguajes de programación deben ser traducidas al lenguaje de máquina para que puedan ser ejecutados por la computadora. Esta traducción se realiza mediante programas llamados <a href="https://es.wikipedia.org/wiki/Compilador">compiladores</a> (para lenguajes compilados como C y C++) o <a href="https://es.wikipedia.org/wiki/Int%C3%A9rprete_(inform%C3%A1tica)">interpretadores</a> (para lenguajes interpretados como Python y R). Mientras que los lenguajes de máquina son específicos para cada CPU, algunos lenguajes de programación pueden ser ejecutados en diferentes plataformas, con el compilador o interpretador adecuado.</p>
 <p>Como ejemplo, considere problema del cálculo del <a href="https://es.wikipedia.org/wiki/%C3%8Dndice_de_masa_corporal">índice de masa corporal (IMC)</a>. El IMC indica si una persona tiene una masa (peso) saludable en relación con su estatura. Se obtiene mediante la fórmula:</p>
 <p><span class="math display">\[
@@ -356,10 +357,14 @@ Figura&nbsp;1.2: Modelo “Entrada - Procesamiento - Salida”
 <section id="arquitectura-de-computadoras" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="arquitectura-de-computadoras"><span class="header-section-number">1.3</span> Arquitectura de computadoras</h2>
 <p>La <a href="https://es.wikipedia.org/wiki/Arquitectura_de_computadoras">arquitectura de computadoras</a> es un área de estudio enfocada en el diseño de los componentes principales de un sistema informático.</p>
-<p>La arquitectura de las computadoras modernas es el resultado de un proceso que ha tomado varios siglos, incluyendo la fabricacióm de <a href="https://es.wikipedia.org/wiki/Calculadora_mec%C3%A1nica">calculadoras mecánicas</a> desde el siglo XVII y los avances alcanzados durante la II Guerra Mundial y los años cercanos, como el diseño de la <a href="https://es.wikipedia.org/wiki/M%C3%A1quina_de_Turing">máquina de Turing</a> en 1936 y la implementación de las computadoras <a href="https://es.wikipedia.org/wiki/Bombe">Bombe</a>, <a href="https://es.wikipedia.org/wiki/Colossus">Colossus</a> y <a href="https://es.wikipedia.org/wiki/ENIAC">ENIAC</a> durante el periodo de guerra y los años posteriores.</p>
-<section id="arquitectura-de-von-neumann" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="arquitectura-de-von-neumann"><span class="header-section-number">1.3.1</span> Arquitectura de von Neumann</h3>
-<p>En 1945, el matemático húngaro-estadounidense <a href="https://es.wikipedia.org/wiki/John_von_Neumann">John von Neumann (1903-1957)</a> propuso un concepto conocido como <a href="https://es.wikipedia.org/wiki/Computador_de_programa_almacenado">programa almacenado</a>, en el cual los datos y los programas se almacenan en una estructura llamada memoria, separada de los componentes físicos que ejecutan las instrucciones. Este modelo permite que las computadoras sean más fáciles de reprogramar y es conocido actualmente como <a href="https://es.wikipedia.org/wiki/Arquitectura_de_Von_Neumann">arquitectura de von Neumann</a>. La arquitectura de von Neumann se ilustra en la <a href="#fig-arquitectura-von-neumann" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>.</p>
+<section id="evolución-histórica" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="evolución-histórica"><span class="header-section-number">1.3.1</span> Evolución histórica</h3>
+<p>La arquitectura de las computadoras modernas es el resultado de un proceso que ha tomado varios siglos, incluyendo la fabricación de <a href="https://es.wikipedia.org/wiki/Calculadora_mec%C3%A1nica">calculadoras mecánicas</a> en el siglo XVII, con capacidades para realizar operaciones aritméticas básicas, y el diseño en el siglo XIX de la <a href="https://es.wikipedia.org/wiki/M%C3%A1quina_anal%C3%ADtica">máquina analítica de Charles Babbage</a>, una computadora mecánica que incorporaba algunas características de las computadoras modernas.</p>
+<p>En 1936, el matemático inglés <a href="https://es.wikipedia.org/wiki/Alan_Turing">Allan Turing (1912 - 1954)</a> propuso la <a href="https://es.wikipedia.org/wiki/M%C3%A1quina_de_Turing">máquina de Turing</a>, un modelo matemático que manipula símbolos en una cinta según un conjunto de reglas y que funcionó como un modelo teórico de gran importancia para desarrollos posteriores, como los dispositivos eletromecánicos <a href="https://es.wikipedia.org/wiki/Bombe">Bombe</a> y <a href="https://es.wikipedia.org/wiki/Colossus">Colossus</a> en el Reino Unido, de uso específico para <a href="https://es.wikipedia.org/wiki/Criptograf%C3%ADa">criptografía</a> durante la II Guerra Mundial. Algunos años después, en 1946, el ejército de los Estados Unidos desarrolló <a href="https://es.wikipedia.org/wiki/ENIAC">ENIAC (<em>Electronic Numerical Integrator And Computer</em>)</a>, considerada por algunos como la primera computadora de uso general y que fue inicialmente diseñada para calcular <a href="https://es.wikipedia.org/wiki/Bal%C3%ADstica_exterior">tablas de tiro de artillería</a>.</p>
+</section>
+<section id="arquitectura-de-von-neumann" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="arquitectura-de-von-neumann"><span class="header-section-number">1.3.2</span> Arquitectura de von Neumann</h3>
+<p>En 1945, el matemático húngaro-estadounidense <a href="https://es.wikipedia.org/wiki/John_von_Neumann">John von Neumann (1903-1957)</a> propuso un concepto conocido como <a href="https://es.wikipedia.org/wiki/Computador_de_programa_almacenado">programa almacenado</a>, en el cual los datos y los programas se almacenan en una estructura llamada memoria, separada de los componentes físicos que ejecutan las instrucciones. Este modelo permite que las computadoras sean más fáciles de programase y reprogramarse y es conocido actualmente como <a href="https://es.wikipedia.org/wiki/Arquitectura_de_Von_Neumann">arquitectura de von Neumann</a>. La arquitectura de von Neumann se ilustra en la <a href="#fig-arquitectura-von-neumann" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>.</p>
 <div id="fig-arquitectura-von-neumann" class="lightbox quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Imagen de la arquitectura de von Neumann">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-arquitectura-von-neumann-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -370,22 +375,22 @@ Figura&nbsp;1.3: Arquitectura de von Neumann. Imagen de David Strigoi compartida
 </figcaption>
 </figure>
 </div>
-<section id="componentes-de-la-arquitectura-de-von-neumann" class="level4" data-number="1.3.1.1">
-<h4 data-number="1.3.1.1" class="anchored" data-anchor-id="componentes-de-la-arquitectura-de-von-neumann"><span class="header-section-number">1.3.1.1</span> Componentes de la arquitectura de von Neumann</h4>
-<section id="memoria-principal" class="level5" data-number="1.3.1.1.1">
-<h5 data-number="1.3.1.1.1" class="anchored" data-anchor-id="memoria-principal"><span class="header-section-number">1.3.1.1.1</span> Memoria principal</h5>
-<p>Almacena las instrucciones de los programas y los datos que utilizan estos programas. Es común denominarla como RAM (<em>Random Access Memory</em>, Memoria de Acceso Aleatorio), lo que significa que toma el mismo tiempo acceder a cualquier posición de la memoria. Cada posición de memoria tiene una dirección a la que se hace referencia cuando se desea leer o escribir.</p>
+<section id="componentes-de-la-arquitectura-de-von-neumann" class="level4" data-number="1.3.2.1">
+<h4 data-number="1.3.2.1" class="anchored" data-anchor-id="componentes-de-la-arquitectura-de-von-neumann"><span class="header-section-number">1.3.2.1</span> Componentes de la arquitectura de von Neumann</h4>
+<section id="memoria-principal" class="level5" data-number="1.3.2.1.1">
+<h5 data-number="1.3.2.1.1" class="anchored" data-anchor-id="memoria-principal"><span class="header-section-number">1.3.2.1.1</span> Memoria principal</h5>
+<p>Almacena las instrucciones de los programas y los datos que utilizan estos programas. Es común denominarla como <a href="https://es.wikipedia.org/wiki/Memoria_de_acceso_aleatorio">RAM (<em>Random Access Memory</em>, Memoria de Acceso Aleatorio)</a>, lo que significa que toma el mismo tiempo acceder a cualquier posición de la memoria. Cada posición de memoria tiene una dirección a la que se hace referencia cuando se desea leer o escribir.</p>
 </section>
-<section id="unidad-central-de-procesamiento" class="level5" data-number="1.3.1.1.2">
-<h5 data-number="1.3.1.1.2" class="anchored" data-anchor-id="unidad-central-de-procesamiento"><span class="header-section-number">1.3.1.1.2</span> Unidad Central de Procesamiento</h5>
-<p>También se le conoce como CPU (<em>Central Processing Unit</em>). Ejecuta las instrucciones de los programas en lenguaje de máquina. Está compuesta por dos partes:</p>
+<section id="unidad-central-de-procesamiento" class="level5" data-number="1.3.2.1.2">
+<h5 data-number="1.3.2.1.2" class="anchored" data-anchor-id="unidad-central-de-procesamiento"><span class="header-section-number">1.3.2.1.2</span> Unidad Central de Procesamiento</h5>
+<p>También se le conoce como <a href="https://es.wikipedia.org/wiki/Unidad_central_de_procesamiento">CPU (<em>Central Processing Unit</em>, Unidad Central de Procesamiento)</a>. Ejecuta las instrucciones de los programas en lenguaje de máquina. Está compuesta por dos partes:</p>
 <ul>
 <li><strong>Unidad de Control</strong>: determina cuál es la siguiente instrucción a ejecutar. Contiene memorias temporales de alta velocidad y poca capacidad llamadas registros, para almacenar los operandos y el resultado de las instrucciones.</li>
 <li><strong>Unidad de Aritmética y Lógica o ALU (<em>Arithmetic and Logic Unit</em>)</strong>: ejecuta las operaciones aritméticas y lógicas.</li>
 </ul>
 </section>
-<section id="sistemas-de-entrada-y-salida" class="level5" data-number="1.3.1.1.3">
-<h5 data-number="1.3.1.1.3" class="anchored" data-anchor-id="sistemas-de-entrada-y-salida"><span class="header-section-number">1.3.1.1.3</span> Sistemas de entrada y salida</h5>
+<section id="sistemas-de-entrada-y-salida" class="level5" data-number="1.3.2.1.3">
+<h5 data-number="1.3.2.1.3" class="anchored" data-anchor-id="sistemas-de-entrada-y-salida"><span class="header-section-number">1.3.2.1.3</span> Sistemas de entrada y salida</h5>
 <p>Permiten que la computadora interactúe con el usuario y, en general, con el mundo exterior. Algunos ejemplos son el teclado y el ratón, como sistemas de entrada, y la pantalla y la impresora, como sistemas de salida.</p>
 
 
@@ -819,7 +824,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

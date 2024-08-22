@@ -42,7 +42,7 @@ Los lenguajes de máquina son específicos para cada tipo de CPU. Así, por ejem
 
 ### Lenguajes de programación
 
-Debido a que el lenguaje de máquina es poco amigable para las personas, actualmente es más común utilizar [lenguajes de programación](https://es.wikipedia.org/wiki/Lenguaje_de_programaci%C3%B3n) para resolver problemas mediante computadoras. Los lenguajes de programación consisten de instrucciones compuestas por palabras y expresiones similares a las de los lenguajes humanos como, por lo general, el idioma inglés. 
+Debido a que el lenguaje de máquina es poco amigable para las personas, actualmente es más común utilizar [lenguajes de programación](https://es.wikipedia.org/wiki/Lenguaje_de_programaci%C3%B3n) para resolver problemas mediante computadoras. Los lenguajes de programación consisten de instrucciones compuestas por palabras y expresiones similares a las de los lenguajes humanos como, por lo general, el idioma inglés. Existe una gran [variedad de lenguajes de programación](https://es.wikipedia.org/wiki/Anexo:Lenguajes_de_programaci%C3%B3n), debido a los diferentes fines para los que fueron creados y a su evolución histórica, entre otras razones.
 
 Las instrucciones de los lenguajes de programación deben ser traducidas al lenguaje de máquina para que puedan ser ejecutados por la computadora. Esta traducción se realiza mediante programas llamados [compiladores](https://es.wikipedia.org/wiki/Compilador) (para lenguajes compilados como C y C++) o [interpretadores](https://es.wikipedia.org/wiki/Int%C3%A9rprete_(inform%C3%A1tica)) (para lenguajes interpretados como Python y R). Mientras que los lenguajes de máquina son específicos para cada CPU, algunos lenguajes de programación pueden ser ejecutados en diferentes plataformas, con el compilador o interpretador adecuado.
 
@@ -116,12 +116,15 @@ El modelo "Entrada - Procesamiento - Salida" se implementa en los componentes f�
 
 La [arquitectura de computadoras](https://es.wikipedia.org/wiki/Arquitectura_de_computadoras) es un área de estudio enfocada en el diseño de los componentes principales de un sistema informático. 
 
-La arquitectura de las computadoras modernas es el resultado de un proceso que ha tomado varios siglos, incluyendo la fabricacióm de [calculadoras mecánicas](https://es.wikipedia.org/wiki/Calculadora_mec%C3%A1nica) desde el siglo XVII y los avances alcanzados durante la II Guerra Mundial y los años cercanos, como el diseño de la [máquina de Turing](https://es.wikipedia.org/wiki/M%C3%A1quina_de_Turing) en 1936 y la implementación de las computadoras [Bombe](https://es.wikipedia.org/wiki/Bombe), [Colossus](https://es.wikipedia.org/wiki/Colossus) y [ENIAC](https://es.wikipedia.org/wiki/ENIAC) durante el periodo de guerra y los años posteriores.
+### Evolución histórica
+La arquitectura de las computadoras modernas es el resultado de un proceso que ha tomado varios siglos, incluyendo la fabricación de [calculadoras mecánicas](https://es.wikipedia.org/wiki/Calculadora_mec%C3%A1nica) en el siglo XVII, con capacidades para realizar operaciones aritméticas básicas, y el diseño en el siglo XIX de la [máquina analítica de Charles Babbage](https://es.wikipedia.org/wiki/M%C3%A1quina_anal%C3%ADtica), una computadora mecánica que incorporaba algunas características de las computadoras modernas.
+
+En 1936, el matemático inglés [Allan Turing (1912 - 1954)](https://es.wikipedia.org/wiki/Alan_Turing) propuso la [máquina de Turing](https://es.wikipedia.org/wiki/M%C3%A1quina_de_Turing), un modelo matemático que manipula símbolos en una cinta según un conjunto de reglas y que funcionó como un modelo teórico de gran importancia para desarrollos posteriores, como los dispositivos eletromecánicos [Bombe](https://es.wikipedia.org/wiki/Bombe) y [Colossus](https://es.wikipedia.org/wiki/Colossus) en el Reino Unido, de uso específico para [criptografía](https://es.wikipedia.org/wiki/Criptograf%C3%ADa) durante la II Guerra Mundial. Algunos años después, en 1946, el ejército de los Estados Unidos desarrolló [ENIAC (*Electronic Numerical Integrator And Computer*)](https://es.wikipedia.org/wiki/ENIAC), considerada por algunos como la primera computadora de uso general y que fue inicialmente diseñada para calcular [tablas de tiro de artillería](https://es.wikipedia.org/wiki/Bal%C3%ADstica_exterior).
 
 
 ### Arquitectura de von Neumann
 
-En 1945, el matemático húngaro-estadounidense [John von Neumann (1903-1957)](https://es.wikipedia.org/wiki/John_von_Neumann) propuso un concepto conocido como [programa almacenado](https://es.wikipedia.org/wiki/Computador_de_programa_almacenado), en el cual los datos y los programas se almacenan en una estructura llamada memoria, separada de los componentes físicos que ejecutan las instrucciones. Este modelo permite que las computadoras sean más fáciles de reprogramar y es conocido actualmente como [arquitectura de von Neumann](https://es.wikipedia.org/wiki/Arquitectura_de_Von_Neumann). La arquitectura de von Neumann se ilustra en la @fig-arquitectura-von-neumann.
+En 1945, el matemático húngaro-estadounidense [John von Neumann (1903-1957)](https://es.wikipedia.org/wiki/John_von_Neumann) propuso un concepto conocido como [programa almacenado](https://es.wikipedia.org/wiki/Computador_de_programa_almacenado), en el cual los datos y los programas se almacenan en una estructura llamada memoria, separada de los componentes físicos que ejecutan las instrucciones. Este modelo permite que las computadoras sean más fáciles de programase y reprogramarse y es conocido actualmente como [arquitectura de von Neumann](https://es.wikipedia.org/wiki/Arquitectura_de_Von_Neumann). La arquitectura de von Neumann se ilustra en la @fig-arquitectura-von-neumann.
 
 ![Arquitectura de von Neumann. Imagen de David Strigoi compartida a través de [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Arquitecturaneumann.jpg).](img/arquitectura-vonneumann.jpg){#fig-arquitectura-von-neumann .lightbox fig-alt="Imagen de la arquitectura de von Neumann" fig-align="center"}
 
@@ -130,12 +133,12 @@ En 1945, el matemático húngaro-estadounidense [John von Neumann (1903-1957)](h
 
 ##### Memoria principal
 
-Almacena las instrucciones de los programas y los datos que utilizan estos programas. Es común denominarla como RAM (*Random Access Memory*, Memoria de Acceso Aleatorio), lo que significa que toma el mismo tiempo acceder a cualquier posición de la memoria. Cada posición de memoria tiene una dirección a la que se hace referencia cuando se desea leer o escribir.
+Almacena las instrucciones de los programas y los datos que utilizan estos programas. Es común denominarla como [RAM (*Random Access Memory*, Memoria de Acceso Aleatorio)](https://es.wikipedia.org/wiki/Memoria_de_acceso_aleatorio), lo que significa que toma el mismo tiempo acceder a cualquier posición de la memoria. Cada posición de memoria tiene una dirección a la que se hace referencia cuando se desea leer o escribir.
 
 
 ##### Unidad Central de Procesamiento
 
-También se le conoce como CPU (*Central Processing Unit*). Ejecuta las instrucciones de los programas en lenguaje de máquina. Está compuesta por dos partes:
+También se le conoce como [CPU (*Central Processing Unit*, Unidad Central de Procesamiento)](https://es.wikipedia.org/wiki/Unidad_central_de_procesamiento). Ejecuta las instrucciones de los programas en lenguaje de máquina. Está compuesta por dos partes:
 
 - **Unidad de Control**: determina cuál es la siguiente instrucción a ejecutar. Contiene memorias temporales de alta velocidad y poca capacidad llamadas registros, para almacenar los operandos y el resultado de las instrucciones.
 - **Unidad de Aritmética y Lógica o ALU (*Arithmetic and Logic Unit*)**: ejecuta las operaciones aritméticas y lógicas.
