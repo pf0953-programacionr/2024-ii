@@ -1,9 +1,5 @@
 # Introducción a la ciencia de datos
 
-
-# Introducción a la ciencia de datos {.unnumbered}
-
-
 ## Trabajo previo {.unnumbered}
 
 ### Lecturas {.unnumbered}

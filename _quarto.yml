@@ -13,6 +13,9 @@ book:
       chapters:
         - 01-introduccion-programacion-computadoras.qmd
         - 02-introduccion-ciencia-datos.qmd
+    - part: parte-ii-lenguaje-programacion-r.qmd
+      chapters:
+        - 03-r.qmd        
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl
