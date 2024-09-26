@@ -240,6 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#cómo-funciona-quarto" id="toc-cómo-funciona-quarto" class="nav-link" data-scroll-target="#cómo-funciona-quarto"><span class="header-section-number">5.2</span> ¿Cómo funciona Quarto?</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">5.3</span> Ejercicios</a></li>
+  <li><a href="#recursos-de-interés" id="toc-recursos-de-interés" class="nav-link" data-scroll-target="#recursos-de-interés"><span class="header-section-number">5.4</span> Recursos de interés</a></li>
   </ul>
 </nav>
     </div>
@@ -349,15 +350,16 @@ format:
 </div>
 </div>
 <p>La opción <code>label</code> se utiliza para etiquetar el bloque y la de <code>include</code> para especificar si se desea que el bloque y sus resultados se incluyan en el documento de salida.</p>
+<p>La documentación de las diferentes opciones disponibles para los bloques de código que utilizan el motor (<em>engine</em>) Knitr (el más utilizado con R) se encuentra en <a href="https://quarto.org/docs/reference/cells/cells-knitr.html">Code Cells: Knitr - Quarto</a>.</p>
 </section>
 </section>
 <section id="cómo-funciona-quarto" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="cómo-funciona-quarto"><span class="header-section-number">5.2</span> ¿Cómo funciona Quarto?</h2>
 <p>Quarto se apoya en <a href="https://yihui.org/knitr/">knitr</a> y en <a href="http://pandoc.org/">Pandoc</a>. knitr ejecuta el código en R (u otro lenguaje) y convierte los documentos a Markdown. Por su parte, Pandoc exporta los documentos Markdown al formato de salida deseado (ej. HTML, PDF, MS Word, MS PowerPoint). Este proceso se ilustra en la <a href="#fig-quarto-knitr-pandoc" class="quarto-xref">Figura&nbsp;<span>5.1</span></a>.</p>
-<div id="fig-quarto-knitr-pandoc" class="lightbox quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Conversión de un documento Quarto (.qmd) a su formato de salida">
+<div id="fig-quarto-knitr-pandoc" class="lightbox quarto-figure quarto-figure-center quarto-float anchored" alt="Conversión de un documento Quarto (.qmd) a su formato de salida" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-quarto-knitr-pandoc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="img/rstudio-qmd-how-it-works.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="img/rstudio-qmd-how-it-works.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Conversión de un documento Quarto (.qmd) a su formato de salida"></a>
+<a href="img/rstudio-qmd-how-it-works.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="img/rstudio-qmd-how-it-works.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Conversión de un documento Quarto (.qmd) a su formato de salida"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quarto-knitr-pandoc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;5.1: Conversión de un documento Quarto (.qmd) a su formato de salida. Imagen de <a href="https://quarto.org/">quarto.org</a>.
@@ -381,6 +383,10 @@ Figura&nbsp;5.1: Conversión de un documento Quarto (.qmd) a su formato de salid
 <li><p>Genere el sitio en GitHub Pages con la opción <em>Settings - Pages - Branch - main - Save</em> de GitHub.</p></li>
 <li><p>Repita los pasos 6, 8 y 9 para cada modificación que realice en el documento Quarto.</p></li>
 </ol>
+</section>
+<section id="recursos-de-interés" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="recursos-de-interés"><span class="header-section-number">5.4</span> Recursos de interés</h2>
+<p><em>Code Cells: Knitr - Quarto</em> (opciones para bloques de código). (s. f.). Recuperado el 26 de setiembre de 2024, de <a href="https://quarto.org/docs/reference/cells/cells-knitr.html">Code Cells: Knitr - Quarto</a></p>
 
 
 <div class="hidden" aria-hidden="true">
@@ -808,7 +814,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

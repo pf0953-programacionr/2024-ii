@@ -95,6 +95,8 @@ plot(
 
 La opción `label` se utiliza para etiquetar el bloque y la de `include` para especificar si se desea que el bloque y sus resultados se incluyan en el documento de salida.
 
+La documentación de las diferentes opciones disponibles para los bloques de código que utilizan el motor (*engine*) Knitr (el más utilizado con R) se encuentra en [Code Cells: Knitr - Quarto](https://quarto.org/docs/reference/cells/cells-knitr.html).
+
 ## ¿Cómo funciona Quarto?
 
 Quarto se apoya en [knitr](https://yihui.org/knitr/) y en [Pandoc](http://pandoc.org/). knitr ejecuta el código en R (u otro lenguaje) y convierte los documentos a Markdown. Por su parte, Pandoc exporta los documentos Markdown al formato de salida deseado (ej. HTML, PDF, MS Word, MS PowerPoint). Este proceso se ilustra en la @fig-quarto-knitr-pandoc.
@@ -125,3 +127,7 @@ Seguidamente, se sugiere una serie de pasos para elaborar el sitio.
 9. Genere el sitio en GitHub Pages con la opción *Settings - Pages - Branch - main - Save* de GitHub.
 
 10. Repita los pasos 6, 8 y 9 para cada modificación que realice en el documento Quarto.
+
+
+## Recursos de interés
+*Code Cells: Knitr - Quarto* (opciones para bloques de código). (s. f.). Recuperado el 26 de setiembre de 2024, de [Code Cells: Knitr - Quarto](https://quarto.org/docs/reference/cells/cells-knitr.html)
