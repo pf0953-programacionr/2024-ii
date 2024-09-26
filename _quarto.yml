@@ -16,6 +16,9 @@ book:
     - part: parte-ii-lenguaje-programacion-r.qmd
       chapters:
         - 03-r.qmd        
+    - part: parte-iii-herramientas-investigacion-reproducible-desarrollo-colaborativo.qmd        
+      chapters:
+        - 04-markdown.qmd   
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl
