@@ -671,7 +671,9 @@ Para más información sobre el uso de bloques de código en documentos Markdown
 Nótese que los bloques de código en un documento Markdown normal (con extensión `.md`) no se ejecutan, solo se muestran. Sin embargo, hay sistemas como [Quarto](https://quarto.org/) y [Jupyter Notebooks](https://jupyter.org/) que permiten combinar narrativa em Markdown con bloques de código ejecutables.
 
 ## Ejercicios
-1.  Con RStudio, cree un documento Markdown llamado `README.md` y escriba en este un breve *curriculum* académico o profesional.
+1. En RStudio, cree un nuevo proyecto con la opción *File - New Project - New Directory - New Project* de RStudio.
+
+2.  En el nuevo proyecto, cree un nuevo documento Markdown con la opción *File - New File - Markdown File* de RStudio. y escriba en este un breve *curriculum* académico o profesional.
     a. Incluya información como: nombre, fotografía, datos de contacto, áreas de interés, carrera, cursos aprobados, publicaciones, etc.
     b. Puede usar información ficticia (**no incluya datos confidenciales o sensibles**).
     c. Especifique la fuente de las imágenes (y de cualquier otra información para la que sea necesario) y no utilice imágenes para las que no tiene autorización. Considere utilizar sitios con imágenes con licencias abiertas (ej. [Wikimedia Commons](https://commons.wikimedia.org/), [Unsplash](https://unsplash.com/), [FreeImages](https://www.freeimages.com/)).
@@ -681,6 +683,19 @@ Nótese que los bloques de código en un documento Markdown normal (con extensi�
         -   Listas.
         -   Enlaces a sitios web.
         -   Imágenes (al menos una local y una remota).
+        
+3. Guarde el documento con el nombre `README.md` (RStudio asigna la extensión automáticamente).
+
+4. Cree una cuenta gratuita en la plataforma de desarrollo colaborativo de software [GitHub](https://github.com/).
+
+5. Cree un repositorio vacío en su cuenta en GitHub (ej. `curriculum-vitae`).
+
+6. Suba al nuevo repositorio el archivo `README.md`.
+
+7. Genere un sitio web en el servicio de alojamiento [GitHub Pages](https://pages.github.com/) con la opción *Settings - Pages - Branch - main - Save* de GitHub.
+
+8. Repita los pasos 6 y 7 para cada modificación que realice en el documento Markdown.
+
 
 ## Recursos de interés
 *Daring Fireball: Markdown*. (s. f.). Recuperado 25 de marzo de 2023, de [https://daringfireball.net/projects/markdown/](https://daringfireball.net/projects/markdown/)
