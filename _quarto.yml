@@ -21,6 +21,11 @@ book:
         - 04-markdown.qmd   
         - 05-git.qmd   
         - 06-quarto.qmd   
+    - part: parte-iv-graficacion-estadistica-r.qmd        
+      chapters:
+        - 07-tidyverse.qmd           
+        - 08-dplyr.qmd           
+        - 09-ggplot2-plotly.qmd           
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl
