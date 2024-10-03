@@ -19,7 +19,8 @@ book:
     - part: parte-iii-herramientas-investigacion-reproducible-desarrollo-colaborativo.qmd        
       chapters:
         - 04-markdown.qmd   
-        - 05-quarto.qmd   
+        - 05-git.qmd   
+        - 06-quarto.qmd   
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl

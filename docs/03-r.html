@@ -210,6 +210,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markdown - lenguaje de marcado</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Git - sistema de control de versiones</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Quarto - sistema de publicación técnica y científica</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -289,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="el-ambiente-de-desarrollo-integrado-rstudio" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="el-ambiente-de-desarrollo-integrado-rstudio"><span class="header-section-number">3.1</span> El ambiente de desarrollo integrado RStudio</h2>
 <p><a href="https://posit.co/products/open-source/rstudio/">RStudio</a> es el IDE más popular para el lenguaje R. Está disponible en una versión de escritorio (RStudio Desktop) y en una versión para servidor (RStudio Server). Esta última permite la conexión de varios usuarios a través de un navegador web. RStudio se ofrece también como un servicio en la nube, a través de <a href="https://posit.co/products/cloud/cloud/">Posit Cloud</a>. La <a href="#fig-interfaz-rstudio" class="quarto-xref">Figura&nbsp;<span>3.1</span></a> muestra la interfaz de RStudio.</p>
-<div id="fig-interfaz-rstudio" class="lightbox quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Interfaz del ambiente de desarrollo integrado RStudio">
+<div id="fig-interfaz-rstudio" class="lightbox quarto-figure quarto-figure-center quarto-float anchored" alt="Interfaz del ambiente de desarrollo integrado RStudio" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-interfaz-rstudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="img/rstudio-interfaz.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="img/rstudio-interfaz.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Interfaz del ambiente de desarrollo integrado RStudio"></a>
@@ -2331,7 +2343,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","openEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","loop":false,"closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
