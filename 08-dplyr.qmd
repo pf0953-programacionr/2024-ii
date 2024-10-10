@@ -99,8 +99,9 @@ library(knitr)
 ## Conjuntos de datos para ejemplos
 En los ejemplos de este capítulo, se utilizan dos conjunto de datos:
 
-- [Pingüinos del archipiélago Palmer](https://allisonhorst.github.io/palmerpenguins/#about-the-data), contenido en el paquete [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/).
-- [Delitos cometidos en Costa Rica en 2023](https://sitiooij.poder-judicial.go.cr/phocadownload/Estadisticas/estadsticaspoliciales2023.xlsx), disponibles en el [sitio Datos Abiertos del Organismo de Investigación Judicial (OIJ)](https://sitiooij.poder-judicial.go.cr/index.php/ayuda/servicios-policiales/servicios-a-organizaciones/indice-de-transparencia-del-sector-publico-costarricense/datos-abiertos).
+- [Pingüinos del archipiélago Palmer](https://allisonhorst.github.io/palmerpenguins/#about-the-data) de [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/).
+- [Países (*Admin 0 – Details*)](https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_sovereignty.zip) de [Natural Earth](https://www.naturalearthdata.com/).
+- [Esperanza de vida al nacer)](https://raw.githubusercontent.com/pf0953-programacionr/2024-ii/refs/heads/main/datos/world-bank/paises-esperanza-vida.csv) de [Banco Mundial - Indicadores](https://datos.bancomundial.org/indicador/SP.DYN.LE00.IN).
 
 ### Pingüinos del archipiélago Palmer
 Para cargar el conjunto de datos `penguins`, basta con cargar el paquete `palmerpenguins`.
@@ -156,37 +157,71 @@ penguins |>
   kable(format = "html")
 ```
 
-### Delitos cometidos en Costa Rica en 2023
+### Países
 Se utiliza la función [readr::read_csv()](https://readr.tidyverse.org/reference/read_delim.html) para leer un archivo CSV almacenado en el repositorio GitHub de este curso, con los datos de las estadísticas policiales proporcionados por el OIJ en formato Excel. `readr::read_csv()` es más eficiente que `read.csv()` (del paquete base de R) y tiene otras ventajas como detección automática de tipos de datos y mejor integración con otros paquetes de Tidyverse (ej. dplyr, tidyr, ggplot2).
 
 ```{r}
-#| label: carga-estadisticaspoliciales2023
+#| label: carga-paises
 #| message: false
 
-# Carga de los datos de delitos cometidos en 2023
-delitos_2023 <-
+# Carga de los datos de países
+paises <-
   read_csv(
-    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2024-i/main/datos/oij/estadisticas-policiales/estadisticaspoliciales2023.csv"
+    "https://raw.githubusercontent.com/pf0953-programacionr/2024-ii/refs/heads/main/datos/natural-earth/paises.csv"
   )
 ```
 
 Estructura del conjunto de datos:
 
 ```{r}
-#| label: estructura-estadisticaspoliciales2023
+#| label: estructura-paises
 
-# Estructura de los datos de delitos cometidos en 2023
-glimpse(delitos_2023)
+# Estructura de los datos de países
+glimpse(paises)
 ```
 
-Despliegue de los datos (debido a que `delitos_2023` es un data frame, pero no un tibble, se limitan manualmente las filas y columnas que se muestran):
+Despliegue de los datos (debido a que `paises` es un data frame, pero no un tibble, se limitan manualmente las filas y columnas que se muestran):
 
-```{r vista-penguins, eval=FALSE}
-#| label: vista-estadisticaspoliciales2023
+```{r}
+#| label: vista-paises
 #| eval: true
 
-# Despliegue de los primeros registros de delitos en una tabla kable
-delitos_2023 |>
+# Despliegue de los primeros registros de paises en una tabla kable
+paises |>
+  head(n = 10) |>
+  kable(format = "html")
+```
+
+### Esperanza de vida al nacer
+
+```{r}
+#| label: carga-esperanza-vida
+#| message: false
+
+# Carga de los datos de esperanza de vida en países
+esperanza_vida <-
+  read_csv(
+    "https://raw.githubusercontent.com/pf0953-programacionr/2024-ii/refs/heads/main/datos/world-bank/paises-esperanza-vida.csv"
+  )
+```
+
+Estructura del conjunto de datos:
+
+```{r}
+#| label: estructura-esperanza-vida
+
+# Estructura de los datos de esperanza de vida
+glimpse(esperanza_vida)
+```
+
+Despliegue de los datos:
+
+```{r}
+#| label: vista-esperanza-vida
+#| eval: true
+
+# Despliegue de los primeros registros de esperanza de vida en una tabla kable
+esperanza_vida |>
   head(n = 10) |>
   kable(format = "html")
 ```
@@ -200,9 +235,9 @@ La función [select()](https://dplyr.tidyverse.org/reference/select.html) selecc
 ```{r}
 #| label: select-ejemplo-01
 
-# Selección de las columnas species, bill_length_mm y sex
-penguins |>
-  select(species, bill_length_mm, sex)
+# Selección de las columnas ADM0_ISO, NAME, POP_EST, GDP_MD
+paises |>
+  select(ADM0_ISO, NAME, POP_EST, GDP_MD)
 ```
 
 Cambio de nombres de columnas:
@@ -211,11 +246,12 @@ Cambio de nombres de columnas:
 #| label: select-ejemplo-02
 
 # Selección y cambio de nombre de las columnas 
-# species, bill_length_mm y sex
-penguins |>
-  select(especie = species,
-         longitud_pico_mm = bill_length_mm,
-         sexo = sex)
+# ADM0_ISO, NAME, POP_EST, GDP_MD
+paises |>
+  select(CODIGO_ISO_3 = ADM0_ISO,
+         NOMBRE = NAME,
+         POBLACION_ESTIMADA = POP_EST,
+         PIB_MD = GDP_MD)
 ```
 
 El operador `:` permite seleccionar un rango de columnas continuas:
@@ -223,9 +259,9 @@ El operador `:` permite seleccionar un rango de columnas continuas:
 ```{r}
 #| label: select-ejemplo-03
 
-# Selección de las columnas desde species a flipper_length_mm
-penguins |>
-  select(species:flipper_length_mm)
+# Selección de las columnas desde CONTINENT hasta INCOME_GRP
+paises |>
+  select(CONTINENT:INCOME_GRP)
 ```
 
 Selección de todas las columnas que cumplen una condición:
@@ -234,7 +270,7 @@ Selección de todas las columnas que cumplen una condición:
 #| label: select-ejemplo-04
 
 # Selección de las columnas numéricas
-penguins |>
+paises |>
   select(where(is.numeric))
 ```
 
@@ -259,59 +295,49 @@ Ejemplos de uso de expresiones y operadores lógicos:
 ```{r}
 #| label: filter-ejemplo-01
 
-# Pingüinos de la especie 'Adelie' 
-# con longitud del pico mayor o igual a 45 mm
-penguins |>
-  filter(species == 'Adelie' & bill_length_mm >= 45)
+# Países de Asia con ingresos alto y en la OCDE
+# 
+paises |>
+  filter(CONTINENT == 'Asia' & INCOME_GRP == '1. High income: OECD')
 ```
 
 ```{r}
 #| label: filter-ejemplo-02
 
-# Pingüinos de las especies 'Adelie' o 'Gentoo'
-penguins |>
-  filter(species == 'Adelie' | species == 'Gentoo')
+# Países de América del Norte o de América del Sur
+paises |>
+  filter(CONTINENT == 'North America' | CONTINENT == 'South America')
 ```
 
 ```{r}
 #| label: filter-ejemplo-04
 
-# Pingüinos de especies diferentes a 'Chinstrap'
-penguins |>
-  filter(!(species == 'Chinstrap'))
+# Países no europeos
+paises |>
+  filter(!(CONTINENT == 'Europe'))
 ```
 
 ```{r}
 #| label: filter-ejemplo-05
 
-# Homicidios cometidos en el cantón de Sarapiquí
-delitos_2023 |>
-  filter(Delito == "HOMICIDIO" & Canton == "SARAPIQUI") |>
-  select(Canton, SubDelito, Fecha, Edad, Nacionalidad) |>
-  kable()
-```
-
-```{r}
-#| label: filter-ejemplo-05b
-
-# Homicidios cometidos en el cantón de Sarapiquí 
-# a personas no costarricenses
-delitos_2023 |>
-  filter(Delito == "HOMICIDIO" &
-           Canton == "SARAPIQUI" & Nacionalidad != "COSTA RICA") |>
-  select(Canton, SubDelito, Fecha, Edad, Nacionalidad) |>
+# Países de Europa en el G7
+# solo con las columnas ADM0_ISO, NAME, POP_EST
+paises |>
+  filter(CONTINENT == "Europe" & ECONOMY == "1. Developed region: G7") |>
+  select(ADM0_ISO, NAME, POP_EST) |>
   kable()
 ```
 
 ```{r}
 #| label: filter-ejemplo-06
 
-# Pingüinos con longitud del pico mayor o igual al promedio
+# Países con población mayor o igual al promedio
 #   El argumento lógico na.rm de mean() 
 #   indica si los valores NA ("not available") 
 #   deben ser removidos antes del cálculo
-penguins |>
-  filter(bill_length_mm >= mean(bill_length_mm, na.rm = TRUE))
+paises |>
+  filter(POP_EST >= mean(POP_EST, na.rm = TRUE)) |>
+  select(ADM0_ISO, NAME, POP_EST)
 ```
 
 Condiciones relacionadas con valores `NA` (nulos):
@@ -319,26 +345,25 @@ Condiciones relacionadas con valores `NA` (nulos):
 ```{r}
 #| label: filter-ejemplo-07
 
-# Filas con valor NA en la columna sex
-penguins |>
-  select(species, island, sex) |>
-  filter(is.na(sex))
+# Filas con valor NA en la columna 2022 (año 2022)
+# del conjunto de datos de esperanza de vida
+esperanza_vida |>
+  select(`Country Name`, `2022`) |>
+  filter(is.na(`2022`))
 ```
+
+**Note como en el bloque anterior las columnas `Country Name` y `2022` deben escribirse entre comillas inversas debido a que una contiene espacios y la otra comienza con un número.**
 
 La función [tidyr::drop_na()](https://tidyr.tidyverse.org/reference/drop_na.html) remueve las filas con valores `NA` en una o varias columnas.
 
 ```{r}
 #| label: filter-ejemplo-08
 
-# Filas con valor diferente a NA en la columna sex
-penguins |>
-  select(species,
-         bill_length_mm,
-         bill_depth_mm,
-         flipper_length_mm,
-         body_mass_g,
-         sex) |>
-  drop_na(sex)
+# Filas con valor diferente a NA en la columna 2022
+esperanza_vida |>
+  select(`Country Name`,
+         `2022`) |>
+  drop_na(`2022`)
 ```
 
 ```{r}
@@ -361,10 +386,10 @@ La función [arrange()](https://dplyr.tidyverse.org/reference/arrange.html) camb
 ```{r}
 #| label: arrange-ejemplo-01
 
-# Ordenamiento ascendente por las columnas 
-# bill_length_mm y bill_depth_mm
-penguins |>
-  arrange(bill_length_mm, bill_depth_mm)
+# Ordenamiento ascendente por las columnas POP_EST y GDP_MD
+paises |>
+  arrange(POP_EST, GDP_MD) |>
+  select(NAME, POP_EST, GDP_MD)
 ```
 
 Por defecto, las columnas se ordenan de manera acendente. Si se desea un orden descendente, puede utilizarse la función [desc()](https://dplyr.tidyverse.org/reference/desc.html).
@@ -372,13 +397,13 @@ Por defecto, las columnas se ordenan de manera acendente. Si se desea un orden d
 ```{r}
 #| label: arrange-ejemplo-02
 
-# Ordenamiento descendente por las columnas 
-# bill_length_mm y bill_depth_mm
-penguins |>
-  arrange(desc(bill_length_mm), desc(bill_depth_mm))
+# Ordenamiento descendente por las columnas POP_EST y GDP_MD
+paises |>
+  arrange(desc(POP_EST), desc(GDP_MD)) |>
+  select(NAME, POP_EST, GDP_MD)
 ```
 
-Nótese que los valores `NA` se ubican al final de cualquier ordenamiento.
+Los valores `NA` (si hay alguno) se ubican al final de cualquier ordenamiento.
 
 ### mutate()
 La función [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) crea o modifica columnas en un data frame.
@@ -386,54 +411,18 @@ La función [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) crea o
 ```{r}
 #| label: mutate-ejemplo-01
 
-# Creación de la columna body_mass_kg,
-# correspondiente al valor de body_mass_g, pero expresado en kg
-penguins |>
-  select(species, body_mass_g) |>
-  mutate(body_mass_kg = body_mass_g/1000)
+# Creación de la columna GDP_PC,
+# correspondiente al producto interno bruto per cápita en dólares
+paises <-
+  paises |>
+  mutate(GDP_PC = (GDP_MD * 1000000) / POP_EST)
+
+# Despliegue
+paises |>
+  select(NAME, GDP_MD, POP_EST, GDP_PC)
 ```
 
-```{r}
-#| label: mutate-ejemplo-02
-
-# Creación de las columnas body_mass_g_mean (promedio de masa) y
-# body_mass_g_normalized (masa normalizada con respecto al promedio)
-penguins |>
-  select(species, body_mass_g) |>
-  mutate(body_mass_g_mean = mean(body_mass_g, na.rm = TRUE)) |>
-  mutate(body_mass_g_normalized = body_mass_g / body_mass_g_mean)
-```
-
-```{r}
-#| label: mutate-ejemplo-03
-
-# Creación de las columnas 
-# Fecha_Date (tipo Date), Anio, Mes y Dia (enteros)
-delitos_2023 |>
-  select(Fecha) |>
-  mutate(Fecha_Date = as.Date(delitos_2023$Fecha, format="%m/%d/%Y")) |>
-  mutate(Anio = as.integer(format(as.Date(delitos_2023$Fecha, format="%m/%d/%Y"), "%Y"))) |>  
-  mutate(Dia = as.integer(format(as.Date(delitos_2023$Fecha, format="%m/%d/%Y"), "%m"))) |>
-  mutate(Mes = as.integer(format(as.Date(delitos_2023$Fecha, format="%m/%d/%Y"), "%d"))) |>
-  slice_head(n = 10)
-```
-
-La función [group_by()](https://dplyr.tidyverse.org/reference/group_by.html) agrupa una o más columnas. Generalmente, esto se hace con el objetivo de rea
-
-```{r}
-#| label: mutate-ejemplo-04
-
-# Creación de la columnas 
-# body_mass_g_mean_species (promedio de masa de la especie) y
-# body_mass_g_species_normalized (masa normalizada con respecto al promedio de la especie)
-penguins |>
-  select(species, body_mass_g) |>
-  group_by(species) |>
-  mutate(body_mass_g_mean_species = mean(body_mass_g, na.rm = TRUE)) |>
-  mutate(body_mass_g_species_normalized = body_mass_g / body_mass_g_mean_species)
-```
-
-### summarize()
+### group_by() y summarize()
 La función [summarize()](https://dplyr.tidyverse.org/reference/summarise.html) se utiliza generalmente junto con la función [group_by()](https://dplyr.tidyverse.org/reference/group_by.html) para realizar cálculos en grupos de filas de un data frame. `group_by()` agrupa las filas y `summarize()` realiza los cálculos (ej. sumas, promedios) en las columnas, para cada grupo. El resultado es un nuevo data frame con una fila por grupo. Si no hay agrupación, se retorna una sola fila correspondiente a los cálculos para todo el data frame.
 
 Ejemplos de cálculos en grupos:
@@ -441,14 +430,14 @@ Ejemplos de cálculos en grupos:
 ```{r}
 #| label: summarise-ejemplo-02
 
-# Mmínimo, máximo, promedio de masa y cantidad de individuos 
-# para cada especie de pingüinos
-penguins |>
-  group_by(species) |>
+# Mínimo, máximo, promedio de población y cantidad de países
+# para cada región de la ONU
+paises |>
+  group_by(REGION_UN) |>
   summarize(
-    body_mass_g_min = min(body_mass_g, na.rm = TRUE),
-    body_mass_g_max = max(body_mass_g, na.rm = TRUE),
-    body_mass_g_mean = mean(body_mass_g, na.rm = TRUE),
+    POP_EST_MIN = min(POP_EST, na.rm = TRUE),
+    POP_EST_MAX = max(POP_EST, na.rm = TRUE),
+    POP_EST_MEAN = mean(POP_EST, na.rm = TRUE),
     n = n()
   )
 ```
@@ -459,28 +448,13 @@ La función [n()](https://dplyr.tidyverse.org/reference/context.html) cuenta la 
 #| label: summarise-ejemplo-03
 #| message: false
 
-# Cantidad de homicidios por provincia y cantón
-delitos_2023 |>
-  filter(Delito == "HOMICIDIO") |>
-  group_by(Provincia, Canton) |>
+# Cantidad de países por región y subregión de la ONU
+paises |>
+  group_by(REGION_UN, SUBREGION) |>
   summarize(
-    homicidios_2023 = n()
+    N = n()
   ) |>
-  arrange(desc(homicidios_2023)) |>
-  kable()
-```
-
-```{r}
-#| label: summarise-ejemplo-04
-#| message: false
-
-# Cantidad de registros por delito y subdelito
-delitos_2023 |>
-  group_by(Delito, SubDelito) |>
-  summarize(
-    n = n()
-  ) |>
-  arrange(desc(n)) |>
+  arrange(desc(N)) |>
   kable()
 ```
 
@@ -489,9 +463,9 @@ Ejemplo de cálculos sin agrupamiento:
 ```{r}
 #| label: summarise-ejemplo-01
 
-# Promedio de masa y n cantidad de registros de pingüinos
-penguins |>
-  summarise(body_mass_g_mean = mean(body_mass_g, na.rm = TRUE),
+# Promedio de GDP_PC y cantidad de países del mundo
+paises |>
+  summarise(GDP_PC_MEAN = mean(GDP_PC, na.rm = TRUE),
             n = n())
 ```
 
@@ -503,10 +477,10 @@ La función [distinct()](https://dplyr.tidyverse.org/reference/distinct.html) re
 ```{r}
 #| label: otras-ejemplo-01
 
-# Valores distintos de la columna Victima
+# Valores distintos de la columna CONTINENT
 
-delitos_2023 |>
-  distinct(Victima) |>
+paises |>
+  distinct(CONTINENT) |>
   kable()
 ```
 
@@ -517,27 +491,23 @@ Una forma alternativa a `summarize()` para realizar un conteo es con la función
 ```{r}
 #| label: otras-ejemplo-02
 
-# Conteo de delitos por tipo de Victima
-delitos_2023 |>
-  count(Victima)
+# Conteo de países por continente
+paises |>
+  count(CONTINENT)
 
 # Expresión equivalente con summarize
-delitos_2023 |>
-  group_by(Victima) |>
+paises |>
+  group_by(CONTINENT) |>
   summarize(n = n()) |>
   kable()
 ```
 
 ## Ejercicios
-Utilice las funciones de dplyr para responder a las siguientes preguntas sobre el conjunto de datos `penguins`:
+Utilice las funciones de dplyr para responder a las siguientes preguntas sobre el conjunto de datos `paises`:
 
-1. ¿Cuántos individuos de cada sexo hay en cada especie?
-2. ¿Cuál es el mínimo, máximo y promedio de masa corporal (peso) por especie y sexo?
-3. ¿Cuántos individuos se observaron durante cada año?
-4. ¿Cuántos individuos de cada especie se observaron durante cada año?
-5. ¿Cuántos individuos de cada especie y cada sexo se observaron durante cada año?
-6. ¿Cuál es el promedio de masa corporal (peso) por año?
-7. ¿Cuál es el promedio de masa corporal (peso) por año para cada especie?
+1. ¿Cuántos países hay en cada región del Banco Mundial?
+2. ¿Cuál es el mínimo, máximo y promedio de producto interno bruto per cápita en el continente africano?
+3. ¿Cuál es el promedio de producto interno bruto per cápita por región del Banco Mundial?
 
 ## Recursos de interés
 RStudio. (2017). *Data transformation with dplyr::Cheat Sheet*. <https://github.com/rstudio/cheatsheets/blob/45c1e642468695830fd8b724587ccfe8901e2185/data-transformation.pdf>

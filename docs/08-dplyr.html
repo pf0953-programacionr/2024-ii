@@ -269,7 +269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#conjuntos-de-datos-para-ejemplos" id="toc-conjuntos-de-datos-para-ejemplos" class="nav-link" data-scroll-target="#conjuntos-de-datos-para-ejemplos"><span class="header-section-number">8.2</span> Conjuntos de datos para ejemplos</a>
   <ul class="collapse">
   <li><a href="#pingüinos-del-archipiélago-palmer" id="toc-pingüinos-del-archipiélago-palmer" class="nav-link" data-scroll-target="#pingüinos-del-archipiélago-palmer"><span class="header-section-number">8.2.1</span> Pingüinos del archipiélago Palmer</a></li>
-  <li><a href="#delitos-cometidos-en-costa-rica-en-2023" id="toc-delitos-cometidos-en-costa-rica-en-2023" class="nav-link" data-scroll-target="#delitos-cometidos-en-costa-rica-en-2023"><span class="header-section-number">8.2.2</span> Delitos cometidos en Costa Rica en 2023</a></li>
+  <li><a href="#países" id="toc-países" class="nav-link" data-scroll-target="#países"><span class="header-section-number">8.2.2</span> Países</a></li>
+  <li><a href="#esperanza-de-vida-al-nacer" id="toc-esperanza-de-vida-al-nacer" class="nav-link" data-scroll-target="#esperanza-de-vida-al-nacer"><span class="header-section-number">8.2.3</span> Esperanza de vida al nacer</a></li>
   </ul></li>
   <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones"><span class="header-section-number">8.3</span> Funciones</a>
   <ul class="collapse">
@@ -277,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter"><span class="header-section-number">8.3.2</span> filter()</a></li>
   <li><a href="#arrange" id="toc-arrange" class="nav-link" data-scroll-target="#arrange"><span class="header-section-number">8.3.3</span> arrange()</a></li>
   <li><a href="#mutate" id="toc-mutate" class="nav-link" data-scroll-target="#mutate"><span class="header-section-number">8.3.4</span> mutate()</a></li>
-  <li><a href="#summarize" id="toc-summarize" class="nav-link" data-scroll-target="#summarize"><span class="header-section-number">8.3.5</span> summarize()</a></li>
+  <li><a href="#group_by-y-summarize" id="toc-group_by-y-summarize" class="nav-link" data-scroll-target="#group_by-y-summarize"><span class="header-section-number">8.3.5</span> group_by() y summarize()</a></li>
   <li><a href="#otras" id="toc-otras" class="nav-link" data-scroll-target="#otras"><span class="header-section-number">8.3.6</span> Otras</a></li>
   </ul></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">8.4</span> Ejercicios</a></li>
@@ -383,8 +384,9 @@ Gentoo          5076.016</code></pre>
 <h2 data-number="8.2" class="anchored" data-anchor-id="conjuntos-de-datos-para-ejemplos"><span class="header-section-number">8.2</span> Conjuntos de datos para ejemplos</h2>
 <p>En los ejemplos de este capítulo, se utilizan dos conjunto de datos:</p>
 <ul>
-<li><a href="https://allisonhorst.github.io/palmerpenguins/#about-the-data">Pingüinos del archipiélago Palmer</a>, contenido en el paquete <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a>.</li>
-<li><a href="https://sitiooij.poder-judicial.go.cr/phocadownload/Estadisticas/estadsticaspoliciales2023.xlsx">Delitos cometidos en Costa Rica en 2023</a>, disponibles en el <a href="https://sitiooij.poder-judicial.go.cr/index.php/ayuda/servicios-policiales/servicios-a-organizaciones/indice-de-transparencia-del-sector-publico-costarricense/datos-abiertos">sitio Datos Abiertos del Organismo de Investigación Judicial (OIJ)</a>.</li>
+<li><a href="https://allisonhorst.github.io/palmerpenguins/#about-the-data">Pingüinos del archipiélago Palmer</a> de <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a>.</li>
+<li><a href="https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_sovereignty.zip">Países (<em>Admin 0 – Details</em>)</a> de <a href="https://www.naturalearthdata.com/">Natural Earth</a>.</li>
+<li><a href="https://raw.githubusercontent.com/pf0953-programacionr/2024-ii/refs/heads/main/datos/world-bank/paises-esperanza-vida.csv">Esperanza de vida al nacer)</a> de <a href="https://datos.bancomundial.org/indicador/SP.DYN.LE00.IN">Banco Mundial - Indicadores</a>.</li>
 </ul>
 <section id="pingüinos-del-archipiélago-palmer" class="level3" data-number="8.2.1">
 <h3 data-number="8.2.1" class="anchored" data-anchor-id="pingüinos-del-archipiélago-palmer"><span class="header-section-number">8.2.1</span> Pingüinos del archipiélago Palmer</h3>
@@ -579,201 +581,1063 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 </div>
 </section>
-<section id="delitos-cometidos-en-costa-rica-en-2023" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="delitos-cometidos-en-costa-rica-en-2023"><span class="header-section-number">8.2.2</span> Delitos cometidos en Costa Rica en 2023</h3>
+<section id="países" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="países"><span class="header-section-number">8.2.2</span> Países</h3>
 <p>Se utiliza la función <a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a> para leer un archivo CSV almacenado en el repositorio GitHub de este curso, con los datos de las estadísticas policiales proporcionados por el OIJ en formato Excel. <code>readr::read_csv()</code> es más eficiente que <code>read.csv()</code> (del paquete base de R) y tiene otras ventajas como detección automática de tipos de datos y mejor integración con otros paquetes de Tidyverse (ej. dplyr, tidyr, ggplot2).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de los datos de delitos cometidos en 2023</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="ot">&lt;-</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de los datos de países</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>paises <span class="ot">&lt;-</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2024-i/main/datos/oij/estadisticas-policiales/estadisticaspoliciales2023.csv"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/pf0953-programacionr/2024-ii/refs/heads/main/datos/natural-earth/paises.csv"</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Estructura del conjunto de datos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estructura de los datos de delitos cometidos en 2023</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(delitos_2023)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estructura de los datos de países</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(paises)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 49,609
-Columns: 12
-$ Delito       &lt;chr&gt; "ASALTO", "ASALTO", "HURTO", "ASALTO", "ASALTO", "HURTO",…
-$ SubDelito    &lt;chr&gt; "ARMA BLANCA", "ARMA BLANCA", "ARDID PREVIO/DISTRACCION",…
-$ Fecha        &lt;chr&gt; "12/31/2023", "12/31/2023", "12/31/2023", "12/31/2023", "…
-$ Hora         &lt;chr&gt; "21:00:00 - 23:59:59", "21:00:00 - 23:59:59", "21:00:00 -…
-$ Victima      &lt;chr&gt; "PERSONA", "PERSONA", "PERSONA", "PERSONA", "PERSONA", "V…
-$ SubVictima   &lt;chr&gt; "PEATON [PERSONA]", "PEATON [PERSONA]", "TAXISTA [PERSONA…
-$ Edad         &lt;chr&gt; "Mayor de edad", "Mayor de edad", "Mayor de edad", "Mayor…
-$ Genero       &lt;chr&gt; "HOMBRE", "MUJER", "HOMBRE", "HOMBRE", "HOMBRE", "MUJER",…
-$ Nacionalidad &lt;chr&gt; "COSTA RICA", "COSTA RICA", "COSTA RICA", "NICARAGUA", "C…
-$ Provincia    &lt;chr&gt; "SAN JOSE", "SAN JOSE", "SAN JOSE", "SAN JOSE", "SAN JOSE…
-$ Canton       &lt;chr&gt; "SAN JOSE", "MORAVIA", "DESAMPARADOS", "SAN JOSE", "SAN J…
-$ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "HOSPI…</code></pre>
+<pre><code>Rows: 201
+Columns: 10
+$ ADM0_ISO   &lt;chr&gt; "IDN", "MYS", "CHL", "BOL", "PER", "ARG", "GBR", "CYP", "IN…
+$ NAME       &lt;chr&gt; "Indonesia", "Malaysia", "Chile", "Bolivia", "Peru", "Argen…
+$ CONTINENT  &lt;chr&gt; "Asia", "Asia", "South America", "South America", "South Am…
+$ REGION_UN  &lt;chr&gt; "Asia", "Asia", "Americas", "Americas", "Americas", "Americ…
+$ SUBREGION  &lt;chr&gt; "South-Eastern Asia", "South-Eastern Asia", "South America"…
+$ REGION_WB  &lt;chr&gt; "East Asia &amp; Pacific", "East Asia &amp; Pacific", "Latin Americ…
+$ ECONOMY    &lt;chr&gt; "4. Emerging region: MIKT", "6. Developing region", "5. Eme…
+$ INCOME_GRP &lt;chr&gt; "4. Lower middle income", "3. Upper middle income", "3. Upp…
+$ POP_EST    &lt;dbl&gt; 270625568, 31949777, 18952038, 11513100, 32510453, 44938712…
+$ GDP_MD     &lt;dbl&gt; 1119190, 364681, 282318, 40895, 226848, 445445, 2863166, 24…</code></pre>
 </div>
 </div>
-<p>Despliegue de los datos (debido a que <code>delitos_2023</code> es un data frame, pero no un tibble, se limitan manualmente las filas y columnas que se muestran):</p>
+<p>Despliegue de los datos (debido a que <code>paises</code> es un data frame, pero no un tibble, se limitan manualmente las filas y columnas que se muestran):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Despliegue de los primeros registros de delitos en una tabla kable</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Despliegue de los primeros registros de paises en una tabla kable</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Delito</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">SubDelito</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Fecha</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Hora</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Victima</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">SubVictima</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Edad</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Genero</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Nacionalidad</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Provincia</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Canton</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Distrito</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">ADM0_ISO</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">NAME</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">CONTINENT</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">REGION_UN</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">SUBREGION</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">REGION_WB</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">ECONOMY</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">INCOME_GRP</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">POP_EST</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">GDP_MD</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARMA BLANCA</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">PEATON [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">HOMBRE</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">MERCED</td>
+<td style="text-align: left;">IDN</td>
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">South-Eastern Asia</td>
+<td style="text-align: left;">East Asia &amp; Pacific</td>
+<td style="text-align: left;">4. Emerging region: MIKT</td>
+<td style="text-align: left;">4. Lower middle income</td>
+<td style="text-align: right;">270625568</td>
+<td style="text-align: right;">1119190</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARMA BLANCA</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">PEATON [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">MUJER</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">MORAVIA</td>
-<td style="text-align: left;">SAN VICENTE</td>
+<td style="text-align: left;">MYS</td>
+<td style="text-align: left;">Malaysia</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">South-Eastern Asia</td>
+<td style="text-align: left;">East Asia &amp; Pacific</td>
+<td style="text-align: left;">6. Developing region</td>
+<td style="text-align: left;">3. Upper middle income</td>
+<td style="text-align: right;">31949777</td>
+<td style="text-align: right;">364681</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">ARDID PREVIO/DISTRACCION</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">TAXISTA [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">HOMBRE</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">DESAMPARADOS</td>
-<td style="text-align: left;">SAN MIGUEL</td>
+<td style="text-align: left;">CHL</td>
+<td style="text-align: left;">Chile</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Latin America &amp; Caribbean</td>
+<td style="text-align: left;">5. Emerging region: G20</td>
+<td style="text-align: left;">3. Upper middle income</td>
+<td style="text-align: right;">18952038</td>
+<td style="text-align: right;">282318</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">INMOVILIZACION</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">PEATON [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">HOMBRE</td>
-<td style="text-align: left;">NICARAGUA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">HOSPITAL</td>
+<td style="text-align: left;">BOL</td>
+<td style="text-align: left;">Bolivia</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Latin America &amp; Caribbean</td>
+<td style="text-align: left;">5. Emerging region: G20</td>
+<td style="text-align: left;">4. Lower middle income</td>
+<td style="text-align: right;">11513100</td>
+<td style="text-align: right;">40895</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARMA DE FUEGO</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">PEATON [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">HOMBRE</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">HOSPITAL</td>
+<td style="text-align: left;">PER</td>
+<td style="text-align: left;">Peru</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Latin America &amp; Caribbean</td>
+<td style="text-align: left;">5. Emerging region: G20</td>
+<td style="text-align: left;">3. Upper middle income</td>
+<td style="text-align: right;">32510453</td>
+<td style="text-align: right;">226848</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">POR DESCUIDO</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">VIVIENDA</td>
-<td style="text-align: left;">NO APLICA [VIVIENDA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">MUJER</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">DOTA</td>
-<td style="text-align: left;">JARDIN</td>
+<td style="text-align: left;">ARG</td>
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">South America</td>
+<td style="text-align: left;">Latin America &amp; Caribbean</td>
+<td style="text-align: left;">5. Emerging region: G20</td>
+<td style="text-align: left;">3. Upper middle income</td>
+<td style="text-align: right;">44938712</td>
+<td style="text-align: right;">445445</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARREBATO</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">PASAJERO DE TRANSPORTE PUBLICO [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">MUJER</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">DESCONOCIDO</td>
+<td style="text-align: left;">GBR</td>
+<td style="text-align: left;">United Kingdom</td>
+<td style="text-align: left;">Europe</td>
+<td style="text-align: left;">Europe</td>
+<td style="text-align: left;">Northern Europe</td>
+<td style="text-align: left;">Europe &amp; Central Asia</td>
+<td style="text-align: left;">1. Developed region: G7</td>
+<td style="text-align: left;">1. High income: OECD</td>
+<td style="text-align: right;">67366465</td>
+<td style="text-align: right;">2863166</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">GOLPES</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">PEATON [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">HOMBRE</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">CORREDORES</td>
-<td style="text-align: left;">CORREDOR</td>
+<td style="text-align: left;">CYP</td>
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Western Asia</td>
+<td style="text-align: left;">Europe &amp; Central Asia</td>
+<td style="text-align: left;">6. Developing region</td>
+<td style="text-align: left;">2. High income: nonOECD</td>
+<td style="text-align: right;">1198575</td>
+<td style="text-align: right;">24948</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">INMOVILIZACION</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: left;">PEATON [PERSONA]</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">HOMBRE</td>
-<td style="text-align: left;">ITALIA</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">HATILLO</td>
+<td style="text-align: left;">IND</td>
+<td style="text-align: left;">India</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Southern Asia</td>
+<td style="text-align: left;">South Asia</td>
+<td style="text-align: left;">3. Emerging region: BRIC</td>
+<td style="text-align: left;">4. Lower middle income</td>
+<td style="text-align: right;">1366417754</td>
+<td style="text-align: right;">2868929</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">CON LLAVE</td>
-<td style="text-align: left;">12/31/2023</td>
-<td style="text-align: left;">21:00:00 - 23:59:59</td>
-<td style="text-align: left;">VIVIENDA</td>
-<td style="text-align: left;">NO APLICA [VIVIENDA]</td>
-<td style="text-align: left;">Adulto Mayor</td>
-<td style="text-align: left;">MUJER</td>
-<td style="text-align: left;">COSTA RICA</td>
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">NICOYA</td>
-<td style="text-align: left;">NICOYA</td>
+<td style="text-align: left;">CHN</td>
+<td style="text-align: left;">China</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Eastern Asia</td>
+<td style="text-align: left;">East Asia &amp; Pacific</td>
+<td style="text-align: left;">3. Emerging region: BRIC</td>
+<td style="text-align: left;">3. Upper middle income</td>
+<td style="text-align: right;">1405862845</td>
+<td style="text-align: right;">14762473</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="esperanza-de-vida-al-nacer" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="esperanza-de-vida-al-nacer"><span class="header-section-number">8.2.3</span> Esperanza de vida al nacer</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de los datos de esperanza de vida en países</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>esperanza_vida <span class="ot">&lt;-</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/pf0953-programacionr/2024-ii/refs/heads/main/datos/world-bank/paises-esperanza-vida.csv"</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Estructura del conjunto de datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estructura de los datos de esperanza de vida</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(esperanza_vida)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 266
+Columns: 69
+$ `Country Name`   &lt;chr&gt; "Aruba", "Africa Eastern and Southern", "Afghanistan"…
+$ `Country Code`   &lt;chr&gt; "ABW", "AFE", "AFG", "AFW", "AGO", "ALB", "AND", "ARB…
+$ `Indicator Name` &lt;chr&gt; "Life expectancy at birth, total (years)", "Life expe…
+$ `Indicator Code` &lt;chr&gt; "SP.DYN.LE00.IN", "SP.DYN.LE00.IN", "SP.DYN.LE00.IN",…
+$ `1960`           &lt;dbl&gt; 64.15200, 44.08555, 32.53500, 37.84515, 38.21100, 54.…
+$ `1961`           &lt;dbl&gt; 64.53700, 44.38670, 33.06800, 38.16495, 37.26700, 55.…
+$ `1962`           &lt;dbl&gt; 64.75200, 44.75218, 33.54700, 38.73510, 37.53900, 56.…
+$ `1963`           &lt;dbl&gt; 65.13200, 44.91316, 34.01600, 39.06372, 37.82400, 57.…
+$ `1964`           &lt;dbl&gt; 65.29400, 45.47904, 34.49400, 39.33536, 38.13100, 58.…
+$ `1965`           &lt;dbl&gt; 65.50200, 45.49834, 34.95300, 39.61804, 38.49500, 60.…
+$ `1966`           &lt;dbl&gt; 66.06300, 45.24910, 35.45300, 39.83783, 38.75700, 60.…
+$ `1967`           &lt;dbl&gt; 66.43900, 45.92491, 35.92400, 39.47150, 39.09200, 61.…
+$ `1968`           &lt;dbl&gt; 66.75700, 46.22310, 36.41800, 40.08568, 39.48400, 62.…
+$ `1969`           &lt;dbl&gt; 67.16800, 46.43230, 36.91000, 40.35042, 39.82900, 63.…
+$ `1970`           &lt;dbl&gt; 67.58300, 46.71848, 37.41800, 41.03476, 40.19000, 64.…
+$ `1971`           &lt;dbl&gt; 67.97500, 47.19294, 37.92300, 41.55672, 40.55400, 65.…
+$ `1972`           &lt;dbl&gt; 68.57700, 46.89739, 38.44400, 42.24979, 40.90500, 66.…
+$ `1973`           &lt;dbl&gt; 69.09200, 47.69232, 39.00300, 42.85505, 41.27000, 67.…
+$ `1974`           &lt;dbl&gt; 69.50300, 47.59806, 39.55000, 43.49768, 41.65200, 67.…
+$ `1975`           &lt;dbl&gt; 69.76200, 47.75989, 40.10000, 44.20125, 41.19100, 68.…
+$ `1976`           &lt;dbl&gt; 70.03500, 48.34959, 40.64500, 45.00316, 41.16300, 68.…
+$ `1977`           &lt;dbl&gt; 70.26400, 48.63591, 41.22800, 45.71989, 41.43700, 69.…
+$ `1978`           &lt;dbl&gt; 70.49400, 48.76360, 40.27100, 46.26954, 41.83000, 69.…
+$ `1979`           &lt;dbl&gt; 70.77800, 49.26134, 39.08600, 46.67374, 42.17500, 69.…
+$ `1980`           &lt;dbl&gt; 71.06600, 49.63654, 39.61800, 47.01524, 42.44900, 70.…
+$ `1981`           &lt;dbl&gt; 71.72200, 50.05707, 40.16400, 47.29719, 42.77200, 70.…
+$ `1982`           &lt;dbl&gt; 71.95900, 50.29685, 37.76600, 47.52938, 43.05100, 71.…
+$ `1983`           &lt;dbl&gt; 72.10500, 48.70333, 38.18700, 47.78526, 42.09200, 71.…
+$ `1984`           &lt;dbl&gt; 72.25100, 48.65266, 33.32900, 47.93192, 42.35300, 71.…
+$ `1985`           &lt;dbl&gt; 72.38800, 49.01163, 33.55000, 48.02168, 42.64800, 71.…
+$ `1986`           &lt;dbl&gt; 72.46200, 49.63972, 39.39600, 48.06676, 42.84300, 71.…
+$ `1987`           &lt;dbl&gt; 72.78900, 50.07589, 39.84400, 48.23785, 40.91700, 72.…
+$ `1988`           &lt;dbl&gt; 73.04700, 49.35973, 43.95800, 48.51291, 41.54500, 72.…
+$ `1989`           &lt;dbl&gt; 73.02300, 50.68410, 45.15800, 48.68985, 41.76500, 72.…
+$ `1990`           &lt;dbl&gt; 73.07600, 50.60773, 45.96700, 48.65000, 41.89300, 73.…
+$ `1991`           &lt;dbl&gt; 73.10000, 50.39046, 46.66300, 48.66246, 43.81300, 73.…
+$ `1992`           &lt;dbl&gt; 73.17900, 49.96211, 47.59600, 48.73727, 42.20900, 73.…
+$ `1993`           &lt;dbl&gt; 73.22500, 50.27363, 51.46600, 48.83204, 42.10100, 73.…
+$ `1994`           &lt;dbl&gt; 73.27200, 50.88258, 51.49500, 48.68189, 43.42200, 74.…
+$ `1995`           &lt;dbl&gt; 73.34900, 51.00193, 52.54400, 48.78377, 45.84900, 74.…
+$ `1996`           &lt;dbl&gt; 73.44800, 50.81069, 53.24300, 48.90628, 46.03300, 74.…
+$ `1997`           &lt;dbl&gt; 73.45200, 50.97423, 53.63400, 49.07918, 46.30600, 73.…
+$ `1998`           &lt;dbl&gt; 73.49100, 50.32591, 52.94300, 49.33295, 45.05700, 74.…
+$ `1999`           &lt;dbl&gt; 73.56100, 51.23785, 54.84600, 49.75012, 45.38600, 75.…
+$ `2000`           &lt;dbl&gt; 73.56900, 51.96448, 55.29800, 50.22195, 46.02400, 75.…
+$ `2001`           &lt;dbl&gt; 73.64700, 52.18965, 55.79800, 50.56514, 46.59000, 75.…
+$ `2002`           &lt;dbl&gt; 73.72600, 52.54079, 56.45400, 50.92785, 47.38600, 75.…
+$ `2003`           &lt;dbl&gt; 73.75200, 53.02203, 57.34400, 51.40336, 49.61700, 76.…
+$ `2004`           &lt;dbl&gt; 73.57600, 53.54546, 57.94400, 51.81913, 50.59200, 76.…
+$ `2005`           &lt;dbl&gt; 73.81100, 54.21965, 58.36100, 52.34455, 51.57000, 76.…
+$ `2006`           &lt;dbl&gt; 74.02600, 55.15055, 58.68400, 52.83213, 52.36900, 76.…
+$ `2007`           &lt;dbl&gt; 74.21000, 55.93380, 59.11100, 53.25171, 53.64200, 77.…
+$ `2008`           &lt;dbl&gt; 74.14700, 56.68042, 59.85200, 53.64116, 54.63300, 77.…
+$ `2009`           &lt;dbl&gt; 74.56000, 57.62085, 60.36400, 54.15942, 55.75200, 77.…
+$ `2010`           &lt;dbl&gt; 75.40400, 58.41115, 60.85100, 54.55017, 56.72600, 77.…
+$ `2011`           &lt;dbl&gt; 75.46500, 59.29327, 61.41900, 55.01314, 57.59600, 78.…
+$ `2012`           &lt;dbl&gt; 75.53100, 60.05078, 61.92300, 55.34056, 58.62300, 78.…
+$ `2013`           &lt;dbl&gt; 75.63600, 60.70987, 62.41700, 55.67341, 59.30700, 78.…
+$ `2014`           &lt;dbl&gt; 75.60100, 61.33792, 62.54500, 55.92223, 60.04000, 78.…
+$ `2015`           &lt;dbl&gt; 75.68300, 61.85646, 62.65900, 56.19587, 60.65500, 78.…
+$ `2016`           &lt;dbl&gt; 75.61700, 62.44405, 63.13600, 56.58168, 61.09200, 78.…
+$ `2017`           &lt;dbl&gt; 75.90300, 62.92239, 63.01600, 56.88845, 61.68000, 79.…
+$ `2018`           &lt;dbl&gt; 76.07200, 63.36586, 63.08100, 57.18914, 62.14400, 79.…
+$ `2019`           &lt;dbl&gt; 76.24800, 63.75568, 63.56500, 57.55580, 62.44800, 79.…
+$ `2020`           &lt;dbl&gt; 75.72300, 63.31386, 62.57500, 57.22637, 62.26100, 76.…
+$ `2021`           &lt;dbl&gt; 74.62600, 62.45459, 61.98200, 56.98866, 61.64300, 76.…
+$ `2022`           &lt;dbl&gt; 74.99200, 62.89903, 62.87900, 57.62618, 61.92900, 76.…
+$ `2023`           &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ ...69            &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
+</div>
+</div>
+<p>Despliegue de los datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Despliegue de los primeros registros de esperanza de vida en una tabla kable</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>esperanza_vida <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Country Name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Country Code</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Indicator Name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Indicator Code</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1960</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1961</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1962</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1963</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1964</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1965</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1966</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1967</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1968</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1969</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1970</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1971</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1972</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1973</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1974</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1975</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1976</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1977</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1978</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1979</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1980</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1981</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1982</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1983</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1984</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1985</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1986</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1987</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1988</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1989</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1990</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1991</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1992</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1993</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1994</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1995</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1996</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1997</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1998</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1999</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2000</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2001</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2002</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2003</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2004</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2005</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2006</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2007</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2008</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2009</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2010</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2011</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2012</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2013</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2014</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2015</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2016</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2017</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2018</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2019</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2020</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2021</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2022</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">2023</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">...69</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">64.15200</td>
+<td style="text-align: right;">64.53700</td>
+<td style="text-align: right;">64.75200</td>
+<td style="text-align: right;">65.13200</td>
+<td style="text-align: right;">65.29400</td>
+<td style="text-align: right;">65.50200</td>
+<td style="text-align: right;">66.06300</td>
+<td style="text-align: right;">66.43900</td>
+<td style="text-align: right;">66.75700</td>
+<td style="text-align: right;">67.16800</td>
+<td style="text-align: right;">67.58300</td>
+<td style="text-align: right;">67.97500</td>
+<td style="text-align: right;">68.57700</td>
+<td style="text-align: right;">69.09200</td>
+<td style="text-align: right;">69.50300</td>
+<td style="text-align: right;">69.76200</td>
+<td style="text-align: right;">70.03500</td>
+<td style="text-align: right;">70.26400</td>
+<td style="text-align: right;">70.49400</td>
+<td style="text-align: right;">70.77800</td>
+<td style="text-align: right;">71.06600</td>
+<td style="text-align: right;">71.72200</td>
+<td style="text-align: right;">71.95900</td>
+<td style="text-align: right;">72.10500</td>
+<td style="text-align: right;">72.25100</td>
+<td style="text-align: right;">72.38800</td>
+<td style="text-align: right;">72.46200</td>
+<td style="text-align: right;">72.78900</td>
+<td style="text-align: right;">73.04700</td>
+<td style="text-align: right;">73.02300</td>
+<td style="text-align: right;">73.07600</td>
+<td style="text-align: right;">73.10000</td>
+<td style="text-align: right;">73.17900</td>
+<td style="text-align: right;">73.22500</td>
+<td style="text-align: right;">73.27200</td>
+<td style="text-align: right;">73.34900</td>
+<td style="text-align: right;">73.44800</td>
+<td style="text-align: right;">73.45200</td>
+<td style="text-align: right;">73.49100</td>
+<td style="text-align: right;">73.56100</td>
+<td style="text-align: right;">73.56900</td>
+<td style="text-align: right;">73.64700</td>
+<td style="text-align: right;">73.72600</td>
+<td style="text-align: right;">73.75200</td>
+<td style="text-align: right;">73.57600</td>
+<td style="text-align: right;">73.81100</td>
+<td style="text-align: right;">74.02600</td>
+<td style="text-align: right;">74.21000</td>
+<td style="text-align: right;">74.14700</td>
+<td style="text-align: right;">74.56000</td>
+<td style="text-align: right;">75.40400</td>
+<td style="text-align: right;">75.46500</td>
+<td style="text-align: right;">75.53100</td>
+<td style="text-align: right;">75.63600</td>
+<td style="text-align: right;">75.60100</td>
+<td style="text-align: right;">75.68300</td>
+<td style="text-align: right;">75.61700</td>
+<td style="text-align: right;">75.90300</td>
+<td style="text-align: right;">76.07200</td>
+<td style="text-align: right;">76.24800</td>
+<td style="text-align: right;">75.72300</td>
+<td style="text-align: right;">74.62600</td>
+<td style="text-align: right;">74.99200</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa Eastern and Southern</td>
+<td style="text-align: left;">AFE</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">44.08555</td>
+<td style="text-align: right;">44.38670</td>
+<td style="text-align: right;">44.75218</td>
+<td style="text-align: right;">44.91316</td>
+<td style="text-align: right;">45.47904</td>
+<td style="text-align: right;">45.49834</td>
+<td style="text-align: right;">45.24910</td>
+<td style="text-align: right;">45.92491</td>
+<td style="text-align: right;">46.22310</td>
+<td style="text-align: right;">46.43230</td>
+<td style="text-align: right;">46.71848</td>
+<td style="text-align: right;">47.19294</td>
+<td style="text-align: right;">46.89739</td>
+<td style="text-align: right;">47.69232</td>
+<td style="text-align: right;">47.59806</td>
+<td style="text-align: right;">47.75989</td>
+<td style="text-align: right;">48.34959</td>
+<td style="text-align: right;">48.63591</td>
+<td style="text-align: right;">48.76360</td>
+<td style="text-align: right;">49.26134</td>
+<td style="text-align: right;">49.63654</td>
+<td style="text-align: right;">50.05707</td>
+<td style="text-align: right;">50.29685</td>
+<td style="text-align: right;">48.70333</td>
+<td style="text-align: right;">48.65266</td>
+<td style="text-align: right;">49.01163</td>
+<td style="text-align: right;">49.63972</td>
+<td style="text-align: right;">50.07589</td>
+<td style="text-align: right;">49.35973</td>
+<td style="text-align: right;">50.68410</td>
+<td style="text-align: right;">50.60773</td>
+<td style="text-align: right;">50.39046</td>
+<td style="text-align: right;">49.96211</td>
+<td style="text-align: right;">50.27363</td>
+<td style="text-align: right;">50.88258</td>
+<td style="text-align: right;">51.00193</td>
+<td style="text-align: right;">50.81069</td>
+<td style="text-align: right;">50.97423</td>
+<td style="text-align: right;">50.32591</td>
+<td style="text-align: right;">51.23785</td>
+<td style="text-align: right;">51.96448</td>
+<td style="text-align: right;">52.18965</td>
+<td style="text-align: right;">52.54079</td>
+<td style="text-align: right;">53.02203</td>
+<td style="text-align: right;">53.54546</td>
+<td style="text-align: right;">54.21965</td>
+<td style="text-align: right;">55.15055</td>
+<td style="text-align: right;">55.93380</td>
+<td style="text-align: right;">56.68042</td>
+<td style="text-align: right;">57.62085</td>
+<td style="text-align: right;">58.41115</td>
+<td style="text-align: right;">59.29327</td>
+<td style="text-align: right;">60.05078</td>
+<td style="text-align: right;">60.70987</td>
+<td style="text-align: right;">61.33792</td>
+<td style="text-align: right;">61.85646</td>
+<td style="text-align: right;">62.44405</td>
+<td style="text-align: right;">62.92239</td>
+<td style="text-align: right;">63.36586</td>
+<td style="text-align: right;">63.75568</td>
+<td style="text-align: right;">63.31386</td>
+<td style="text-align: right;">62.45459</td>
+<td style="text-align: right;">62.89903</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: left;">AFG</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">32.53500</td>
+<td style="text-align: right;">33.06800</td>
+<td style="text-align: right;">33.54700</td>
+<td style="text-align: right;">34.01600</td>
+<td style="text-align: right;">34.49400</td>
+<td style="text-align: right;">34.95300</td>
+<td style="text-align: right;">35.45300</td>
+<td style="text-align: right;">35.92400</td>
+<td style="text-align: right;">36.41800</td>
+<td style="text-align: right;">36.91000</td>
+<td style="text-align: right;">37.41800</td>
+<td style="text-align: right;">37.92300</td>
+<td style="text-align: right;">38.44400</td>
+<td style="text-align: right;">39.00300</td>
+<td style="text-align: right;">39.55000</td>
+<td style="text-align: right;">40.10000</td>
+<td style="text-align: right;">40.64500</td>
+<td style="text-align: right;">41.22800</td>
+<td style="text-align: right;">40.27100</td>
+<td style="text-align: right;">39.08600</td>
+<td style="text-align: right;">39.61800</td>
+<td style="text-align: right;">40.16400</td>
+<td style="text-align: right;">37.76600</td>
+<td style="text-align: right;">38.18700</td>
+<td style="text-align: right;">33.32900</td>
+<td style="text-align: right;">33.55000</td>
+<td style="text-align: right;">39.39600</td>
+<td style="text-align: right;">39.84400</td>
+<td style="text-align: right;">43.95800</td>
+<td style="text-align: right;">45.15800</td>
+<td style="text-align: right;">45.96700</td>
+<td style="text-align: right;">46.66300</td>
+<td style="text-align: right;">47.59600</td>
+<td style="text-align: right;">51.46600</td>
+<td style="text-align: right;">51.49500</td>
+<td style="text-align: right;">52.54400</td>
+<td style="text-align: right;">53.24300</td>
+<td style="text-align: right;">53.63400</td>
+<td style="text-align: right;">52.94300</td>
+<td style="text-align: right;">54.84600</td>
+<td style="text-align: right;">55.29800</td>
+<td style="text-align: right;">55.79800</td>
+<td style="text-align: right;">56.45400</td>
+<td style="text-align: right;">57.34400</td>
+<td style="text-align: right;">57.94400</td>
+<td style="text-align: right;">58.36100</td>
+<td style="text-align: right;">58.68400</td>
+<td style="text-align: right;">59.11100</td>
+<td style="text-align: right;">59.85200</td>
+<td style="text-align: right;">60.36400</td>
+<td style="text-align: right;">60.85100</td>
+<td style="text-align: right;">61.41900</td>
+<td style="text-align: right;">61.92300</td>
+<td style="text-align: right;">62.41700</td>
+<td style="text-align: right;">62.54500</td>
+<td style="text-align: right;">62.65900</td>
+<td style="text-align: right;">63.13600</td>
+<td style="text-align: right;">63.01600</td>
+<td style="text-align: right;">63.08100</td>
+<td style="text-align: right;">63.56500</td>
+<td style="text-align: right;">62.57500</td>
+<td style="text-align: right;">61.98200</td>
+<td style="text-align: right;">62.87900</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa Western and Central</td>
+<td style="text-align: left;">AFW</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">37.84515</td>
+<td style="text-align: right;">38.16495</td>
+<td style="text-align: right;">38.73510</td>
+<td style="text-align: right;">39.06372</td>
+<td style="text-align: right;">39.33536</td>
+<td style="text-align: right;">39.61804</td>
+<td style="text-align: right;">39.83783</td>
+<td style="text-align: right;">39.47150</td>
+<td style="text-align: right;">40.08568</td>
+<td style="text-align: right;">40.35042</td>
+<td style="text-align: right;">41.03476</td>
+<td style="text-align: right;">41.55672</td>
+<td style="text-align: right;">42.24979</td>
+<td style="text-align: right;">42.85505</td>
+<td style="text-align: right;">43.49768</td>
+<td style="text-align: right;">44.20125</td>
+<td style="text-align: right;">45.00316</td>
+<td style="text-align: right;">45.71989</td>
+<td style="text-align: right;">46.26954</td>
+<td style="text-align: right;">46.67374</td>
+<td style="text-align: right;">47.01524</td>
+<td style="text-align: right;">47.29719</td>
+<td style="text-align: right;">47.52938</td>
+<td style="text-align: right;">47.78526</td>
+<td style="text-align: right;">47.93192</td>
+<td style="text-align: right;">48.02168</td>
+<td style="text-align: right;">48.06676</td>
+<td style="text-align: right;">48.23785</td>
+<td style="text-align: right;">48.51291</td>
+<td style="text-align: right;">48.68985</td>
+<td style="text-align: right;">48.65000</td>
+<td style="text-align: right;">48.66246</td>
+<td style="text-align: right;">48.73727</td>
+<td style="text-align: right;">48.83204</td>
+<td style="text-align: right;">48.68189</td>
+<td style="text-align: right;">48.78377</td>
+<td style="text-align: right;">48.90628</td>
+<td style="text-align: right;">49.07918</td>
+<td style="text-align: right;">49.33295</td>
+<td style="text-align: right;">49.75012</td>
+<td style="text-align: right;">50.22195</td>
+<td style="text-align: right;">50.56514</td>
+<td style="text-align: right;">50.92785</td>
+<td style="text-align: right;">51.40336</td>
+<td style="text-align: right;">51.81913</td>
+<td style="text-align: right;">52.34455</td>
+<td style="text-align: right;">52.83213</td>
+<td style="text-align: right;">53.25171</td>
+<td style="text-align: right;">53.64116</td>
+<td style="text-align: right;">54.15942</td>
+<td style="text-align: right;">54.55017</td>
+<td style="text-align: right;">55.01314</td>
+<td style="text-align: right;">55.34056</td>
+<td style="text-align: right;">55.67341</td>
+<td style="text-align: right;">55.92223</td>
+<td style="text-align: right;">56.19587</td>
+<td style="text-align: right;">56.58168</td>
+<td style="text-align: right;">56.88845</td>
+<td style="text-align: right;">57.18914</td>
+<td style="text-align: right;">57.55580</td>
+<td style="text-align: right;">57.22637</td>
+<td style="text-align: right;">56.98866</td>
+<td style="text-align: right;">57.62618</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Angola</td>
+<td style="text-align: left;">AGO</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">38.21100</td>
+<td style="text-align: right;">37.26700</td>
+<td style="text-align: right;">37.53900</td>
+<td style="text-align: right;">37.82400</td>
+<td style="text-align: right;">38.13100</td>
+<td style="text-align: right;">38.49500</td>
+<td style="text-align: right;">38.75700</td>
+<td style="text-align: right;">39.09200</td>
+<td style="text-align: right;">39.48400</td>
+<td style="text-align: right;">39.82900</td>
+<td style="text-align: right;">40.19000</td>
+<td style="text-align: right;">40.55400</td>
+<td style="text-align: right;">40.90500</td>
+<td style="text-align: right;">41.27000</td>
+<td style="text-align: right;">41.65200</td>
+<td style="text-align: right;">41.19100</td>
+<td style="text-align: right;">41.16300</td>
+<td style="text-align: right;">41.43700</td>
+<td style="text-align: right;">41.83000</td>
+<td style="text-align: right;">42.17500</td>
+<td style="text-align: right;">42.44900</td>
+<td style="text-align: right;">42.77200</td>
+<td style="text-align: right;">43.05100</td>
+<td style="text-align: right;">42.09200</td>
+<td style="text-align: right;">42.35300</td>
+<td style="text-align: right;">42.64800</td>
+<td style="text-align: right;">42.84300</td>
+<td style="text-align: right;">40.91700</td>
+<td style="text-align: right;">41.54500</td>
+<td style="text-align: right;">41.76500</td>
+<td style="text-align: right;">41.89300</td>
+<td style="text-align: right;">43.81300</td>
+<td style="text-align: right;">42.20900</td>
+<td style="text-align: right;">42.10100</td>
+<td style="text-align: right;">43.42200</td>
+<td style="text-align: right;">45.84900</td>
+<td style="text-align: right;">46.03300</td>
+<td style="text-align: right;">46.30600</td>
+<td style="text-align: right;">45.05700</td>
+<td style="text-align: right;">45.38600</td>
+<td style="text-align: right;">46.02400</td>
+<td style="text-align: right;">46.59000</td>
+<td style="text-align: right;">47.38600</td>
+<td style="text-align: right;">49.61700</td>
+<td style="text-align: right;">50.59200</td>
+<td style="text-align: right;">51.57000</td>
+<td style="text-align: right;">52.36900</td>
+<td style="text-align: right;">53.64200</td>
+<td style="text-align: right;">54.63300</td>
+<td style="text-align: right;">55.75200</td>
+<td style="text-align: right;">56.72600</td>
+<td style="text-align: right;">57.59600</td>
+<td style="text-align: right;">58.62300</td>
+<td style="text-align: right;">59.30700</td>
+<td style="text-align: right;">60.04000</td>
+<td style="text-align: right;">60.65500</td>
+<td style="text-align: right;">61.09200</td>
+<td style="text-align: right;">61.68000</td>
+<td style="text-align: right;">62.14400</td>
+<td style="text-align: right;">62.44800</td>
+<td style="text-align: right;">62.26100</td>
+<td style="text-align: right;">61.64300</td>
+<td style="text-align: right;">61.92900</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Albania</td>
+<td style="text-align: left;">ALB</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">54.43900</td>
+<td style="text-align: right;">55.63400</td>
+<td style="text-align: right;">56.67100</td>
+<td style="text-align: right;">57.84400</td>
+<td style="text-align: right;">58.98300</td>
+<td style="text-align: right;">60.01900</td>
+<td style="text-align: right;">60.99800</td>
+<td style="text-align: right;">61.97200</td>
+<td style="text-align: right;">62.94600</td>
+<td style="text-align: right;">63.92300</td>
+<td style="text-align: right;">64.82400</td>
+<td style="text-align: right;">65.61800</td>
+<td style="text-align: right;">66.42200</td>
+<td style="text-align: right;">67.14000</td>
+<td style="text-align: right;">67.76900</td>
+<td style="text-align: right;">68.32800</td>
+<td style="text-align: right;">68.70400</td>
+<td style="text-align: right;">69.12100</td>
+<td style="text-align: right;">69.30900</td>
+<td style="text-align: right;">69.58400</td>
+<td style="text-align: right;">70.47800</td>
+<td style="text-align: right;">70.73000</td>
+<td style="text-align: right;">71.02300</td>
+<td style="text-align: right;">71.29600</td>
+<td style="text-align: right;">71.50200</td>
+<td style="text-align: right;">71.65600</td>
+<td style="text-align: right;">71.95000</td>
+<td style="text-align: right;">72.35200</td>
+<td style="text-align: right;">72.64100</td>
+<td style="text-align: right;">72.88000</td>
+<td style="text-align: right;">73.14400</td>
+<td style="text-align: right;">73.37800</td>
+<td style="text-align: right;">73.71500</td>
+<td style="text-align: right;">73.93900</td>
+<td style="text-align: right;">74.13100</td>
+<td style="text-align: right;">74.36200</td>
+<td style="text-align: right;">74.59200</td>
+<td style="text-align: right;">73.90400</td>
+<td style="text-align: right;">74.99000</td>
+<td style="text-align: right;">75.18300</td>
+<td style="text-align: right;">75.40400</td>
+<td style="text-align: right;">75.63900</td>
+<td style="text-align: right;">75.89000</td>
+<td style="text-align: right;">76.14200</td>
+<td style="text-align: right;">76.37600</td>
+<td style="text-align: right;">76.62100</td>
+<td style="text-align: right;">76.81600</td>
+<td style="text-align: right;">77.54900</td>
+<td style="text-align: right;">77.65300</td>
+<td style="text-align: right;">77.78100</td>
+<td style="text-align: right;">77.93600</td>
+<td style="text-align: right;">78.09200</td>
+<td style="text-align: right;">78.06400</td>
+<td style="text-align: right;">78.12300</td>
+<td style="text-align: right;">78.40700</td>
+<td style="text-align: right;">78.64400</td>
+<td style="text-align: right;">78.86000</td>
+<td style="text-align: right;">79.04700</td>
+<td style="text-align: right;">79.18400</td>
+<td style="text-align: right;">79.28200</td>
+<td style="text-align: right;">76.98900</td>
+<td style="text-align: right;">76.46300</td>
+<td style="text-align: right;">76.83300</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Andorra</td>
+<td style="text-align: left;">AND</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arab World</td>
+<td style="text-align: left;">ARB</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">44.97290</td>
+<td style="text-align: right;">45.67640</td>
+<td style="text-align: right;">46.12258</td>
+<td style="text-align: right;">46.97247</td>
+<td style="text-align: right;">47.89576</td>
+<td style="text-align: right;">48.23211</td>
+<td style="text-align: right;">48.45707</td>
+<td style="text-align: right;">48.91291</td>
+<td style="text-align: right;">49.44512</td>
+<td style="text-align: right;">49.82224</td>
+<td style="text-align: right;">50.35134</td>
+<td style="text-align: right;">51.29642</td>
+<td style="text-align: right;">51.86446</td>
+<td style="text-align: right;">52.53968</td>
+<td style="text-align: right;">53.19444</td>
+<td style="text-align: right;">53.70986</td>
+<td style="text-align: right;">54.04753</td>
+<td style="text-align: right;">55.36147</td>
+<td style="text-align: right;">56.11217</td>
+<td style="text-align: right;">56.82629</td>
+<td style="text-align: right;">57.30237</td>
+<td style="text-align: right;">57.69293</td>
+<td style="text-align: right;">58.05480</td>
+<td style="text-align: right;">58.78737</td>
+<td style="text-align: right;">59.47898</td>
+<td style="text-align: right;">60.21574</td>
+<td style="text-align: right;">61.22126</td>
+<td style="text-align: right;">61.16971</td>
+<td style="text-align: right;">60.60903</td>
+<td style="text-align: right;">62.48114</td>
+<td style="text-align: right;">62.92797</td>
+<td style="text-align: right;">63.17961</td>
+<td style="text-align: right;">63.47441</td>
+<td style="text-align: right;">64.45832</td>
+<td style="text-align: right;">65.49673</td>
+<td style="text-align: right;">65.34978</td>
+<td style="text-align: right;">65.71840</td>
+<td style="text-align: right;">65.99442</td>
+<td style="text-align: right;">65.80771</td>
+<td style="text-align: right;">66.87673</td>
+<td style="text-align: right;">67.29733</td>
+<td style="text-align: right;">67.63168</td>
+<td style="text-align: right;">67.93557</td>
+<td style="text-align: right;">67.85900</td>
+<td style="text-align: right;">67.89591</td>
+<td style="text-align: right;">68.16268</td>
+<td style="text-align: right;">68.56725</td>
+<td style="text-align: right;">68.92868</td>
+<td style="text-align: right;">69.28643</td>
+<td style="text-align: right;">69.81264</td>
+<td style="text-align: right;">70.04125</td>
+<td style="text-align: right;">70.26152</td>
+<td style="text-align: right;">70.18046</td>
+<td style="text-align: right;">70.19651</td>
+<td style="text-align: right;">70.49263</td>
+<td style="text-align: right;">70.75822</td>
+<td style="text-align: right;">70.94306</td>
+<td style="text-align: right;">71.42960</td>
+<td style="text-align: right;">71.63302</td>
+<td style="text-align: right;">71.84463</td>
+<td style="text-align: right;">70.92336</td>
+<td style="text-align: right;">70.81448</td>
+<td style="text-align: right;">71.22727</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">United Arab Emirates</td>
+<td style="text-align: left;">ARE</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">48.81100</td>
+<td style="text-align: right;">49.69500</td>
+<td style="text-align: right;">50.68600</td>
+<td style="text-align: right;">51.58400</td>
+<td style="text-align: right;">52.84800</td>
+<td style="text-align: right;">53.98500</td>
+<td style="text-align: right;">55.18500</td>
+<td style="text-align: right;">56.33900</td>
+<td style="text-align: right;">57.54000</td>
+<td style="text-align: right;">58.76000</td>
+<td style="text-align: right;">60.02100</td>
+<td style="text-align: right;">61.21100</td>
+<td style="text-align: right;">62.30400</td>
+<td style="text-align: right;">63.35100</td>
+<td style="text-align: right;">64.33800</td>
+<td style="text-align: right;">65.08000</td>
+<td style="text-align: right;">65.82000</td>
+<td style="text-align: right;">66.51400</td>
+<td style="text-align: right;">67.20900</td>
+<td style="text-align: right;">67.84600</td>
+<td style="text-align: right;">68.53000</td>
+<td style="text-align: right;">69.08500</td>
+<td style="text-align: right;">69.66000</td>
+<td style="text-align: right;">69.94900</td>
+<td style="text-align: right;">70.48500</td>
+<td style="text-align: right;">70.74700</td>
+<td style="text-align: right;">70.96400</td>
+<td style="text-align: right;">71.49100</td>
+<td style="text-align: right;">71.60600</td>
+<td style="text-align: right;">71.75700</td>
+<td style="text-align: right;">71.90000</td>
+<td style="text-align: right;">72.24100</td>
+<td style="text-align: right;">72.30600</td>
+<td style="text-align: right;">72.52100</td>
+<td style="text-align: right;">72.59800</td>
+<td style="text-align: right;">72.69500</td>
+<td style="text-align: right;">72.76700</td>
+<td style="text-align: right;">72.93700</td>
+<td style="text-align: right;">73.06600</td>
+<td style="text-align: right;">73.67000</td>
+<td style="text-align: right;">74.38000</td>
+<td style="text-align: right;">74.63600</td>
+<td style="text-align: right;">74.90100</td>
+<td style="text-align: right;">76.22200</td>
+<td style="text-align: right;">76.45300</td>
+<td style="text-align: right;">76.68300</td>
+<td style="text-align: right;">76.90900</td>
+<td style="text-align: right;">77.12900</td>
+<td style="text-align: right;">77.48800</td>
+<td style="text-align: right;">78.00300</td>
+<td style="text-align: right;">78.33400</td>
+<td style="text-align: right;">78.51700</td>
+<td style="text-align: right;">78.71600</td>
+<td style="text-align: right;">78.85300</td>
+<td style="text-align: right;">79.04400</td>
+<td style="text-align: right;">79.22300</td>
+<td style="text-align: right;">79.33500</td>
+<td style="text-align: right;">79.50400</td>
+<td style="text-align: right;">79.62700</td>
+<td style="text-align: right;">79.72600</td>
+<td style="text-align: right;">78.94600</td>
+<td style="text-align: right;">78.71000</td>
+<td style="text-align: right;">79.19600</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: left;">ARG</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: right;">63.97800</td>
+<td style="text-align: right;">64.36000</td>
+<td style="text-align: right;">64.24400</td>
+<td style="text-align: right;">64.44900</td>
+<td style="text-align: right;">64.36300</td>
+<td style="text-align: right;">64.59300</td>
+<td style="text-align: right;">64.89100</td>
+<td style="text-align: right;">64.99200</td>
+<td style="text-align: right;">64.89000</td>
+<td style="text-align: right;">64.85900</td>
+<td style="text-align: right;">65.58900</td>
+<td style="text-align: right;">65.54100</td>
+<td style="text-align: right;">65.92300</td>
+<td style="text-align: right;">66.32300</td>
+<td style="text-align: right;">66.56300</td>
+<td style="text-align: right;">67.08100</td>
+<td style="text-align: right;">67.22800</td>
+<td style="text-align: right;">67.86100</td>
+<td style="text-align: right;">68.19700</td>
+<td style="text-align: right;">68.49100</td>
+<td style="text-align: right;">68.56400</td>
+<td style="text-align: right;">68.97600</td>
+<td style="text-align: right;">68.93700</td>
+<td style="text-align: right;">69.26700</td>
+<td style="text-align: right;">69.19500</td>
+<td style="text-align: right;">69.65100</td>
+<td style="text-align: right;">70.11900</td>
+<td style="text-align: right;">70.56400</td>
+<td style="text-align: right;">71.05200</td>
+<td style="text-align: right;">71.42500</td>
+<td style="text-align: right;">71.78400</td>
+<td style="text-align: right;">72.31900</td>
+<td style="text-align: right;">72.43000</td>
+<td style="text-align: right;">72.56500</td>
+<td style="text-align: right;">73.17200</td>
+<td style="text-align: right;">73.13300</td>
+<td style="text-align: right;">73.30700</td>
+<td style="text-align: right;">73.09000</td>
+<td style="text-align: right;">73.47400</td>
+<td style="text-align: right;">73.72200</td>
+<td style="text-align: right;">73.92600</td>
+<td style="text-align: right;">74.18600</td>
+<td style="text-align: right;">74.40800</td>
+<td style="text-align: right;">74.08000</td>
+<td style="text-align: right;">74.85500</td>
+<td style="text-align: right;">75.13900</td>
+<td style="text-align: right;">75.43300</td>
+<td style="text-align: right;">75.00600</td>
+<td style="text-align: right;">75.64100</td>
+<td style="text-align: right;">75.93600</td>
+<td style="text-align: right;">75.72100</td>
+<td style="text-align: right;">76.12400</td>
+<td style="text-align: right;">76.46700</td>
+<td style="text-align: right;">76.49100</td>
+<td style="text-align: right;">76.75500</td>
+<td style="text-align: right;">76.76000</td>
+<td style="text-align: right;">76.30800</td>
+<td style="text-align: right;">76.83300</td>
+<td style="text-align: right;">76.99900</td>
+<td style="text-align: right;">77.28400</td>
+<td style="text-align: right;">75.89200</td>
+<td style="text-align: right;">75.39000</td>
+<td style="text-align: right;">76.06400</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
 </tr>
 </tbody>
 </table>
@@ -790,93 +1654,94 @@ $ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "H
 <h3 data-number="8.3.1" class="anchored" data-anchor-id="select"><span class="header-section-number">8.3.1</span> select()</h3>
 <p>La función <a href="https://dplyr.tidyverse.org/reference/select.html">select()</a> selecciona (y opcionalmente renombra) columnas de un data frame con base en sus nombres.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de las columnas species, bill_length_mm y sex</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, bill_length_mm, sex)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de las columnas ADM0_ISO, NAME, POP_EST, GDP_MD</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ADM0_ISO, NAME, POP_EST, GDP_MD)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 3
-   species bill_length_mm sex   
-   &lt;fct&gt;            &lt;dbl&gt; &lt;fct&gt; 
- 1 Adelie            39.1 male  
- 2 Adelie            39.5 female
- 3 Adelie            40.3 female
- 4 Adelie            NA   &lt;NA&gt;  
- 5 Adelie            36.7 female
- 6 Adelie            39.3 male  
- 7 Adelie            38.9 female
- 8 Adelie            39.2 male  
- 9 Adelie            34.1 &lt;NA&gt;  
-10 Adelie            42   &lt;NA&gt;  
-# ℹ 334 more rows</code></pre>
+<pre><code># A tibble: 201 × 4
+   ADM0_ISO NAME              POP_EST   GDP_MD
+   &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+ 1 IDN      Indonesia       270625568  1119190
+ 2 MYS      Malaysia         31949777   364681
+ 3 CHL      Chile            18952038   282318
+ 4 BOL      Bolivia          11513100    40895
+ 5 PER      Peru             32510453   226848
+ 6 ARG      Argentina        44938712   445445
+ 7 GBR      United Kingdom   67366465  2863166
+ 8 CYP      Cyprus            1198575    24948
+ 9 IND      India          1366417754  2868929
+10 CHN      China          1405862845 14762473
+# ℹ 191 more rows</code></pre>
 </div>
 </div>
 <p>Cambio de nombres de columnas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección y cambio de nombre de las columnas </span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># species, bill_length_mm y sex</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">especie =</span> species,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">longitud_pico_mm =</span> bill_length_mm,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sexo =</span> sex)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección y cambio de nombre de las columnas </span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ADM0_ISO, NAME, POP_EST, GDP_MD</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">CODIGO_ISO_3 =</span> ADM0_ISO,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">NOMBRE =</span> NAME,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">POBLACION_ESTIMADA =</span> POP_EST,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">PIB_MD =</span> GDP_MD)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 3
-   especie longitud_pico_mm sexo  
-   &lt;fct&gt;              &lt;dbl&gt; &lt;fct&gt; 
- 1 Adelie              39.1 male  
- 2 Adelie              39.5 female
- 3 Adelie              40.3 female
- 4 Adelie              NA   &lt;NA&gt;  
- 5 Adelie              36.7 female
- 6 Adelie              39.3 male  
- 7 Adelie              38.9 female
- 8 Adelie              39.2 male  
- 9 Adelie              34.1 &lt;NA&gt;  
-10 Adelie              42   &lt;NA&gt;  
-# ℹ 334 more rows</code></pre>
+<pre><code># A tibble: 201 × 4
+   CODIGO_ISO_3 NOMBRE         POBLACION_ESTIMADA   PIB_MD
+   &lt;chr&gt;        &lt;chr&gt;                       &lt;dbl&gt;    &lt;dbl&gt;
+ 1 IDN          Indonesia               270625568  1119190
+ 2 MYS          Malaysia                 31949777   364681
+ 3 CHL          Chile                    18952038   282318
+ 4 BOL          Bolivia                  11513100    40895
+ 5 PER          Peru                     32510453   226848
+ 6 ARG          Argentina                44938712   445445
+ 7 GBR          United Kingdom           67366465  2863166
+ 8 CYP          Cyprus                    1198575    24948
+ 9 IND          India                  1366417754  2868929
+10 CHN          China                  1405862845 14762473
+# ℹ 191 more rows</code></pre>
 </div>
 </div>
 <p>El operador <code>:</code> permite seleccionar un rango de columnas continuas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de las columnas desde species a flipper_length_mm</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species<span class="sc">:</span>flipper_length_mm)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de las columnas desde CONTINENT hasta INCOME_GRP</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CONTINENT<span class="sc">:</span>INCOME_GRP)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 5
-   species island    bill_length_mm bill_depth_mm flipper_length_mm
-   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;
- 1 Adelie  Torgersen           39.1          18.7               181
- 2 Adelie  Torgersen           39.5          17.4               186
- 3 Adelie  Torgersen           40.3          18                 195
- 4 Adelie  Torgersen           NA            NA                  NA
- 5 Adelie  Torgersen           36.7          19.3               193
- 6 Adelie  Torgersen           39.3          20.6               190
- 7 Adelie  Torgersen           38.9          17.8               181
- 8 Adelie  Torgersen           39.2          19.6               195
- 9 Adelie  Torgersen           34.1          18.1               193
-10 Adelie  Torgersen           42            20.2               190
-# ℹ 334 more rows</code></pre>
+<pre><code># A tibble: 201 × 6
+   CONTINENT     REGION_UN SUBREGION          REGION_WB       ECONOMY INCOME_GRP
+   &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt;     
+ 1 Asia          Asia      South-Eastern Asia East Asia &amp; Pa… 4. Eme… 4. Lower …
+ 2 Asia          Asia      South-Eastern Asia East Asia &amp; Pa… 6. Dev… 3. Upper …
+ 3 South America Americas  South America      Latin America … 5. Eme… 3. Upper …
+ 4 South America Americas  South America      Latin America … 5. Eme… 4. Lower …
+ 5 South America Americas  South America      Latin America … 5. Eme… 3. Upper …
+ 6 South America Americas  South America      Latin America … 5. Eme… 3. Upper …
+ 7 Europe        Europe    Northern Europe    Europe &amp; Centr… 1. Dev… 1. High i…
+ 8 Asia          Asia      Western Asia       Europe &amp; Centr… 6. Dev… 2. High i…
+ 9 Asia          Asia      Southern Asia      South Asia      3. Eme… 4. Lower …
+10 Asia          Asia      Eastern Asia       East Asia &amp; Pa… 3. Eme… 3. Upper …
+# ℹ 191 more rows</code></pre>
 </div>
 </div>
 <p>Selección de todas las columnas que cumplen una condición:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de las columnas numéricas</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de las columnas numéricas</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 5
-   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g  year
-            &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;int&gt;
- 1           39.1          18.7               181        3750  2007
- 2           39.5          17.4               186        3800  2007
- 3           40.3          18                 195        3250  2007
- 4           NA            NA                  NA          NA  2007
- 5           36.7          19.3               193        3450  2007
- 6           39.3          20.6               190        3650  2007
- 7           38.9          17.8               181        3625  2007
- 8           39.2          19.6               195        4675  2007
- 9           34.1          18.1               193        3475  2007
-10           42            20.2               190        4250  2007
-# ℹ 334 more rows</code></pre>
+<pre><code># A tibble: 201 × 2
+      POP_EST   GDP_MD
+        &lt;dbl&gt;    &lt;dbl&gt;
+ 1  270625568  1119190
+ 2   31949777   364681
+ 3   18952038   282318
+ 4   11513100    40895
+ 5   32510453   226848
+ 6   44938712   445445
+ 7   67366465  2863166
+ 8    1198575    24948
+ 9 1366417754  2868929
+10 1405862845 14762473
+# ℹ 191 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -898,392 +1763,187 @@ $ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "H
 </ul>
 <p>Ejemplos de uso de expresiones y operadores lógicos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pingüinos de la especie 'Adelie' </span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># con longitud del pico mayor o igual a 45 mm</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">'Adelie'</span> <span class="sc">&amp;</span> bill_length_mm <span class="sc">&gt;=</span> <span class="dv">45</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Países de Asia con ingresos alto y en la OCDE</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CONTINENT <span class="sc">==</span> <span class="st">'Asia'</span> <span class="sc">&amp;</span> INCOME_GRP <span class="sc">==</span> <span class="st">'1. High income: OECD'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 8
-  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
-1 Adelie  Torgersen           46            21.5               194        4200
-2 Adelie  Torgersen           45.8          18.9               197        4150
-3 Adelie  Biscoe              45.6          20.3               191        4600
-# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<pre><code># A tibble: 3 × 10
+  ADM0_ISO NAME       CONTINENT REGION_UN SUBREGION REGION_WB ECONOMY INCOME_GRP
+  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
+1 ISR      Israel     Asia      Asia      Western … Middle E… 2. Dev… 1. High i…
+2 KOR      South Kor… Asia      Asia      Eastern … East Asi… 4. Eme… 1. High i…
+3 JPN      Japan      Asia      Asia      Eastern … East Asi… 1. Dev… 1. High i…
+# ℹ 2 more variables: POP_EST &lt;dbl&gt;, GDP_MD &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pingüinos de las especies 'Adelie' o 'Gentoo'</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">'Adelie'</span> <span class="sc">|</span> species <span class="sc">==</span> <span class="st">'Gentoo'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Países de América del Norte o de América del Sur</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CONTINENT <span class="sc">==</span> <span class="st">'North America'</span> <span class="sc">|</span> CONTINENT <span class="sc">==</span> <span class="st">'South America'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 276 × 8
-   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torgersen           39.1          18.7               181        3750
- 2 Adelie  Torgersen           39.5          17.4               186        3800
- 3 Adelie  Torgersen           40.3          18                 195        3250
- 4 Adelie  Torgersen           NA            NA                  NA          NA
- 5 Adelie  Torgersen           36.7          19.3               193        3450
- 6 Adelie  Torgersen           39.3          20.6               190        3650
- 7 Adelie  Torgersen           38.9          17.8               181        3625
- 8 Adelie  Torgersen           39.2          19.6               195        4675
- 9 Adelie  Torgersen           34.1          18.1               193        3475
-10 Adelie  Torgersen           42            20.2               190        4250
-# ℹ 266 more rows
-# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<pre><code># A tibble: 35 × 10
+   ADM0_ISO NAME      CONTINENT REGION_UN SUBREGION REGION_WB ECONOMY INCOME_GRP
+   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
+ 1 CHL      Chile     South Am… Americas  South Am… Latin Am… 5. Eme… 3. Upper …
+ 2 BOL      Bolivia   South Am… Americas  South Am… Latin Am… 5. Eme… 4. Lower …
+ 3 PER      Peru      South Am… Americas  South Am… Latin Am… 5. Eme… 3. Upper …
+ 4 ARG      Argentina South Am… Americas  South Am… Latin Am… 5. Eme… 3. Upper …
+ 5 SUR      Suriname  South Am… Americas  South Am… Latin Am… 6. Dev… 3. Upper …
+ 6 GUY      Guyana    South Am… Americas  South Am… Latin Am… 6. Dev… 4. Lower …
+ 7 CRI      Costa Ri… North Am… Americas  Central … Latin Am… 5. Eme… 3. Upper …
+ 8 NIC      Nicaragua North Am… Americas  Central … Latin Am… 6. Dev… 4. Lower …
+ 9 BRA      Brazil    South Am… Americas  South Am… Latin Am… 3. Eme… 3. Upper …
+10 URY      Uruguay   South Am… Americas  South Am… Latin Am… 5. Eme… 3. Upper …
+# ℹ 25 more rows
+# ℹ 2 more variables: POP_EST &lt;dbl&gt;, GDP_MD &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pingüinos de especies diferentes a 'Chinstrap'</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(species <span class="sc">==</span> <span class="st">'Chinstrap'</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Países no europeos</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(CONTINENT <span class="sc">==</span> <span class="st">'Europe'</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 276 × 8
-   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torgersen           39.1          18.7               181        3750
- 2 Adelie  Torgersen           39.5          17.4               186        3800
- 3 Adelie  Torgersen           40.3          18                 195        3250
- 4 Adelie  Torgersen           NA            NA                  NA          NA
- 5 Adelie  Torgersen           36.7          19.3               193        3450
- 6 Adelie  Torgersen           39.3          20.6               190        3650
- 7 Adelie  Torgersen           38.9          17.8               181        3625
- 8 Adelie  Torgersen           39.2          19.6               195        4675
- 9 Adelie  Torgersen           34.1          18.1               193        3475
-10 Adelie  Torgersen           42            20.2               190        4250
-# ℹ 266 more rows
-# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<pre><code># A tibble: 156 × 10
+   ADM0_ISO NAME      CONTINENT REGION_UN SUBREGION REGION_WB ECONOMY INCOME_GRP
+   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
+ 1 IDN      Indonesia Asia      Asia      South-Ea… East Asi… 4. Eme… 4. Lower …
+ 2 MYS      Malaysia  Asia      Asia      South-Ea… East Asi… 6. Dev… 3. Upper …
+ 3 CHL      Chile     South Am… Americas  South Am… Latin Am… 5. Eme… 3. Upper …
+ 4 BOL      Bolivia   South Am… Americas  South Am… Latin Am… 5. Eme… 4. Lower …
+ 5 PER      Peru      South Am… Americas  South Am… Latin Am… 5. Eme… 3. Upper …
+ 6 ARG      Argentina South Am… Americas  South Am… Latin Am… 5. Eme… 3. Upper …
+ 7 CYP      Cyprus    Asia      Asia      Western … Europe &amp;… 6. Dev… 2. High i…
+ 8 IND      India     Asia      Asia      Southern… South As… 3. Eme… 4. Lower …
+ 9 CHN      China     Asia      Asia      Eastern … East Asi… 3. Eme… 3. Upper …
+10 ISR      Israel    Asia      Asia      Western … Middle E… 2. Dev… 1. High i…
+# ℹ 146 more rows
+# ℹ 2 more variables: POP_EST &lt;dbl&gt;, GDP_MD &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Homicidios cometidos en el cantón de Sarapiquí</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Delito <span class="sc">==</span> <span class="st">"HOMICIDIO"</span> <span class="sc">&amp;</span> Canton <span class="sc">==</span> <span class="st">"SARAPIQUI"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Canton, SubDelito, Fecha, Edad, Nacionalidad) <span class="sc">|&gt;</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Países de Europa en el G7</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># solo con las columnas ADM0_ISO, NAME, POP_EST</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CONTINENT <span class="sc">==</span> <span class="st">"Europe"</span> <span class="sc">&amp;</span> ECONOMY <span class="sc">==</span> <span class="st">"1. Developed region: G7"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ADM0_ISO, NAME, POP_EST) <span class="sc">|&gt;</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 39%">
-<col style="width: 13%">
-<col style="width: 17%">
-<col style="width: 16%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Canton</th>
-<th style="text-align: left;">SubDelito</th>
-<th style="text-align: left;">Fecha</th>
-<th style="text-align: left;">Edad</th>
-<th style="text-align: left;">Nacionalidad</th>
+<th style="text-align: left;">ADM0_ISO</th>
+<th style="text-align: left;">NAME</th>
+<th style="text-align: right;">POP_EST</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">DISCUSION/RIÑA</td>
-<td style="text-align: left;">12/06/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">COSTA RICA</td>
+<td style="text-align: left;">GBR</td>
+<td style="text-align: left;">United Kingdom</td>
+<td style="text-align: right;">67366465</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">10/28/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
+<td style="text-align: left;">FRA</td>
+<td style="text-align: left;">France</td>
+<td style="text-align: right;">67692632</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">10/16/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
+<td style="text-align: left;">DEU</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: right;">83132799</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">09/30/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">09/28/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">07/28/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">07/07/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">07/05/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">06/25/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">05/31/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">05/22/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">DISCUSION/RIÑA</td>
-<td style="text-align: left;">05/16/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">04/12/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">POR LA COMISION DE OTRO DELITO</td>
-<td style="text-align: left;">03/18/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">NICARAGUA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">DISCUSION/RIÑA</td>
-<td style="text-align: left;">03/13/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">02/16/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">01/31/2023</td>
-<td style="text-align: left;">Adulto Mayor</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">01/31/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">01/07/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">COSTA RICA</td>
+<td style="text-align: left;">ITA</td>
+<td style="text-align: left;">Italy</td>
+<td style="text-align: right;">60297396</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Homicidios cometidos en el cantón de Sarapiquí </span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a personas no costarricenses</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Delito <span class="sc">==</span> <span class="st">"HOMICIDIO"</span> <span class="sc">&amp;</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>           Canton <span class="sc">==</span> <span class="st">"SARAPIQUI"</span> <span class="sc">&amp;</span> Nacionalidad <span class="sc">!=</span> <span class="st">"COSTA RICA"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Canton, SubDelito, Fecha, Edad, Nacionalidad) <span class="sc">|&gt;</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 39%">
-<col style="width: 13%">
-<col style="width: 17%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Canton</th>
-<th style="text-align: left;">SubDelito</th>
-<th style="text-align: left;">Fecha</th>
-<th style="text-align: left;">Edad</th>
-<th style="text-align: left;">Nacionalidad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">10/28/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">09/28/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">07/28/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">07/07/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">06/25/2023</td>
-<td style="text-align: left;">Desconocido</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">POR LA COMISION DE OTRO DELITO</td>
-<td style="text-align: left;">03/18/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">NICARAGUA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SARAPIQUI</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: left;">02/16/2023</td>
-<td style="text-align: left;">Mayor de edad</td>
-<td style="text-align: left;">Desconocido</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pingüinos con longitud del pico mayor o igual al promedio</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   El argumento lógico na.rm de mean() </span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   indica si los valores NA ("not available") </span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   deben ser removidos antes del cálculo</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(bill_length_mm <span class="sc">&gt;=</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Países con población mayor o igual al promedio</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   El argumento lógico na.rm de mean() </span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   indica si los valores NA ("not available") </span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   deben ser removidos antes del cálculo</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(POP_EST <span class="sc">&gt;=</span> <span class="fu">mean</span>(POP_EST, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ADM0_ISO, NAME, POP_EST)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 175 × 8
-   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torgersen           46            21.5               194        4200
- 2 Adelie  Dream               44.1          19.7               196        4400
- 3 Adelie  Torgersen           45.8          18.9               197        4150
- 4 Adelie  Biscoe              45.6          20.3               191        4600
- 5 Adelie  Torgersen           44.1          18                 210        4000
- 6 Gentoo  Biscoe              46.1          13.2               211        4500
- 7 Gentoo  Biscoe              50            16.3               230        5700
- 8 Gentoo  Biscoe              48.7          14.1               210        4450
- 9 Gentoo  Biscoe              50            15.2               218        5700
-10 Gentoo  Biscoe              47.6          14.5               215        5400
-# ℹ 165 more rows
-# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<pre><code># A tibble: 36 × 3
+   ADM0_ISO NAME              POP_EST
+   &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;
+ 1 IDN      Indonesia       270625568
+ 2 ARG      Argentina        44938712
+ 3 GBR      United Kingdom   67366465
+ 4 IND      India          1366417754
+ 5 CHN      China          1405862845
+ 6 ETH      Ethiopia        112078730
+ 7 KEN      Kenya            52573973
+ 8 TZA      Tanzania         58005463
+ 9 FRA      France           67692632
+10 KOR      South Korea      51709098
+# ℹ 26 more rows</code></pre>
 </div>
 </div>
 <p>Condiciones relacionadas con valores <code>NA</code> (nulos):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filas con valor NA en la columna sex</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, island, sex) <span class="sc">|&gt;</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(sex))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filas con valor NA en la columna 2022 (año 2022)</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># del conjunto de datos de esperanza de vida</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>esperanza_vida <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Country Name</span><span class="st">`</span>, <span class="st">`</span><span class="at">2022</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">2022</span><span class="st">`</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 11 × 3
-   species island    sex  
-   &lt;fct&gt;   &lt;fct&gt;     &lt;fct&gt;
- 1 Adelie  Torgersen &lt;NA&gt; 
- 2 Adelie  Torgersen &lt;NA&gt; 
- 3 Adelie  Torgersen &lt;NA&gt; 
- 4 Adelie  Torgersen &lt;NA&gt; 
- 5 Adelie  Torgersen &lt;NA&gt; 
- 6 Adelie  Dream     &lt;NA&gt; 
- 7 Gentoo  Biscoe    &lt;NA&gt; 
- 8 Gentoo  Biscoe    &lt;NA&gt; 
- 9 Gentoo  Biscoe    &lt;NA&gt; 
-10 Gentoo  Biscoe    &lt;NA&gt; 
-11 Gentoo  Biscoe    &lt;NA&gt; </code></pre>
+<pre><code># A tibble: 9 × 2
+  `Country Name`           `2022`
+  &lt;chr&gt;                     &lt;dbl&gt;
+1 Andorra                      NA
+2 American Samoa               NA
+3 Curacao                      NA
+4 Cayman Islands               NA
+5 Not classified               NA
+6 Monaco                       NA
+7 Northern Mariana Islands     NA
+8 Palau                        NA
+9 San Marino                   NA</code></pre>
 </div>
 </div>
+<p><strong>Note como en el bloque anterior las columnas <code>Country Name</code> y <code>2022</code> deben escribirse entre comillas inversas debido a que una contiene espacios y la otra comienza con un número.</strong></p>
 <p>La función <a href="https://tidyr.tidyverse.org/reference/drop_na.html">tidyr::drop_na()</a> remueve las filas con valores <code>NA</code> en una o varias columnas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filas con valor diferente a NA en la columna sex</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species,</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>         bill_length_mm,</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>         bill_depth_mm,</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>         flipper_length_mm,</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>         body_mass_g,</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>         sex) <span class="sc">|&gt;</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filas con valor diferente a NA en la columna 2022</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>esperanza_vida <span class="sc">|&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Country Name</span><span class="st">`</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">2022</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(<span class="st">`</span><span class="at">2022</span><span class="st">`</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 333 × 6
-   species bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex   
-   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;fct&gt; 
- 1 Adelie            39.1          18.7               181        3750 male  
- 2 Adelie            39.5          17.4               186        3800 female
- 3 Adelie            40.3          18                 195        3250 female
- 4 Adelie            36.7          19.3               193        3450 female
- 5 Adelie            39.3          20.6               190        3650 male  
- 6 Adelie            38.9          17.8               181        3625 female
- 7 Adelie            39.2          19.6               195        4675 male  
- 8 Adelie            41.1          17.6               182        3200 female
- 9 Adelie            38.6          21.2               191        3800 male  
-10 Adelie            34.6          21.1               198        4400 male  
-# ℹ 323 more rows</code></pre>
+<pre><code># A tibble: 257 × 2
+   `Country Name`              `2022`
+   &lt;chr&gt;                        &lt;dbl&gt;
+ 1 Aruba                         75.0
+ 2 Africa Eastern and Southern   62.9
+ 3 Afghanistan                   62.9
+ 4 Africa Western and Central    57.6
+ 5 Angola                        61.9
+ 6 Albania                       76.8
+ 7 Arab World                    71.2
+ 8 United Arab Emirates          79.2
+ 9 Argentina                     76.1
+10 Armenia                       73.4
+# ℹ 247 more rows</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filas con valor diferente a NA en cualquier columna</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>         bill_length_mm,</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>         bill_depth_mm,</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>         flipper_length_mm,</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>         body_mass_g,</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>         sex) <span class="sc">|&gt;</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filas con valor diferente a NA en cualquier columna</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>         bill_length_mm,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>         bill_depth_mm,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>         flipper_length_mm,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>         body_mass_g,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>         sex) <span class="sc">|&gt;</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 333 × 6
    species bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex   
@@ -1306,815 +1966,243 @@ $ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "H
 <h3 data-number="8.3.3" class="anchored" data-anchor-id="arrange"><span class="header-section-number">8.3.3</span> arrange()</h3>
 <p>La función <a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a> cambia el orden de las filas de un data frame de acuerdo con los valores de las columnas seleccionadas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenamiento ascendente por las columnas </span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># bill_length_mm y bill_depth_mm</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(bill_length_mm, bill_depth_mm)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenamiento ascendente por las columnas POP_EST y GDP_MD</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(POP_EST, GDP_MD) <span class="sc">|&gt;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, POP_EST, GDP_MD)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 8
-   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Dream               32.1          15.5               188        3050
- 2 Adelie  Dream               33.1          16.1               178        2900
- 3 Adelie  Torgersen           33.5          19                 190        3600
- 4 Adelie  Dream               34            17.1               185        3400
- 5 Adelie  Torgersen           34.1          18.1               193        3475
- 6 Adelie  Torgersen           34.4          18.4               184        3325
- 7 Adelie  Biscoe              34.5          18.1               187        2900
- 8 Adelie  Torgersen           34.6          17.2               189        3200
- 9 Adelie  Torgersen           34.6          21.1               198        4400
-10 Adelie  Biscoe              35            17.9               190        3450
-# ℹ 334 more rows
-# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<pre><code># A tibble: 201 × 3
+   NAME                    POP_EST GDP_MD
+   &lt;chr&gt;                     &lt;dbl&gt;  &lt;dbl&gt;
+ 1 Vatican                     825    -99
+ 2 Antarctica                 4490    898
+ 3 Cyprus U.N. Buffer Zone   10000    280
+ 4 Tuvalu                    11646     47
+ 5 Nauru                     12581    118
+ 6 Palau                     18008    268
+ 7 San Marino                33860   1655
+ 8 Liechtenstein             38019   6876
+ 9 Monaco                    38964   7188
+10 St. Kitts and Nevis       52834   1053
+# ℹ 191 more rows</code></pre>
 </div>
 </div>
 <p>Por defecto, las columnas se ordenan de manera acendente. Si se desea un orden descendente, puede utilizarse la función <a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenamiento descendente por las columnas </span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># bill_length_mm y bill_depth_mm</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(bill_length_mm), <span class="fu">desc</span>(bill_depth_mm))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenamiento descendente por las columnas POP_EST y GDP_MD</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(POP_EST), <span class="fu">desc</span>(GDP_MD)) <span class="sc">|&gt;</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, POP_EST, GDP_MD)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 8
-   species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   &lt;fct&gt;     &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
- 1 Gentoo    Biscoe           59.6          17                 230        6050
- 2 Chinstrap Dream            58            17.8               181        3700
- 3 Gentoo    Biscoe           55.9          17                 228        5600
- 4 Chinstrap Dream            55.8          19.8               207        4000
- 5 Gentoo    Biscoe           55.1          16                 230        5850
- 6 Gentoo    Biscoe           54.3          15.7               231        5650
- 7 Chinstrap Dream            54.2          20.8               201        4300
- 8 Chinstrap Dream            53.5          19.9               205        4500
- 9 Gentoo    Biscoe           53.4          15.8               219        5500
-10 Chinstrap Dream            52.8          20                 205        4550
-# ℹ 334 more rows
-# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<pre><code># A tibble: 201 × 3
+   NAME                        POP_EST   GDP_MD
+   &lt;chr&gt;                         &lt;dbl&gt;    &lt;dbl&gt;
+ 1 China                    1405862845 14762473
+ 2 India                    1366417754  2868929
+ 3 United States of America  331595460 21542705
+ 4 Indonesia                 270625568  1119190
+ 5 Pakistan                  216565318   278221
+ 6 Brazil                    211049527  1839758
+ 7 Nigeria                   200963599   448120
+ 8 Bangladesh                163046161   302571
+ 9 Russia                    144373535  1699876
+10 Mexico                    127575529  1268870
+# ℹ 191 more rows</code></pre>
 </div>
 </div>
-<p>Nótese que los valores <code>NA</code> se ubican al final de cualquier ordenamiento.</p>
+<p>Los valores <code>NA</code> (si hay alguno) se ubican al final de cualquier ordenamiento.</p>
 </section>
 <section id="mutate" class="level3" data-number="8.3.4">
 <h3 data-number="8.3.4" class="anchored" data-anchor-id="mutate"><span class="header-section-number">8.3.4</span> mutate()</h3>
 <p>La función <a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a> crea o modifica columnas en un data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creación de la columna body_mass_kg,</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># correspondiente al valor de body_mass_g, pero expresado en kg</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, body_mass_g) <span class="sc">|&gt;</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_mass_kg =</span> body_mass_g<span class="sc">/</span><span class="dv">1000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creación de la columna GDP_PC,</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># correspondiente al producto interno bruto per cápita en dólares</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>paises <span class="ot">&lt;-</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  paises <span class="sc">|&gt;</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GDP_PC =</span> (GDP_MD <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">/</span> POP_EST)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Despliegue</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, GDP_MD, POP_EST, GDP_PC)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 3
-   species body_mass_g body_mass_kg
-   &lt;fct&gt;         &lt;int&gt;        &lt;dbl&gt;
- 1 Adelie         3750         3.75
- 2 Adelie         3800         3.8 
- 3 Adelie         3250         3.25
- 4 Adelie           NA        NA   
- 5 Adelie         3450         3.45
- 6 Adelie         3650         3.65
- 7 Adelie         3625         3.62
- 8 Adelie         4675         4.68
- 9 Adelie         3475         3.48
-10 Adelie         4250         4.25
-# ℹ 334 more rows</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creación de las columnas body_mass_g_mean (promedio de masa) y</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># body_mass_g_normalized (masa normalizada con respecto al promedio)</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, body_mass_g) <span class="sc">|&gt;</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_mass_g_mean =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_mass_g_normalized =</span> body_mass_g <span class="sc">/</span> body_mass_g_mean)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 4
-   species body_mass_g body_mass_g_mean body_mass_g_normalized
-   &lt;fct&gt;         &lt;int&gt;            &lt;dbl&gt;                  &lt;dbl&gt;
- 1 Adelie         3750            4202.                  0.892
- 2 Adelie         3800            4202.                  0.904
- 3 Adelie         3250            4202.                  0.773
- 4 Adelie           NA            4202.                 NA    
- 5 Adelie         3450            4202.                  0.821
- 6 Adelie         3650            4202.                  0.869
- 7 Adelie         3625            4202.                  0.863
- 8 Adelie         4675            4202.                  1.11 
- 9 Adelie         3475            4202.                  0.827
-10 Adelie         4250            4202.                  1.01 
-# ℹ 334 more rows</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creación de las columnas </span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fecha_Date (tipo Date), Anio, Mes y Dia (enteros)</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Fecha) <span class="sc">|&gt;</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fecha_Date =</span> <span class="fu">as.Date</span>(delitos_2023<span class="sc">$</span>Fecha, <span class="at">format=</span><span class="st">"%m/%d/%Y"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Anio =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">as.Date</span>(delitos_2023<span class="sc">$</span>Fecha, <span class="at">format=</span><span class="st">"%m/%d/%Y"</span>), <span class="st">"%Y"</span>))) <span class="sc">|&gt;</span>  </span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Dia =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">as.Date</span>(delitos_2023<span class="sc">$</span>Fecha, <span class="at">format=</span><span class="st">"%m/%d/%Y"</span>), <span class="st">"%m"</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Mes =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">as.Date</span>(delitos_2023<span class="sc">$</span>Fecha, <span class="at">format=</span><span class="st">"%m/%d/%Y"</span>), <span class="st">"%d"</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 5
-   Fecha      Fecha_Date  Anio   Dia   Mes
-   &lt;chr&gt;      &lt;date&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;
- 1 12/31/2023 2023-12-31  2023    12    31
- 2 12/31/2023 2023-12-31  2023    12    31
- 3 12/31/2023 2023-12-31  2023    12    31
- 4 12/31/2023 2023-12-31  2023    12    31
- 5 12/31/2023 2023-12-31  2023    12    31
- 6 12/31/2023 2023-12-31  2023    12    31
- 7 12/31/2023 2023-12-31  2023    12    31
- 8 12/31/2023 2023-12-31  2023    12    31
- 9 12/31/2023 2023-12-31  2023    12    31
-10 12/31/2023 2023-12-31  2023    12    31</code></pre>
-</div>
-</div>
-<p>La función <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a> agrupa una o más columnas. Generalmente, esto se hace con el objetivo de rea</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creación de la columnas </span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># body_mass_g_mean_species (promedio de masa de la especie) y</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># body_mass_g_species_normalized (masa normalizada con respecto al promedio de la especie)</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, body_mass_g) <span class="sc">|&gt;</span></span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_mass_g_mean_species =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_mass_g_species_normalized =</span> body_mass_g <span class="sc">/</span> body_mass_g_mean_species)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 4
-# Groups:   species [3]
-   species body_mass_g body_mass_g_mean_species body_mass_g_species_normalized
-   &lt;fct&gt;         &lt;int&gt;                    &lt;dbl&gt;                          &lt;dbl&gt;
- 1 Adelie         3750                    3701.                          1.01 
- 2 Adelie         3800                    3701.                          1.03 
- 3 Adelie         3250                    3701.                          0.878
- 4 Adelie           NA                    3701.                         NA    
- 5 Adelie         3450                    3701.                          0.932
- 6 Adelie         3650                    3701.                          0.986
- 7 Adelie         3625                    3701.                          0.980
- 8 Adelie         4675                    3701.                          1.26 
- 9 Adelie         3475                    3701.                          0.939
-10 Adelie         4250                    3701.                          1.15 
-# ℹ 334 more rows</code></pre>
+<pre><code># A tibble: 201 × 4
+   NAME             GDP_MD    POP_EST GDP_PC
+   &lt;chr&gt;             &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+ 1 Indonesia       1119190  270625568  4136.
+ 2 Malaysia         364681   31949777 11414.
+ 3 Chile            282318   18952038 14896.
+ 4 Bolivia           40895   11513100  3552.
+ 5 Peru             226848   32510453  6978.
+ 6 Argentina        445445   44938712  9912.
+ 7 United Kingdom  2863166   67366465 42501.
+ 8 Cyprus            24948    1198575 20815.
+ 9 India           2868929 1366417754  2100.
+10 China          14762473 1405862845 10501.
+# ℹ 191 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="summarize" class="level3" data-number="8.3.5">
-<h3 data-number="8.3.5" class="anchored" data-anchor-id="summarize"><span class="header-section-number">8.3.5</span> summarize()</h3>
+<section id="group_by-y-summarize" class="level3" data-number="8.3.5">
+<h3 data-number="8.3.5" class="anchored" data-anchor-id="group_by-y-summarize"><span class="header-section-number">8.3.5</span> group_by() y summarize()</h3>
 <p>La función <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a> se utiliza generalmente junto con la función <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a> para realizar cálculos en grupos de filas de un data frame. <code>group_by()</code> agrupa las filas y <code>summarize()</code> realiza los cálculos (ej. sumas, promedios) en las columnas, para cada grupo. El resultado es un nuevo data frame con una fila por grupo. Si no hay agrupación, se retorna una sola fila correspondiente a los cálculos para todo el data frame.</p>
 <p>Ejemplos de cálculos en grupos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mmínimo, máximo, promedio de masa y cantidad de individuos </span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># para cada especie de pingüinos</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">body_mass_g_min =</span> <span class="fu">min</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">body_mass_g_max =</span> <span class="fu">max</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">body_mass_g_mean =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mínimo, máximo, promedio de población y cantidad de países</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># para cada región de la ONU</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(REGION_UN) <span class="sc">|&gt;</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">POP_EST_MIN =</span> <span class="fu">min</span>(POP_EST, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">POP_EST_MAX =</span> <span class="fu">max</span>(POP_EST, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">POP_EST_MEAN =</span> <span class="fu">mean</span>(POP_EST, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-  species   body_mass_g_min body_mass_g_max body_mass_g_mean     n
-  &lt;fct&gt;               &lt;int&gt;           &lt;int&gt;            &lt;dbl&gt; &lt;int&gt;
-1 Adelie               2850            4775            3701.   152
-2 Chinstrap            2700            4800            3733.    68
-3 Gentoo               3950            6300            5076.   124</code></pre>
+<pre><code># A tibble: 6 × 5
+  REGION_UN  POP_EST_MIN POP_EST_MAX POP_EST_MEAN     n
+  &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt; &lt;int&gt;
+1 Africa           97625   200963599    23381240.    56
+2 Americas         52834   331595460    28909700.    35
+3 Antarctica        4490        4490        4490      1
+4 Asia             10000  1405862845    91256711.    50
+5 Europe             825   144373535    16615735.    45
+6 Oceania          11646    25368867     2970679.    14</code></pre>
 </div>
 </div>
 <p>La función <a href="https://dplyr.tidyverse.org/reference/context.html">n()</a> cuenta la cantidad de filas en un grupo.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cantidad de homicidios por provincia y cantón</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Delito <span class="sc">==</span> <span class="st">"HOMICIDIO"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Provincia, Canton) <span class="sc">|&gt;</span></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">homicidios_2023 =</span> <span class="fu">n</span>()</span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(homicidios_2023)) <span class="sc">|&gt;</span></span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cantidad de países por región y subregión de la ONU</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(REGION_UN, SUBREGION) <span class="sc">|&gt;</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>()</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(N)) <span class="sc">|&gt;</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Provincia</th>
-<th style="text-align: left;">Canton</th>
-<th style="text-align: right;">homicidios_2023</th>
+<th style="text-align: left;">REGION_UN</th>
+<th style="text-align: left;">SUBREGION</th>
+<th style="text-align: right;">N</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">LIMON</td>
-<td style="text-align: left;">LIMON</td>
-<td style="text-align: right;">91</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: right;">82</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: right;">68</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">LIMON</td>
-<td style="text-align: left;">MATINA</td>
-<td style="text-align: right;">50</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: right;">44</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">LIMON</td>
-<td style="text-align: left;">POCOCI</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">NICOYA</td>
-<td style="text-align: right;">28</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">DESAMPARADOS</td>
-<td style="text-align: right;">26</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">SANTA CRUZ</td>
-<td style="text-align: right;">24</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">ALAJUELITA</td>
-<td style="text-align: right;">23</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: right;">21</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">LIMON</td>
-<td style="text-align: left;">SIQUIRRES</td>
-<td style="text-align: right;">21</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">GOICOECHEA</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">SAN CARLOS</td>
-<td style="text-align: right;">19</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">SARAPIQUI</td>
+<td style="text-align: left;">Africa</td>
+<td style="text-align: left;">Eastern Africa</td>
 <td style="text-align: right;">19</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">PARAISO</td>
-<td style="text-align: right;">17</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: right;">17</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">PARRITA</td>
-<td style="text-align: right;">17</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">LIBERIA</td>
-<td style="text-align: right;">16</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">CORREDORES</td>
-<td style="text-align: right;">16</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">LA UNION</td>
-<td style="text-align: right;">15</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">QUEPOS</td>
-<td style="text-align: right;">15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">SAN RAMON</td>
-<td style="text-align: right;">13</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">GARABITO</td>
-<td style="text-align: right;">13</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">PEREZ ZELEDON</td>
-<td style="text-align: right;">13</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">CARRILLO</td>
-<td style="text-align: right;">11</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">TURRIALBA</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">LIMON</td>
-<td style="text-align: left;">GUACIMO</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">LIMON</td>
-<td style="text-align: left;">TALAMANCA</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">ESCAZU</td>
-<td style="text-align: right;">8</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">ASERRI</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">TIBAS</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">VASQUEZ DE CORONADO</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">LOS CHILES</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">CANAS</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">CURRIDABAT</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">MONTES DE OCA</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">ABANGARES</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">ESPARZA</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">GOLFITO</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">OSA</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">GRECIA</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">EL GUARCO</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">LA CRUZ</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">SAN RAFAEL</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">ATENAS</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">GUATUSO</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">NARANJO</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">OROTINA</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">OREAMUNO</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">BAGACES</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">SANTO DOMINGO</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">MONTES DE ORO</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">LEON CORTES</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">MORAVIA</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">POAS</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">UPALA</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">ALVARADO</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">TILARAN</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">SANTA BARBARA</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">COTO BRUS</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">MORA</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ALAJUELA</td>
-<td style="text-align: left;">RIO CUARTO</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CARTAGO</td>
-<td style="text-align: left;">JIMENEZ</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GUANACASTE</td>
-<td style="text-align: left;">NANDAYURE</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">BARVA</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">FLORES</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HEREDIA</td>
-<td style="text-align: left;">SAN PABLO</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PUNTARENAS</td>
-<td style="text-align: left;">BUENOS AIRES</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">PURISCAL</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">SANTA ANA</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SAN JOSE</td>
-<td style="text-align: left;">TARRAZU</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cantidad de registros por delito y subdelito</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Delito, SubDelito) <span class="sc">|&gt;</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Delito</th>
-<th style="text-align: left;">SubDelito</th>
-<th style="text-align: right;">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">POR DESCUIDO</td>
-<td style="text-align: right;">8326</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">FORZADURA</td>
-<td style="text-align: right;">6066</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARMA DE FUEGO</td>
-<td style="text-align: right;">4915</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">TACHA DE VEHICULO</td>
-<td style="text-align: left;">TACHA DE VEHICULO</td>
-<td style="text-align: right;">3863</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARMA BLANCA</td>
-<td style="text-align: right;">2925</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">POR CONFIANZA</td>
-<td style="text-align: right;">2924</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">CARTERISTA</td>
-<td style="text-align: right;">2869</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ROBO DE VEHICULO</td>
-<td style="text-align: left;">DESCUIDO</td>
-<td style="text-align: right;">2356</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARREBATO</td>
-<td style="text-align: right;">1915</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">BOQUETE</td>
-<td style="text-align: right;">1385</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">ESCALAMIENTO</td>
-<td style="text-align: right;">1274</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">GOLPES</td>
-<td style="text-align: right;">1248</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ROBO DE VEHICULO</td>
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: right;">1070</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ROBO DE VEHICULO</td>
-<td style="text-align: left;">COCHERAZO</td>
-<td style="text-align: right;">750</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">ARDID PREVIO/DISTRACCION</td>
-<td style="text-align: right;">728</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">CORTA CANDADOS</td>
-<td style="text-align: right;">695</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">RUPTURA VENTANA</td>
-<td style="text-align: right;">682</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">INTIMIDACION VERBAL</td>
-<td style="text-align: right;">666</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">AJUSTE DE CUENTAS/VENGANZA</td>
-<td style="text-align: right;">633</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">OTRO O INDETERMINADO</td>
-<td style="text-align: right;">633</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">QUITAN CELOSIAS</td>
-<td style="text-align: right;">502</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">CON LLAVE</td>
-<td style="text-align: right;">484</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ROBO DE VEHICULO</td>
-<td style="text-align: left;">POR CONFIANZA</td>
-<td style="text-align: right;">399</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">CANDADO CHINO</td>
-<td style="text-align: right;">352</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">OTRO O INDETERMINADO</td>
-<td style="text-align: right;">345</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">INMOVILIZACION</td>
-<td style="text-align: right;">331</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">PROGRESIVOS</td>
-<td style="text-align: right;">233</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">ARMA CONTUNDENTE</td>
-<td style="text-align: right;">170</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">OTRO O INDETERMINADO</td>
-<td style="text-align: right;">149</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ROBO DE VEHICULO</td>
-<td style="text-align: left;">OTRO O INDETERMINADO</td>
-<td style="text-align: right;">133</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">DISCUSION/RIÑA</td>
-<td style="text-align: right;">118</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">RETIRO DE CAJERO AUTOMATICO</td>
-<td style="text-align: right;">116</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">POR LA COMISION DE OTRO DELITO</td>
-<td style="text-align: right;">83</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">USO DE SOMNIFERO</td>
-<td style="text-align: right;">74</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ROBO DE VEHICULO</td>
-<td style="text-align: left;">ARDID PREVIO</td>
-<td style="text-align: right;">51</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">GANZUA/VARILLA</td>
-<td style="text-align: right;">47</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">VIOLENCIA DOMESTICA</td>
-<td style="text-align: right;">26</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">USO DE GAS</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Western Asia</td>
 <td style="text-align: right;">19</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">OTRO O INDETERMINADO</td>
+<td style="text-align: left;">Africa</td>
+<td style="text-align: left;">Western Africa</td>
 <td style="text-align: right;">16</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">REPELIENDO ACTIVIDAD CRIMINAL</td>
+<td style="text-align: left;">Europe</td>
+<td style="text-align: left;">Southern Europe</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">Caribbean</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">South America</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">PROFESIONAL</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">South-Eastern Asia</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Europe</td>
+<td style="text-align: left;">Eastern Europe</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Europe</td>
+<td style="text-align: left;">Northern Europe</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa</td>
+<td style="text-align: left;">Middle Africa</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Southern Asia</td>
 <td style="text-align: right;">9</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">NO DETERMINADO</td>
+<td style="text-align: left;">Europe</td>
+<td style="text-align: left;">Western Europe</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">Central America</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa</td>
+<td style="text-align: left;">Northern Africa</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Eastern Asia</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa</td>
+<td style="text-align: left;">Southern Africa</td>
 <td style="text-align: right;">5</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">HURTO</td>
-<td style="text-align: left;">DESCONOCIDO</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: left;">Central Asia</td>
 <td style="text-align: right;">5</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ASALTO</td>
-<td style="text-align: left;">DESCONOCIDO</td>
+<td style="text-align: left;">Oceania</td>
+<td style="text-align: left;">Micronesia</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oceania</td>
+<td style="text-align: left;">Melanesia</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oceania</td>
+<td style="text-align: left;">Polynesia</td>
 <td style="text-align: right;">3</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ROBO</td>
-<td style="text-align: left;">DESCONOCIDO</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: left;">Americas</td>
+<td style="text-align: left;">Northern America</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">HOMICIDIO</td>
-<td style="text-align: left;">FEMICIDIO</td>
+<td style="text-align: left;">Oceania</td>
+<td style="text-align: left;">Australia and New Zealand</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Antarctica</td>
+<td style="text-align: left;">Antarctica</td>
 <td style="text-align: right;">1</td>
 </tr>
 </tbody>
@@ -2123,15 +2211,15 @@ $ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "H
 </div>
 <p>Ejemplo de cálculos sin agrupamiento:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Promedio de masa y n cantidad de registros de pingüinos</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">body_mass_g_mean =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Promedio de GDP_PC y cantidad de países del mundo</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">GDP_PC_MEAN =</span> <span class="fu">mean</span>(GDP_PC, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
-  body_mass_g_mean     n
-             &lt;dbl&gt; &lt;int&gt;
-1            4202.   344</code></pre>
+  GDP_PC_MEAN     n
+        &lt;dbl&gt; &lt;int&gt;
+1      15836.   201</code></pre>
 </div>
 </div>
 </section>
@@ -2141,33 +2229,42 @@ $ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "H
 <h4 data-number="8.3.6.1" class="anchored" data-anchor-id="distinct"><span class="header-section-number">8.3.6.1</span> distinct()</h4>
 <p>La función <a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a> retorna las combinaciones únicas de filas en un data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores distintos de la columna Victima</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(Victima) <span class="sc">|&gt;</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores distintos de la columna CONTINENT</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(CONTINENT) <span class="sc">|&gt;</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Victima</th>
+<th style="text-align: left;">CONTINENT</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">PERSONA</td>
+<td style="text-align: left;">Asia</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">VIVIENDA</td>
+<td style="text-align: left;">South America</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">VEHICULO</td>
+<td style="text-align: left;">Europe</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">EDIFICACION</td>
+<td style="text-align: left;">Africa</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">OTROS</td>
+<td style="text-align: left;">North America</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oceania</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Antarctica</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seven seas (open ocean)</td>
 </tr>
 </tbody>
 </table>
@@ -2178,52 +2275,67 @@ $ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "H
 <h4 data-number="8.3.6.2" class="anchored" data-anchor-id="count"><span class="header-section-number">8.3.6.2</span> count()</h4>
 <p>Una forma alternativa a <code>summarize()</code> para realizar un conteo es con la función <a href="https://dplyr.tidyverse.org/reference/count.html">count()</a>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conteo de delitos por tipo de Victima</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Victima)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conteo de países por continente</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(CONTINENT)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 2
-  Victima         n
-  &lt;chr&gt;       &lt;int&gt;
-1 EDIFICACION  6981
-2 OTROS        1946
-3 PERSONA     19448
-4 VEHICULO    11476
-5 VIVIENDA     9758</code></pre>
+<pre><code># A tibble: 8 × 2
+  CONTINENT                   n
+  &lt;chr&gt;                   &lt;int&gt;
+1 Africa                     54
+2 Antarctica                  1
+3 Asia                       49
+4 Europe                     45
+5 North America              23
+6 Oceania                    14
+7 Seven seas (open ocean)     3
+8 South America              12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expresión equivalente con summarize</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>delitos_2023 <span class="sc">|&gt;</span></span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Victima) <span class="sc">|&gt;</span></span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expresión equivalente con summarize</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>paises <span class="sc">|&gt;</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CONTINENT) <span class="sc">|&gt;</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Victima</th>
+<th style="text-align: left;">CONTINENT</th>
 <th style="text-align: right;">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">EDIFICACION</td>
-<td style="text-align: right;">6981</td>
+<td style="text-align: left;">Africa</td>
+<td style="text-align: right;">54</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">OTROS</td>
-<td style="text-align: right;">1946</td>
+<td style="text-align: left;">Antarctica</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PERSONA</td>
-<td style="text-align: right;">19448</td>
+<td style="text-align: left;">Asia</td>
+<td style="text-align: right;">49</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">VEHICULO</td>
-<td style="text-align: right;">11476</td>
+<td style="text-align: left;">Europe</td>
+<td style="text-align: right;">45</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">VIVIENDA</td>
-<td style="text-align: right;">9758</td>
+<td style="text-align: left;">North America</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oceania</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seven seas (open ocean)</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South America</td>
+<td style="text-align: right;">12</td>
 </tr>
 </tbody>
 </table>
@@ -2234,15 +2346,11 @@ $ Distrito     &lt;chr&gt; "MERCED", "SAN VICENTE", "SAN MIGUEL", "HOSPITAL", "H
 </section>
 <section id="ejercicios" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">8.4</span> Ejercicios</h2>
-<p>Utilice las funciones de dplyr para responder a las siguientes preguntas sobre el conjunto de datos <code>penguins</code>:</p>
+<p>Utilice las funciones de dplyr para responder a las siguientes preguntas sobre el conjunto de datos <code>paises</code>:</p>
 <ol type="1">
-<li>¿Cuántos individuos de cada sexo hay en cada especie?</li>
-<li>¿Cuál es el mínimo, máximo y promedio de masa corporal (peso) por especie y sexo?</li>
-<li>¿Cuántos individuos se observaron durante cada año?</li>
-<li>¿Cuántos individuos de cada especie se observaron durante cada año?</li>
-<li>¿Cuántos individuos de cada especie y cada sexo se observaron durante cada año?</li>
-<li>¿Cuál es el promedio de masa corporal (peso) por año?</li>
-<li>¿Cuál es el promedio de masa corporal (peso) por año para cada especie?</li>
+<li>¿Cuántos países hay en cada región del Banco Mundial?</li>
+<li>¿Cuál es el mínimo, máximo y promedio de producto interno bruto per cápita en el continente africano?</li>
+<li>¿Cuál es el promedio de producto interno bruto per cápita por región del Banco Mundial?</li>
 </ol>
 </section>
 <section id="recursos-de-interés" class="level2" data-number="8.5">
