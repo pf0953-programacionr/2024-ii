@@ -72,7 +72,7 @@ paises <-
   )
 ```
 
-En el siguiente bloque de código, se utiliza la función [datatable()](https://rdrr.io/cran/DT/man/datatable.html) del paquete [DT](https://rstudio.github.io/DT/), para desplegar las observaciones de mpg en una tabla.
+En el siguiente bloque de código, se utiliza la función [datatable()](https://rdrr.io/cran/DT/man/datatable.html) del paquete [DT](https://rstudio.github.io/DT/), para desplegar las observaciones de países en una tabla.
 
 ```{r}
 #| label: tabla-paises
@@ -294,7 +294,7 @@ ggplot2 incluye las funciones [ggtitle()](https://ggplot2.tidyverse.org/referenc
 Algunas de las opciones que ofrecen estas funciones se ilustran en el siguiente gráfico.
 
 ```{r}
-#| label: grafico-dispersion-mpg-etiquetas
+#| label: grafico-dispersion-paises-etiquetas
 #| warning: false
 #| message: false
 
@@ -410,6 +410,7 @@ library(hrbrthemes)
 
 ```{r}
 #| label: grafico-dispersion-paises-hbrthemes
+#| warning: false
 #| message: false
 
 # Gráfico de dispersión de PIB per cápita vs esperanza de vida al nacer
@@ -442,6 +443,7 @@ El siguiente bloque de código genera un gráfico de dispersión para los datos 
 
 ```{r}
 #| label: grafico-dispersion--scale_color
+#| warning: false
 #| message: false
 
 # Gráfico de dispersión de PIB per cápita vs esperanza de vida al nacer
@@ -490,7 +492,7 @@ plotly implementa la función [ggplotly()](https://rdrr.io/cran/plotly/man/ggplo
 El siguiente bloque de código muestra un gráfico generado con ggplot2 y convertido a plotly con la función `ggplotly()`.
 
 ```{r}
-#| label: grafico-dispersion-mpg-plotly
+#| label: grafico-dispersion-paises-plotly
 #| warning: false
 #| message: false
 
@@ -518,6 +520,79 @@ grafico_ggplot2 <-
 # Gráfico plotly
 ggplotly(grafico_ggplot2, tooltip = "text") |> 
   config(locale = 'es') # para mostrar los controles en español
+```
+
+## Tipos de gráficos
+En esta sección, se ejemplifican varios tipos de gráficos, los cuales se construyen con ggplot2 y luego se convierten a plotly.
+
+### Histogramas
+Un [histograma](https://es.wikipedia.org/wiki/Histograma) es una representación gráfica de la distribución de una variable numérica en forma de barras (en este caso, llamadas en inglés *bins*). La longitud de cada barra representa la frecuencia de un rango de valores de la variable. La graficación de la distribución de las variables es, frecuentemente, una de las primeras tareas que se realiza cuando se explora un conjunto de datos.
+
+En ggplot2, los histogramas se implementan con la función [geom_histogram()](https://ggplot2.tidyverse.org/reference/geom_histogram.html).
+
+El siguiente bloque de código muestra, mediante un histograma, la distribución del [producto interno bruto (PIB) per cápita](https://es.wikipedia.org/wiki/Renta_per_c%C3%A1pita) para el año 2007, entre los países incluídos en gapminder.
+
+```{r}
+#| label: histograma-paises-gdppc
+#| warning: false
+
+# Histograma ggplot2 de distribución del PIB per cápita
+histograma_ggplot2 <- 
+  paises |>
+  ggplot(aes(x = GDP_PC)) +
+  geom_histogram(
+    aes(
+      text = paste0(
+        "PIB per cápita (valor medio del rango): $", round(after_stat(x), 2), "\n",
+        "Frecuencia: ", after_stat(count)
+      )
+    ), 
+    bins = 10
+  )  +
+  scale_x_continuous(labels = comma, limits = c(0, NA)) +
+  coord_cartesian(ylim = c(0, 50)) +
+  ggtitle("Distribución del PIB per cápita") +
+  xlab("PIB per cápita ($ EE.UU.)") +
+  ylab("Frecuencia") +
+  labs(subtitle = "Datos de 201 países", caption = "Fuentes: Natural Earth y Banco Mundial") +
+  theme_economist()
+
+# Histograma plotly
+ggplotly(histograma_ggplot2, tooltip = "text") |> 
+  config(locale = 'es')
+```
+
+La función [geom_density()](https://ggplot2.tidyverse.org/reference/geom_density.html) permite crear una estimación de densidad del kernel (*Kernel Density Estimation* o KDE), una curva que muestra la densidad de los datos.
+
+```{r}
+#| label: histograma-paises-gdppc-density
+#| warning: false
+
+# Histograma ggplot2 de distribución del PIB per cápita
+histograma_ggplot2 <-
+  paises |>
+  ggplot(aes(x = GDP_PC)) +
+  geom_histogram(
+    aes(
+      text = paste0(
+        "PIB per cápita (valor medio del rango): $", round(after_stat(x), 2), "\n",
+        "Frecuencia: ", after_stat(count)
+      ),
+      y = after_stat(density) # argumento necesario para crear la curva KDE
+    ),
+    bins = 10
+  ) +
+  geom_density() +
+  scale_y_continuous(labels = scales::label_comma()) + # para formatear el eje y en notación decimal
+  ggtitle("Distribución del PIB per cápita") +
+  xlab("PIB per cápita ($ EE.UU.)") +
+  ylab("Densidad") +
+  labs(subtitle = "Datos de 201 países", caption = "Fuentes: Natural Earth y Banco Mundial") +
+  theme_economist()
+
+# Histograma plotly
+ggplotly(histograma_ggplot2, tooltip = "text") |>
+  config(locale = 'es')
 ```
 
 ## Recursos de interés
