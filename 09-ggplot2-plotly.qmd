@@ -525,6 +525,87 @@ ggplotly(grafico_ggplot2, tooltip = "text") |>
 ## Tipos de gráficos
 En esta sección, se ejemplifican varios tipos de gráficos, los cuales se construyen con ggplot2 y luego se convierten a plotly.
 
+## Gráficos de dispersión
+
+### Gráficos de dispersión
+Un [gráfico de dispersión (*scatterplot*)](https://es.wikipedia.org/wiki/Diagrama_de_dispersi%C3%B3n) despliega los valores de dos variables numéricas, como puntos en un sistema de coordenadas. El valor de una variable se despliega en el eje X y el de la otra variable en el eje Y. Variables adicionales pueden ser mostradas mediante atributos de los puntos, tales como su tamaño, color o forma.
+
+En `ggplot2`, los gráficos de dispersión se implementan con la función de geometría [geom_point()](https://ggplot2.tidyverse.org/reference/geom_point.html).
+
+El siguiente bloque de código muestra la relación entre el PIB per cápita y la esperanza de vida de países.
+
+```{r}
+#| label: grafico-dispersion-gdpPercap-lifeExp
+#| warning: false
+
+# Gráfico de dispersión PIB per cápita vs esperanza de vida
+# + línea de tendencia
+grafico_dispersion_ggplot2 <-
+  paises |>
+  ggplot(aes(x = GDP_PC, y = LIFE_EXPECTANCY)) +
+  geom_point(aes(
+    text = paste0(
+      "País: ",
+      NAME,
+      "\n",
+      "PIB per cápita: ",
+      scales::comma(round(GDP_PC, 2)),
+      "\n",
+      "Esperanza de vida: ",
+      round(LIFE_EXPECTANCY, 2)
+    )
+  )) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(labels = comma, limits = c(0, NA)) +
+  scale_y_continuous(labels = comma, limits = c(50, 90)) +
+  ggtitle("PIB per cápita vs esperanza de vida al nacer") +
+  xlab("PIB per cápita (USD)") +
+  ylab("Esperanza de vida (años)") +
+  labs(caption = "Fuentes: Natural Earth y Banco Mundial") +
+  theme_economist()  
+
+# Gráfico de dispersión plotly
+ggplotly(grafico_dispersion_ggplot2, tooltip = "text") |>
+  config(locale = 'es')
+```
+
+Como se explicó anteriormente, se pueden agregar al gráfico variables adicionales mediante su mapeo a propiedades visuales. En el siguiente ejemplo, se agrega la variable de continente al gráfico anterior, mediante su mapeo a la propiedad correspondiente al color.
+
+```{r}
+#| label: grafico-dispersion-gdpPercap-lifeExp-continent
+#| warning: false
+
+# Gráfico de dispersión PIB per cápita vs esperanza de vida
+# + línea de tendencia
+grafico_dispersion_ggplot2 <-
+  paises |>
+  ggplot(aes(x = GDP_PC, y = LIFE_EXPECTANCY, color = CONTINENT)) +
+  geom_point(aes(
+    text = paste0(
+      "País: ",
+      NAME,
+      "\n",
+      "PIB per cápita: ",
+      scales::comma(round(GDP_PC, 2)),
+      "\n",
+      "Esperanza de vida: ",
+      round(LIFE_EXPECTANCY, 2)
+    )
+  )) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(labels = comma, limits = c(0, NA)) +
+  scale_y_continuous(labels = comma, limits = c(50, 90)) +
+  ggtitle("PIB per cápita vs esperanza de vida al nacer") +
+  xlab("PIB per cápita (USD)") +
+  ylab("Esperanza de vida (años)") +
+  labs(caption = "Fuentes: Natural Earth y Banco Mundial", color = "Continente") +
+  theme_economist()  
+
+# Gráfico de dispersión plotly
+ggplotly(grafico_dispersion_ggplot2, tooltip = "text") |>
+  config(locale = 'es')
+```
+
 ### Histogramas
 Un [histograma](https://es.wikipedia.org/wiki/Histograma) es una representación gráfica de la distribución de una variable numérica en forma de barras (en este caso, llamadas en inglés *bins*). La longitud de cada barra representa la frecuencia de un rango de valores de la variable. La graficación de la distribución de las variables es, frecuentemente, una de las primeras tareas que se realiza cuando se explora un conjunto de datos.
 
@@ -550,7 +631,7 @@ histograma_ggplot2 <-
     bins = 10
   )  +
   scale_x_continuous(labels = comma, limits = c(0, NA)) +
-  coord_cartesian(ylim = c(0, 50)) +
+  coord_cartesian(ylim = c(0, 40)) +
   ggtitle("Distribución del PIB per cápita") +
   xlab("PIB per cápita ($ EE.UU.)") +
   ylab("Frecuencia") +
@@ -562,36 +643,282 @@ ggplotly(histograma_ggplot2, tooltip = "text") |>
   config(locale = 'es')
 ```
 
-La función [geom_density()](https://ggplot2.tidyverse.org/reference/geom_density.html) permite crear una estimación de densidad del kernel (*Kernel Density Estimation* o KDE), una curva que muestra la densidad de los datos.
+### Gráficos de pastel
+Un [gráfico de pastel](https://es.wikipedia.org/wiki/Gr%C3%A1fico_circular) representa porcentajes y porciones en secciones (*slices*) de un círculo. Son muy populares, pero también criticados debido a la dificultad del cerebro humano de comparar áreas de sectores circulares, por lo que [algunos expertos recomiendan sustituirlos por otros tipos de gráficos como, por ejemplo, gráficos de barras](https://www.data-to-viz.com/caveat/pie.html).
+
+En ggplot2, los gráficos de pastel se implementan con la función de geometría `geom_bar(stat = "identity", width = 1)` y la función [coord_polar()](https://ggplot2.tidyverse.org/reference/coord_polar.html), la cual implementa un sistema de coordenadas polares.
+
+El siguiente gráfico de pastel muestre la distribución de la población según la regiones de la Organización de Naciones Unidas (ONU).
 
 ```{r}
-#| label: histograma-paises-gdppc-density
+#| label: grafico-pastel-poblacion
 #| warning: false
 
-# Histograma ggplot2 de distribución del PIB per cápita
-histograma_ggplot2 <-
-  paises |>
-  ggplot(aes(x = GDP_PC)) +
-  geom_histogram(
+# Agrupar y resumir los datos
+suma_poblacion_por_region <- paises |>
+  group_by(REGION_UN) |>
+  summarise(POP_TOTAL = sum(POP_EST))
+
+# Calcular porcentajes
+porcentaje_poblacion_por_region <- suma_poblacion_por_region |>
+  mutate(POP_PCT = round(POP_TOTAL / sum(POP_TOTAL) * 100, 1))
+
+# Gráfico de pastel
+grafico_pastel_ggplot2 <-
+  ggplot(porcentaje_poblacion_por_region, aes(x = "", y = POP_TOTAL, fill = REGION_UN)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar(theta = "y") +
+  geom_text(
+    aes(label = paste0(POP_PCT, "%")), 
+    position = position_stack(vjust = 0.6) # para ajustar la posición del texto en cada porción
+  ) +
+  labs(title = "Distribución de la población por región de la ONU",
+       x = NULL,
+       y = NULL,
+       fill = "Región de la ONU") +
+  theme_void()
+
+# Despliegue del gráfico
+grafico_pastel_ggplot2
+
+# Gráfico de pastel plotly (está generando un error)
+# ggplotly(grafico_pastel_ggplot2) |>
+#   config(locale = 'es')
+```
+
+El gráfico interactivo no se presenta en este caso, debido a que la función `ggplotly()` produce un error al procesar el gráfico de pastel generado por ggplot2.
+
+### Gráficos de barras
+Un [gráfico de barras](https://es.wikipedia.org/wiki/Diagrama_de_barras) se compone de barras rectangulares con longitud proporcional a estadísticas (ej. frecuencias, promedios, mínimos, máximos) asociadas a una variable categórica o discreta. Las barras pueden ser horizontales o verticales y se recomienda que estén ordenadas según su longitud, a menos que exista un orden inherente a la variable (ej. el orden de los días de la semana). Es uno de los tipos de gráficos estadísticos más antiguos y comunes y tiene la ventaja de ser muy fácil de comprender.
+
+En ggplot2, los gráficos de barras se implementan con las funciones [geom_bar()](https://ggplot2.tidyverse.org/reference/geom_bar.html), que se utiliza en gráficos que requieren transformaciones estadísticas, y [geom_col()](https://ggplot2.tidyverse.org/reference/geom_col.html), para gráficos que no requieren estas transformaciones.
+
+#### Barras con transformaciones estadísticas
+Los gráficos de barras y otros tipos de gráficos (ej. histogramas, gráficos de caja, líneas de ajuste) pueden requerir de alguna **transformación estadística** antes de presentar la información. Esta transformación estadística puede ser un conteo, el cálculo de un promedio, un mínimo o un máximo, entre otras opciones.
+
+Por ejemplo, el siguiente gráfico muestra la cantidad de países por región de la ONU presentes en el conjunto de datos de países. Nótese que este conteo no está presente en ninguna de las variables del conjunto de datos.
+
+```{r}
+#| label: grafico-barras-gapminder-count-region-ordered
+#| warning: false
+
+# Gráfico de barras con conteo de países por región de la ONU
+grafico_barras_ggplot2 <-
+paises |>
+  ggplot(aes(x = fct_infreq(REGION_UN))) +
+  geom_bar(
     aes(
       text = paste0(
-        "PIB per cápita (valor medio del rango): $", round(after_stat(x), 2), "\n",
-        "Frecuencia: ", after_stat(count)
-      ),
-      y = after_stat(density) # argumento necesario para crear la curva KDE
-    ),
-    bins = 10
+        "Cantidad de países: ", after_stat(count)
+      )
+    )    
   ) +
-  geom_density() +
-  scale_y_continuous(labels = scales::label_comma()) + # para formatear el eje y en notación decimal
-  ggtitle("Distribución del PIB per cápita") +
-  xlab("PIB per cápita ($ EE.UU.)") +
-  ylab("Densidad") +
-  labs(subtitle = "Datos de 201 países", caption = "Fuentes: Natural Earth y Banco Mundial") +
+  ggtitle("Cantidad de países por región de la ONU") +
+  xlab("Región de la ONU") +
+  ylab("Cantidad de países") +
+  labs(caption = "Fuente: Natural Earth") +
   theme_economist()
 
-# Histograma plotly
-ggplotly(histograma_ggplot2, tooltip = "text") |>
+# Gráfico de barras plotly
+ggplotly(grafico_barras_ggplot2, tooltip = "text") |> 
+  config(locale = 'es')
+```
+
+La función [fct_infreq()](https://forcats.tidyverse.org/reference/fct_inorder.html) del paquete [forcats](https://forcats.tidyverse.org/index.html) se usa para ordenar las barras. Si se prefiere el orden inverso, puede utilizarse la función [fct_rev()](https://forcats.tidyverse.org/reference/fct_rev.html) (ej. `fct_rev(fct_infreq(REGION_UN))`). Para más información sobre el ordenamiento en gráficos, se recomienda consultar [FAQ: Reordering - ggplot2](https://ggplot2.tidyverse.org/articles/faq-reordering.html).
+
+El cálculo de la cantidad de países por continente o el de la cantidad de diamantes por corte, son ejemplos de transformaciones estadísticas. La @fig-ggplot2-transformacion-estadistica muestra como se realiza este proceso para el gráfico anterior.
+
+```{r}
+#| label: fig-ggplot2-transformacion-estadistica
+#| fig.cap: Transformación estadística para un gráfico de barras de ggplot2. Imagen de [Hadley Wickham](https://r4ds.had.co.nz/data-visualisation.html).
+#| echo: false
+
+knitr::include_graphics(rep("img/ggplot2-transformacion-estadistica.png"))
+```
+
+Las barras pueden mostrar otras transformaciones estadísticas a través del uso de los argumentos `stat` y `fun.y` de `geom_bar()`. Por ejemplo, `stat = "summary"` y `fun.y = "mean"`generan un gráfico que muestra el promedio de esperanza de vida (`LIFE_EXPECTANCY`) para cada región de la ONU.
+
+```{r}
+#| label: grafico-barras-paises-mean-lifeexp-region
+#| warning: false
+#| message: false
+
+# Gráfico de barras con promedio de esperanza de vida
+# para cada región de la ONU
+grafico_barras_ggplot2 <-
+  paises |>
+  ggplot(aes(x = fct_infreq(REGION_UN), y = LIFE_EXPECTANCY)) +
+  geom_bar(
+    stat = "summary", 
+    fun.y = "mean",
+    aes(
+      text = paste0(
+        "Promedio de esperanza de vida: ", round(after_stat(y), 2)
+      )
+    )
+  ) +
+  ggtitle("Promedio de esperanza de vida por región de la ONU") +
+  xlab("Región de la ONU") +
+  ylab("Promedio de esperanza de vida") +
+  labs(caption = "Fuente: ") +
+  theme_economist()
+
+# Gráfico de barras plotly
+ggplotly(grafico_barras_ggplot2, tooltip = "text") |>
+  config(locale = 'es')
+```
+
+**Nota: ** la función `fct_infreq()` no está ordenando en este caso las columnas. El ordenamiento aún puede conseguirse si se realiza primero el cálculo del promedio y luego se grafica la columna correspondiente, como en el siguiente bloque de código.
+
+```{r}
+# Cálculo del promedio de esperanza de vida por región
+promedio_esperanza_vida_por_region <-
+  paises |>
+  group_by(REGION_UN) |>
+  summarize(LIFE_EXPECTANCY_MEAN = mean(LIFE_EXPECTANCY, na.rm = TRUE))
+
+# Despliegue por orden descendente del promedio de esperanza de vida
+promedio_esperanza_vida_por_region |>
+  arrange(desc(LIFE_EXPECTANCY_MEAN))
+
+```
+
+Luego se dibuja luego el gráfico con `geom_col()` y se ordenan las barras con la función [reorder()](https://rdrr.io/cran/gplots/man/reorder.html).
+
+```{r}
+#| label: grafico-barras-paises-mean-lifeexp-region-ordered
+#| warning: false
+
+# Gráfico de barras con promedio de esperanza de vida
+# para cada región de la ONU
+grafico_barras_ggplot2 <-
+  promedio_esperanza_vida_por_region |>
+  ggplot(aes(x = reorder(REGION_UN,-LIFE_EXPECTANCY_MEAN), y = LIFE_EXPECTANCY_MEAN)) +
+  geom_col(
+    aes(
+      text = paste0(
+        "Promedio de esperanza de vida: ", round(after_stat(y), 2)
+      )
+    )    
+  ) +
+  ggtitle("Promedio de esperanza de vida por región de la ONU") +
+  xlab("Región de la ONU") +
+  ylab("Promedio de esperanza de vida") +
+  labs(caption = "Fuente: Natural Earth") +
+  theme_economist()
+
+# Gráfico de barras plotly
+ggplotly(grafico_barras_ggplot2, tooltip = "text") |>
+  config(locale = 'es')
+```
+
+El uso de `geom_col()` se ampliará en la sección siguiente.
+
+#### Barras sin transformaciones estadísticas
+En algunos conjuntos de datos, el valor que se quiere representar en la longitud de las barras ya está presente como una variable en el conjunto de datos, por lo que no es necesario que `ggplot2` realice una transformación estadística. En estos casos, se utiliza la función [geom_col()](https://ggplot2.tidyverse.org/reference/geom_bar.html).
+
+**Nota: ** para dibujar barras sin transformaciones estadísticas, tambien es posible utilizar la función `geom_bar()`. En este caso, al argumento `stat` se le asigna el valor `"identity"` y al argumento `y` de `aes()` la variable que contiene el valor que quiere mostrarse en las barras.
+
+El siguiente gráfico de barras muestra la población de los países de los países de América. Nótese que este valor se puede tomar directamente de la variable `POP_EST`, después de realizar los filtros correspondientes.
+
+```{r}
+#| label: grafico-barras-paises-pop-america
+#| warning: false
+
+# Gráfico de barras con población de países 
+# de América
+grafico_barras_ggplot2 <-
+paises |>
+  filter(REGION_UN == "Americas") |>
+  ggplot(aes(x = reorder(ADM0_ISO, POP_EST), y = POP_EST/1000000)) +
+  geom_col(
+    aes(
+      text = paste0(
+        "País: ", NAME, "\n",
+        "Población (millones de habitantes): ", round(POP_EST/1000000, 2)
+      )
+    )
+  ) +
+  scale_y_discrete(expand = expansion(mult = c(0.2, 0.2))) + # agrega un 20% de espacio al inicio y al final del eje y
+  coord_flip() + # para mostrar barras horizontales
+  ggtitle("Población de países de América") +
+  xlab("País") +
+  ylab("Población (millones de habitantes)") +
+  labs(caption = "Fuente: Natural Earth") +
+  theme_economist()
+
+# Gráfico de barras plotly
+ggplotly(grafico_barras_ggplot2, tooltip = "text") |> 
+  config(locale = 'es')
+```
+
+#### Barras apiladas
+Al usar el argumento `fill` de `aes()`, las barras de un gráfico pueden dividirse de acuerdo con una variable adicional, produciendo el efecto de barras apiladas (i.e. unas sobre otras).
+
+En el siguiente bloque de código, se genera un gráfico de barras apiladas que, para el conjunto de datos de países, muestra las cantidades de países por región de la ONU (`REGION_UN`) subdivididas por nivel de economía (`ECONOMY`). 
+
+```{r}
+#| label: grafico-barras-apiladas-paises
+#| warning: false
+
+# Gráfico de barras apiladas por región de la ONU y nivel de economía
+grafico_barras_ggplot2 <-
+paises |>
+  ggplot(aes(x = REGION_UN, fill = ECONOMY)) +
+  geom_bar() +
+  ggtitle("Cantidad de países por región de la ONU y nivel de economía") +
+  xlab("Región de la ONU") +
+  ylab("Cantidad de países") +
+  labs(fill = "Nivel de economía") +
+  theme_minimal()
+
+# Gráfico de barras plotly
+ggplotly(grafico_barras_ggplot2) |> 
+  config(locale = 'es')
+```
+
+El argumento `position = "fill"` de `geom_bar()` también genera barras apiladas, pero le asigna a todas las barras la misma longitud, facilitando así la comparación de proporciones.
+
+```{r}
+#| label: grafico-barras-apiladas-paises-proporcion
+#| warning: false
+
+# Gráfico de barras apiladas por región de la ONU y nivel de economía
+grafico_barras_ggplot2 <-
+paises |>
+  ggplot(aes(x = REGION_UN, fill = ECONOMY)) +
+  geom_bar(position = "fill") +
+  ggtitle("Proporción de niveles de economía en regiones de la ONU") +
+  xlab("Región de la ONU") +
+  ylab("Proporción") +
+  labs(fill = "Nivel de economía") +
+  theme_minimal()
+
+# Gráfico de barras plotly
+ggplotly(grafico_barras_ggplot2) |> 
+  config(locale = 'es')
+```
+
+#### Barras agrupadas
+El argumento `position = "dodge"` de `geom_bar()` genera barras agrupadas (i.e. unas al lado de otras), facilitando así la comparación de valores individuales.
+
+```{r}
+#| label: grafico-barras-agrupadas-paises
+#| warning: false
+
+# Gráfico de barras agrupadas por región de la ONU y nivel de economía
+grafico_barras_ggplot2 <-
+paises |>
+  ggplot(aes(x = REGION_UN, fill = ECONOMY)) +
+  geom_bar(position = "dodge") +
+  ggtitle("Cantidad de países por región de la ONU y nivel de economía") +
+  xlab("Región de la ONU") +
+  ylab("Cantidad de países") +
+  labs(fill = "Nivel de economía") +
+  theme_minimal()
+
+# Gráfico de barras plotly
+ggplotly(grafico_barras_ggplot2) |> 
   config(locale = 'es')
 ```
 
