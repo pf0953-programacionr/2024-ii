@@ -525,8 +525,6 @@ ggplotly(grafico_ggplot2, tooltip = "text") |>
 ## Tipos de gráficos
 En esta sección, se ejemplifican varios tipos de gráficos, los cuales se construyen con ggplot2 y luego se convierten a plotly.
 
-## Gráficos de dispersión
-
 ### Gráficos de dispersión
 Un [gráfico de dispersión (*scatterplot*)](https://es.wikipedia.org/wiki/Diagrama_de_dispersi%C3%B3n) despliega los valores de dos variables numéricas, como puntos en un sistema de coordenadas. El valor de una variable se despliega en el eje X y el de la otra variable en el eje Y. Variables adicionales pueden ser mostradas mediante atributos de los puntos, tales como su tamaño, color o forma.
 
