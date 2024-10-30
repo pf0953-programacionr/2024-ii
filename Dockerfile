@@ -31,6 +31,15 @@ RUN R -e "devtools::install_version('ggthemes', version = '5.1.0', repos = 'http
 # Instalación del paquete hrbrthemes de R, versión 0.8.7
 RUN R -e "devtools::install_version('hrbrthemes', version = '0.8.7', repos = 'http://cran.us.r-project.org')"
 
+# Instalación del paquete rgbif de R, versión 3.8.1
+RUN R -e "devtools::install_version('rgbif', version = '3.8.1', repos = 'http://cran.us.r-project.org')"
+
+# Instalación del paquete geodata de R, versión 0.6-2
+RUN R -e "devtools::install_version('geodata', version = '0.6-2', repos = 'http://cran.us.r-project.org')"
+
+# Instalación del paquete dismo de R, versión 1.3-14
+RUN R -e "devtools::install_version('dismo', version = '1.3-14', repos = 'http://cran.us.r-project.org')"
+
 
 # Se limpia el cache de apt-get para reducir el tamaño de la imagen
 RUN apt-get clean && \
