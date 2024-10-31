@@ -25,7 +25,8 @@ book:
       chapters:
         - 07-tidyverse.qmd           
         - 08-dplyr.qmd           
-        - 09-ggplot2-plotly.qmd           
+        - 09-ggplot2-plotly.qmd
+        - 10-introduccion-manejo-datos-geoespaciales.qmd
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl
