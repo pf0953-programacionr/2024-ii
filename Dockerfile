@@ -40,6 +40,9 @@ RUN R -e "devtools::install_version('geodata', version = '0.6-2', repos = 'http:
 # Instalación del paquete dismo de R, versión 1.3-14
 RUN R -e "devtools::install_version('dismo', version = '1.3-14', repos = 'http://cran.us.r-project.org')"
 
+# Instalación del paquete tmap, versión 4 (recomendada en https://github.com/r-tmap/tmap)
+RUN R -e "remotes::install_github('r-tmap/tmap')"
+
 
 # Se limpia el cache de apt-get para reducir el tamaño de la imagen
 RUN apt-get clean && \
