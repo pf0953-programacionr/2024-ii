@@ -27,6 +27,7 @@ book:
         - 08-dplyr.qmd           
         - 09-ggplot2-plotly.qmd
         - 10-introduccion-manejo-datos-geoespaciales.qmd
+        - 11-modelos-nichos-ecologicos.qmd
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl

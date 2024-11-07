@@ -1,0 +1,551 @@
+# Modelos de nichos ecológicos
+
+## Introducción
+
+Los modelos de nichos ecológicos permiten predecir la distribución potencial de especies en función de datos de presencia y variables ambientales. Puede consultar estas [diapositivas](https://mfvargas.github.io/modelos-nichos-ecologicos/) sobre el tema.
+
+## Instalación y carga de paquetes
+
+Se utilizan varios paquetes para manejar datos geoespaciales y para ejecutar la modelización.
+
+```{r}
+#| label: instalacion-paquetes
+#| eval: false
+
+# Paquete para acceder datos en GBIF
+install.packages("rgbif")
+
+# Paquete para acceder datos geoespaciales
+install.packages("geodata")
+
+# Paquete para mapas interactivos
+install.packages("leaflet")
+
+# Paquete para modelado de distribución de especies
+install.packages("dismo")
+```
+
+```{r}
+#| label: carga-paquetes
+#| message: false
+
+# Colección de paquetes de Tidyverse
+library(tidyverse)
+
+# Estilos para ggplot2
+library(ggthemes)
+
+# Paletas de colores de RColorBrewer
+library(RColorBrewer)
+
+# Paletas de colores de viridis
+library(viridisLite)
+
+# Gráficos interactivos
+library(plotly)
+
+# Manejo de datos vectoriales
+library(sf)
+
+# Manejo de datos raster
+library(terra)
+
+# Manejo de datos raster
+library(raster)
+
+# Mapas interactivos
+library(leaflet)
+
+# Acceso a datos en GBIF
+library(rgbif)
+
+# Datos geoespaciales
+library(geodata)
+
+# Modelado de distribución de especies
+library(dismo)
+```
+
+## Obtención de datos de presencia
+
+En el siguiente bloque se especifica el nombre de la especie que se va a modelar. Como ejemplo inicial se desarrolla un modelo de distribución de [*Bradypus variegatus* (perezoso de tres dedos)](https://es.wikipedia.org/wiki/Bradypus_variegatus).
+
+```{r}
+# Nombre de la especie
+especie <- "Bradypus variegatus"
+```
+
+Para obtener los datos de presencia se emplea el paquete [rgbif](https://docs.ropensci.org/rgbif/), el cual proporciona acceso a los datos agrupados por el [Sistema Mundial de Información en Biodiversidad (GBIF)](https://www.gbif.org/).
+
+```{r}
+#| label: obtener-datos-presencia
+#| warning: false
+#| message: false
+#| eval: false
+
+# Consulta a GBIF
+respuesta <- occ_search(
+  scientificName = especie, 
+  hasCoordinate = TRUE,
+  hasGeospatialIssue = FALSE,
+  limit = 10000
+)
+
+# Extraer datos de presencia
+presencia <- respuesta$data
+```
+
+Opcionalmente, se puede guardar el dataframe con los datos de presencia en un archivo CSV, para no tener que repetir la consulta al API de GBIF.
+
+```{r}
+#| label: guardar-datos-presencia
+#| warning: false
+#| message: false
+#| eval: false
+
+# Guardar los datos de presencia en un archivo CSV
+write_csv(presencia, 'presencia.csv')
+```
+
+El siguiente bloque debe ejecutarse si se desea leer los datos desde el archivo CSV.
+
+```{r}
+#| label: leer-datos-presencia
+#| warning: false
+#| message: false
+#| eval: true
+
+# Leer los datos de presencia de un archivo CSV
+presencia <- read_csv('presencia.csv')
+```
+
+Para manejarlo como un conjunto de datos geoespacial, el dataframe retornado por `occ_search()` se convierte a un objeto `sf`.
+
+```{r}
+presencia <- st_as_sf(
+  presencia,
+  coords = c("decimalLongitude", "decimalLatitude"),
+  remove = FALSE, # conservar las columnas de las coordenadas
+  crs = 4326
+)
+```
+
+### Registros de presencia por país
+
+```{r}
+#| label: grafico-registros-presencia-pais
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Gráfico ggplot2
+grafico_ggplot2 <-
+  presencia |>
+  st_drop_geometry() |>
+  ggplot(aes(x = fct_infreq(countryCode))) +
+  geom_bar(
+    aes(
+      text = paste0(
+        "Cantidad de registros de presencia: ", after_stat(count)
+      )
+    )    
+  ) +
+  ggtitle("Cantidad de registros de presencia por país") +
+  xlab("País") +
+  ylab("Cantidad de registros de presencia") +
+  labs(caption = "Fuente: GBIF") +
+  theme_economist()
+
+# Gráfico plotly
+ggplotly(grafico_ggplot2, tooltip = "text") |> 
+  config(locale = 'es')
+```
+
+### Registros de presencia por año
+
+```{r}
+#| label: grafico-registros-presencia-anio
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Gráfico ggplot2
+grafico_ggplot2 <-
+  presencia |>
+  st_drop_geometry() |>
+  group_by(year) |>
+  summarize(n = n()) |>
+  ggplot(aes(x = year, y = n)) +
+  geom_line() +
+  geom_point(
+    aes(
+      text = paste0(
+        "Año: ", year, "\n",
+        "Cantidad de registros: ", n
+      )
+    )
+  ) +
+  ggtitle("Cantidad de registros de presencia por año") +
+  xlab("Año") +
+  ylab("Cantidad de registros de presencia") +
+  labs(caption = "Fuente: GBIF") +
+  theme_economist()
+
+# Gráfico plotly
+ggplotly(grafico_ggplot2, tooltip = "text") |> 
+  config(locale = 'es')
+```
+
+### Mapa de registros de presencia
+
+```{r}
+#| label: mapa-presencia
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Mapa
+leaflet() |>
+  addTiles(group = "Mapa general") |>
+  addProviderTiles(
+    providers$Esri.WorldImagery, 
+    group = "Imágenes satelitales"
+  ) |>
+  addProviderTiles(
+    providers$CartoDB.Positron, 
+    group = "Mapa blanco"
+  ) |>  
+  addCircleMarkers(
+    # capa de registros de presencia (puntos)
+    data = presencia,
+    stroke = F,
+    radius = 3,
+    fillColor = 'red',
+    fillOpacity = 1,
+    popup = paste(
+      paste0("<strong>País: </strong>", presencia$country),
+      paste0("<strong>Localidad: </strong>", presencia$locality),
+      paste0("<strong>Fecha: </strong>", presencia$eventDate),
+      paste0("<strong>Fuente: </strong>", presencia$institutionCode),
+      paste0("<a href='", presencia$occurrenceID, "'>Más información</a>"),
+      sep = '<br/>'
+    ),
+    group = "Registros de Bradypus variegatus"
+  ) |>
+  addLayersControl(
+    baseGroups = c("Mapa general", "Imágenes satelitales", "Mapa blanco"),
+    overlayGroups = c("Registros de Bradypus variegatus"))
+```
+
+## Obtención de datos climáticos
+
+Las variables climáticas se obtienen mediante el paquete [geodata](https://github.com/rspatial/geodata), el cual brinda acceso a varios conjuntos de datos geoespaciales. En este caso, se descargan las [variables bioclimáticas](https://www.worldclim.org/data/bioclim.html) de [WorldClim](https://www.worldclim.org/).
+
+```{r}
+#| label: obtener-datos-clima
+#| warning: false
+#| message: false
+#| eval: true
+
+# Consulta a WorldClim
+clima <- worldclim_global(var = 'bio', res = 10, path = tempdir())
+
+# Nombres de las variables climáticas
+names(clima)
+```
+
+Seguidamente, se "recortan" las capas raster climáticas provenientes de WorldClim para así cubrir solamente el área en la que se encuentra presente la especie.
+
+```{r}
+#| label: definir-area-estudio
+#| warning: false
+#| message: false
+
+# Definir la extensión del área de estudio
+area_estudio <- ext(
+  min(presencia$decimalLongitude) - 5, 
+  max(presencia$decimalLongitude) + 5,
+  min(presencia$decimalLatitude) - 5, 
+  max(presencia$decimalLatitude) + 5
+)
+
+# Recortar las variables bioclimáticas al área de estudio
+clima <- crop(clima, area_estudio)
+```
+
+### Mapa de variables climáticas
+
+```{r}
+#| label: mapa-clima
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Paleta de colores de temperatura
+colores_temperatura <- colorNumeric(
+  # palette = "inferno",
+  # palette = "magma",
+  palette = rev(brewer.pal(11, "RdYlBu")),
+  values(clima$wc2.1_10m_bio_1),
+  na.color = "transparent"
+)
+
+# Paleta de colores de precipitación
+colores_precipitacion <- colorNumeric(
+  # palette = "viridis",
+  # palette = "YlGnBu",  
+  palette = "Blues",
+  values(clima$wc2.1_10m_bio_12),
+  na.color = "transparent"
+)
+
+# Mapa
+leaflet() |>
+  addTiles(group = "Mapa general") |>
+  addProviderTiles(
+    providers$Esri.WorldImagery, 
+    group = "Imágenes satelitales"
+  ) |>  
+  addProviderTiles(
+    providers$CartoDB.Positron, 
+    group = "Mapa blanco"
+  ) |>
+  addRasterImage( # capa raster de temperatura
+    clima$wc2.1_10m_bio_1,
+    colors = colores_temperatura, # paleta de colores
+    opacity = 0.6,
+    group = "Temperatura",
+  ) |>
+  addRasterImage( # capa raster de precipitación
+    clima$wc2.1_10m_bio_12,
+    colors = colores_precipitacion, # paleta de colores
+    opacity = 0.6,
+    group = "Precipitación",
+  ) |>
+  addCircleMarkers(
+    # capa de registros de presencia (puntos)
+    data = presencia,
+    stroke = F,
+    radius = 3,
+    fillColor = 'red',
+    fillOpacity = 1,
+    popup = paste(
+      paste0("<strong>País: </strong>", presencia$country),
+      paste0("<strong>Localidad: </strong>", presencia$locality),
+      paste0("<strong>Fecha: </strong>", presencia$eventDate),
+      paste0("<strong>Fuente: </strong>", presencia$institutionCode),
+      paste0("<a href='", presencia$occurrenceID, "'>Más información</a>"),
+      sep = '<br/>'
+    ),
+    group = "Registros de Bradypus variegatus"
+  ) |>  
+  addLegend(
+    title = "Temperatura",
+    values = values(clima$wc2.1_10m_bio_1),
+    pal = colores_temperatura,
+    position = "bottomleft",
+    group = "Temperatura"
+  ) |>
+  addLegend(
+    title = "Precipitación",
+    values = values(clima$wc2.1_10m_bio_12),
+    pal = colores_precipitacion,
+    position = "bottomleft",
+    group = "Precipitación"
+  ) |>  
+  addLayersControl(
+    # control de capas
+    baseGroups = c("Mapa general", "Imágenes satelitales", "Mapa blanco"),
+    overlayGroups = c("Temperatura", "Precipitación", "Registros de Bradypus variegatus")
+  ) |>
+  hideGroup("Precipitación")
+```
+
+## Modelización
+
+Para elaborar el modelo de distribución se utiliza el paquete [dismo](https://rspatial.org/raster/sdm/), el cual implementa varios algoritmos de modelado de distribución de especies. Para este ejercicio, se utiliza el algoritmo [Maxent](https://biodiversityinformatics.amnh.org/open_source/maxent/). El algoritmo recibe como entradas un conjunto de datos de presencia de una especie y un conjunto de variables climáticas (en formato raster).
+
+Primero, se eliminan las coordenadas duplicadas del conjunto de datos de presencia.
+
+```{r}
+#| label: preparacion-datos
+#| warning: false
+#| message: false
+
+coordenadas_presencia <- data.frame(
+  decimalLongitude = presencia$decimalLongitude,
+  decimalLatitude = presencia$decimalLatitude
+)
+
+coordenadas_presencia <- unique(coordenadas_presencia)
+```
+
+Seguidamente se dividen los datos de presencia en dos subconjuntos:
+
+- Entrenamiento: para desarrollar el modelo.
+- Evaluación: para evaluar el modelo.
+
+```{r}
+#| label: separacion-datos
+#| warning: false
+#| message: false
+
+# Dividir los datos en entrenamiento y evaluación
+set.seed(123)
+n_presencia <- nrow(coordenadas_presencia)
+
+indices_entrenamiento <- sample(
+  1:n_presencia, 
+  size = round(0.7 * n_presencia)
+)
+
+entrenamiento <- coordenadas_presencia[indices_entrenamiento, ]
+evaluacion <- coordenadas_presencia[-indices_entrenamiento, ]
+```
+
+Ahora puede ejecutarse el modelo con Maxent.
+
+```{r}
+#| label: ejecucion-modelo
+#| warning: false
+#| message: false
+
+# Los datos de clima deben convertirse al formato que usa el paquete raster
+# debido a es este el que acepta el paquete dismo
+clima_raster <- raster::stack(clima)
+
+# Ejecutar el modelo
+modelo_maxent <- maxent(x = clima_raster, p = entrenamiento)
+
+# Crear un raster basado en el modelo
+prediccion <- predict(modelo_maxent, clima_raster)
+```
+
+Se evalúa el modelo.
+
+```{r}
+#| label: evaluacion-modelo
+#| warning: false
+#| message: false
+
+# Extraer valores del raster de predicción para los puntos de evaluación de presencias
+eval_pres <- terra::extract(
+  prediccion, 
+  evaluacion[, c('decimalLongitude', 'decimalLatitude')]
+)
+
+# Generar puntos aleatorios de ausencia
+ausencias <- randomPoints(mask = clima_raster, n = 1000)
+
+# Extraer valores del raster de predicción para los puntos de ausencias
+eval_aus <- terra::extract(
+  prediccion, 
+  ausencias
+)
+
+# Generar estadísticas de evaluación del modelo
+evaluation <- evaluate(p = eval_pres, a = eval_aus)
+
+# Graficación de la curva ROC
+plot(evaluation, 'ROC')
+```
+
+El mapa de distribución potencial puede apreciarse en el siguiente mapa.
+
+```{r}
+#| label: mapa-modelo
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Paleta de colores del modelo
+colores_modelo <- colorNumeric(
+  palette = c("white", "black"),
+  values(prediccion),
+  na.color = "transparent"
+)
+
+# Mapa
+leaflet() |>
+  addTiles(group = "Mapa general") |>
+  addProviderTiles(
+    providers$Esri.WorldImagery, 
+    group = "Imágenes satelitales"
+  ) |>  
+  addProviderTiles(
+    providers$CartoDB.Positron, 
+    group = "Mapa blanco"
+  ) |>
+  addRasterImage( # capa raster de temperatura
+    clima$wc2.1_10m_bio_1,
+    colors = colores_temperatura, # paleta de colores
+    opacity = 0.6,
+    group = "Temperatura",
+  ) |>
+  addRasterImage( # capa raster de precipitación
+    clima$wc2.1_10m_bio_12,
+    colors = colores_precipitacion, # paleta de colores
+    opacity = 0.6,
+    group = "Precipitación",
+  ) |>
+  addRasterImage( # capa raster del modelo de distribución
+    prediccion,
+    colors = colores_modelo,
+    opacity = 0.6,
+    group = "Modelo de distribución",
+  ) |>  
+  addCircleMarkers(
+    # capa de registros de presencia (puntos)
+    data = presencia,
+    stroke = F,
+    radius = 3,
+    fillColor = 'red',
+    fillOpacity = 1,
+    popup = paste(
+      paste0("<strong>País: </strong>", presencia$country),
+      paste0("<strong>Localidad: </strong>", presencia$locality),
+      paste0("<strong>Fecha: </strong>", presencia$eventDate),
+      paste0("<strong>Fuente: </strong>", presencia$institutionCode),
+      paste0("<a href='", presencia$occurrenceID, "'>Más información</a>"),
+      sep = '<br/>'
+    ),
+    group = "Registros de Bradypus variegatus"
+  ) |>  
+  addLegend(
+    title = "Temperatura",
+    values = values(clima$wc2.1_10m_bio_1),
+    pal = colores_temperatura,
+    position = "bottomleft",
+    group = "Temperatura"
+  ) |>
+  addLegend(
+    title = "Precipitación",
+    values = values(clima$wc2.1_10m_bio_12),
+    pal = colores_precipitacion,
+    position = "bottomleft",
+    group = "Precipitación"
+  ) |>
+  addLegend(
+    title = "Modelo de distribución",
+    values = values(prediccion),
+    pal = colores_modelo,
+    position = "bottomright",
+    group = "Modelo de distribución"
+  ) |>  
+  addLayersControl(
+    # control de capas
+    baseGroups = c("Mapa general", "Imágenes satelitales", "Mapa blanco"),
+    overlayGroups = c(
+      "Temperatura",
+      "Precipitación",
+      "Modelo de distribución",
+      "Registros de Bradypus variegatus"
+    )
+  ) |>
+  hideGroup("Temperatura") |>
+  hideGroup("Precipitación")
+```
+
+## Recursos de interés
+
+Phillips, S. J., Anderson, R. P., & Schapire, R. E. (2006). Maximum entropy modeling of species geographic distributions. *Ecological Modelling*, **190**(3-4), 231-259. [https://doi.org/10.1016/j.ecolmodel.2005.03.026](https://doi.org/10.1016/j.ecolmodel.2005.03.026)
