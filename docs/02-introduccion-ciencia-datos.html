@@ -243,6 +243,12 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introducción al manejo de datos geoespaciales con R</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-modelos-nichos-ecologicos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelos de nichos ecológicos</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -316,7 +322,7 @@ div.csl-indent {
 </section>
 <section id="datos" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="datos"><span class="header-section-number">2.1</span> Datos</h2>
-<p>Los científicos tratan de responder preguntas mediante métodos rigurosos y observaciones cuidadosas. Estas observaciones, recopiladas de notas de campo, encuestas y experimentos, entre otras fuentes, forman la columna vertebral de una investigación estadística y se denominan datos. La presentación y descripción efectivas de los datos constituyen el primer paso en un análisis <span class="citation" data-cites="cetinkaya-rundel_introduction_2021">Çetinkaya-Rundel &amp; Hardin (<a href="#ref-cetinkaya-rundel_introduction_2021" role="doc-biblioref">2021</a>)</span>. Esta sección introduce una estructura para organizar los datos, así como alguna terminología que se utilizará a lo largo de este curso.</p>
+<p>Los científicos tratan de responder preguntas mediante métodos rigurosos y observaciones cuidadosas. Estas observaciones, recopiladas de notas de campo, encuestas y experimentos, entre otras fuentes, forman la columna vertebral de una investigación estadística y se denominan datos. La presentación y descripción efectivas de los datos constituyen el primer paso en un análisis <span class="citation" data-cites="cetinkaya-rundel_introduction_2021">Çetinkaya-Rundel &amp; Hardin (<a href="02-introduccion-ciencia-datos.html#ref-cetinkaya-rundel_introduction_2021" role="doc-biblioref">2021</a>)</span>. Esta sección introduce una estructura para organizar los datos, así como alguna terminología que se utilizará a lo largo de este curso.</p>
 <section id="observaciones-y-variables" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="observaciones-y-variables"><span class="header-section-number">2.1.1</span> Observaciones y variables</h3>
 <p>La tabla 1 contiene 10 filas de un conjunto de datos. Cada fila representa una persona. En términos estadísticos, cada fila corresponde a una observación. Las columnas representan características de las personas. Cada columna corresponde a una variable.</p>
@@ -629,14 +635,14 @@ bajo
 </section>
 <section id="tipos-de-variables" class="level3" data-number="2.1.2">
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="tipos-de-variables"><span class="header-section-number">2.1.2</span> Tipos de variables</h3>
-<p>Las variables de los datos de la tabla 1 son de varios tipos, cuya jerarquía se muestra en la <a href="#fig-tipos-variables-estadisticas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-tipos-variables-estadisticas</span></a>.</p>
+<p>Las variables de los datos de la tabla 1 son de varios tipos, cuya jerarquía se muestra en la <a href="#fig-tipos-variables-estadisticas" class="quarto-xref">Figura&nbsp;<span>2.1</span></a>.</p>
 <div id="fig-tipos-variables-estadisticas" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen de tipos de variables estadíticas" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tipos-variables-estadisticas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="img/tipos-variables-estadisticas.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figura&nbsp;2.1: Tipos de variables estadísticas. Imagen de @cetinkaya-rundel_introduction_2021"><img src="img/tipos-variables-estadisticas.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Imagen de tipos de variables estadíticas"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tipos-variables-estadisticas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.1: Tipos de variables estadísticas. Imagen de <span class="citation" data-cites="cetinkaya-rundel_introduction_2021">Çetinkaya-Rundel &amp; Hardin (<a href="#ref-cetinkaya-rundel_introduction_2021" role="doc-biblioref">2021</a>)</span>
+Figura&nbsp;2.1: Tipos de variables estadísticas. Imagen de <span class="citation" data-cites="cetinkaya-rundel_introduction_2021">Çetinkaya-Rundel &amp; Hardin (<a href="02-introduccion-ciencia-datos.html#ref-cetinkaya-rundel_introduction_2021" role="doc-biblioref">2021</a>)</span>
 </figcaption>
 </figure>
 </div>
@@ -669,17 +675,17 @@ Figura&nbsp;2.1: Tipos de variables estadísticas. Imagen de <span class="citati
 </section>
 <section id="ciclo-de-vida-de-un-proyecto-de-ciencia-de-datos" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="ciclo-de-vida-de-un-proyecto-de-ciencia-de-datos"><span class="header-section-number">2.2</span> Ciclo de vida de un proyecto de ciencia de datos</h2>
-<p>La ciencia de datos es una disciplina que permite convertir datos “crudos” (sin procesar) en comprensión y conocimiento <span class="citation" data-cites="wickham_r_2023">Wickham, Çetinkaya-Rundel, &amp; Grolemund (<a href="#ref-wickham_r_2023" role="doc-biblioref">2023</a>)</span>. Se basa en la estadística y en las ciencias de la computación, entre otras disciplinas.</p>
+<p>La ciencia de datos es una disciplina que permite convertir datos “crudos” (sin procesar) en comprensión y conocimiento <span class="citation" data-cites="wickham_r_2023">Wickham, Çetinkaya-Rundel, &amp; Grolemund (<a href="02-introduccion-ciencia-datos.html#ref-wickham_r_2023" role="doc-biblioref">2023</a>)</span>. Se basa en la estadística y en las ciencias de la computación, entre otras disciplinas.</p>
 <section id="procesos" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="procesos"><span class="header-section-number">2.2.1</span> Procesos</h3>
-<p>La <a href="#fig-modelo-ciencia-datos" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-modelo-ciencia-datos</span></a> ilustra el ciclo de vida de un proyecto típico de ciencia de datos, el cual incluye los procesos de importar, ordenar, transformar, visualizar, modelar y comunicar. Todos se articulan mediante programación de computadoras.</p>
+<p>La <a href="07-tidyverse.html#fig-modelo-ciencia-datos" class="quarto-xref">Figura&nbsp;<span>7.1</span></a> ilustra el ciclo de vida de un proyecto típico de ciencia de datos, el cual incluye los procesos de importar, ordenar, transformar, visualizar, modelar y comunicar. Todos se articulan mediante programación de computadoras.</p>
 <div id="fig-modelo-ciencia-datos" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen del ciclo de vida de un proyecto de ciencia de datos" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-modelo-ciencia-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="img/modelo-ciencia-datos.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;2.2: Ciclo de vida de un proyecto de ciencia de datos. Imagen de @wickham_r_2023"><img src="img/modelo-ciencia-datos.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Imagen del ciclo de vida de un proyecto de ciencia de datos"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modelo-ciencia-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.2: Ciclo de vida de un proyecto de ciencia de datos. Imagen de <span class="citation" data-cites="wickham_r_2023">Wickham et&nbsp;al. (<a href="#ref-wickham_r_2023" role="doc-biblioref">2023</a>)</span>
+Figura&nbsp;2.2: Ciclo de vida de un proyecto de ciencia de datos. Imagen de <span class="citation" data-cites="wickham_r_2023">Wickham et&nbsp;al. (<a href="02-introduccion-ciencia-datos.html#ref-wickham_r_2023" role="doc-biblioref">2023</a>)</span>
 </figcaption>
 </figure>
 </div>
@@ -716,27 +722,27 @@ Figura&nbsp;2.2: Ciclo de vida de un proyecto de ciencia de datos. Imagen de <sp
 <section id="ejemplos" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="ejemplos"><span class="header-section-number">2.2.2</span> Ejemplos</h3>
 <p>Las etapas iniciales de un proyecto de ciencia de datos incluyen técnicas estadísticas convencionales como el <a href="https://es.wikipedia.org/wiki/An%C3%A1lisis_exploratorio_de_datos">análisis exploratorio de datos (EDA)</a>, mientras que las más avanzadas pueden involucrar técnicas de <a href="https://es.wikipedia.org/wiki/Inteligencia_artificial">inteligencia artificial</a> como <a href="https://es.wikipedia.org/wiki/Aprendizaje_autom%C3%A1tico">aprendizaje automático (<em>machine learning</em>)</a> y <a href="https://es.wikipedia.org/wiki/Aprendizaje_profundo">aprendizaje profundo (<em>deep learning</em>)</a>.</p>
-<p>La <a href="#fig-problemas-regresion-clasificacion" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-problemas-regresion-clasificacion</span></a> ilustra varios problemas resueltos mediante <a href="https://es.wikipedia.org/wiki/An%C3%A1lisis_de_la_regresi%C3%B3n">regresión</a> y <a href="https://es.wikipedia.org/wiki/Clasificaci%C3%B3n_estad%C3%ADstica">clasificación</a>, dos técnicas que se utilizan en <em>deep learning</em>. En cada caso, hay una entrada que puede tener diversos formatos como un conjunto de números, una hilera de texto, un archivo de sonido o una imagen. Esta entrada se transforma y se codifica como un vector de números. Este vector constituye la entrada del modelo de regresión o clasificación. El modelo convierte la entrada en un vector de salida que se “traduce” de nuevo a un formato adecuado.</p>
+<p>La <a href="#fig-problemas-regresion-clasificacion" class="quarto-xref">Figura&nbsp;<span>2.3</span></a> ilustra varios problemas resueltos mediante <a href="https://es.wikipedia.org/wiki/An%C3%A1lisis_de_la_regresi%C3%B3n">regresión</a> y <a href="https://es.wikipedia.org/wiki/Clasificaci%C3%B3n_estad%C3%ADstica">clasificación</a>, dos técnicas que se utilizan en <em>deep learning</em>. En cada caso, hay una entrada que puede tener diversos formatos como un conjunto de números, una hilera de texto, un archivo de sonido o una imagen. Esta entrada se transforma y se codifica como un vector de números. Este vector constituye la entrada del modelo de regresión o clasificación. El modelo convierte la entrada en un vector de salida que se “traduce” de nuevo a un formato adecuado.</p>
 <div id="fig-problemas-regresion-clasificacion" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen de problemas de regresión y clasificación" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-problemas-regresion-clasificacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="img/problemas-regresion-clasificacion.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;2.3: Problemas de regresión y clasificación. Imagen de @prince2023understanding"><img src="img/problemas-regresion-clasificacion.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Imagen de problemas de regresión y clasificación"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-problemas-regresion-clasificacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.3: Problemas de regresión y clasificación. Imagen de <span class="citation" data-cites="prince2023understanding">Prince (<a href="#ref-prince2023understanding" role="doc-biblioref">2023</a>)</span>
+Figura&nbsp;2.3: Problemas de regresión y clasificación. Imagen de <span class="citation" data-cites="prince2023understanding">Prince (<a href="02-introduccion-ciencia-datos.html#ref-prince2023understanding" role="doc-biblioref">2023</a>)</span>
 </figcaption>
 </figure>
 </div>
 <p>El modelo de a) predice el precio de una vivienda en función de características de entrada como el área en pies cuadrados y el número de dormitorios <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Se trata de un problema de regresión, ya el modelo retorna un número real (no asigna una categoría). El modelo de la figura b) recibe la estructura química de una molécula como entrada y predice su punto de congelación y su punto de ebullición. Este es un problema de regresión multivariada, ya que la salida incluye más de un número.</p>
 <p>El modelo en c) recibe como entrada una hilera de texto que contiene las calificaciones de varios aspectos a evaluar sobre una comida en un restaurante (plato principal, ensalada, sopa, postre, etc.) y predice si el resultado general es positivo o negativo. Es un problema de clasificación binaria porque el modelo asigna como salida una de dos categorías. El vector de salida contiene las probabilidades de posible valor. Los modelos en d) y e) corresponden a problemas de clasificación multiclase. Aquí, el modelo asigna el valor de salida a una de n &gt; 2 categorías. En el primer caso, la entrada es un archivo de audio y el modelo predice el género musical al que pertenece. En el segundo caso, la entrada es una imagen y el modelo predice qué objeto contiene. En cada caso, el modelo devuelve un vector de tamaño n que contiene las probabilidades de las n categorías.</p>
-<p>En la <a href="#fig-problemas-regresion-clasificacion" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-problemas-regresion-clasificacion</span></a>, los modelos de <em>deep learning</em> se muestran como “cajas negras” que reciben una entrada y retornan una salida, sin entrar en detalles de como se procesa la entrada. Hay muchas posibilidades para implementar estas “cajas negras”. Considere un modelo para predecir la estatura de un niño a partir de su edad, como el de la <a href="#fig-modelo-aprendizaje-automatico" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-modelo-aprendizaje-automatico</span></a>. En este caso, el modelo es una ecuación que describe como la estatura promedio varía en función de la edad. Al ingresar la edad a la ecuación, retorna la estatura.</p>
+<p>En la <a href="#fig-problemas-regresion-clasificacion" class="quarto-xref">Figura&nbsp;<span>2.3</span></a>, los modelos de <em>deep learning</em> se muestran como “cajas negras” que reciben una entrada y retornan una salida, sin entrar en detalles de como se procesa la entrada. Hay muchas posibilidades para implementar estas “cajas negras”. Considere un modelo para predecir la estatura de un niño a partir de su edad, como el de la <a href="#fig-modelo-aprendizaje-automatico" class="quarto-xref">Figura&nbsp;<span>2.4</span></a>. En este caso, el modelo es una ecuación que describe como la estatura promedio varía en función de la edad. Al ingresar la edad a la ecuación, retorna la estatura.</p>
 <div id="fig-modelo-aprendizaje-automatico" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen de modelo de aprendizaje automático" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-modelo-aprendizaje-automatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="img/modelo-aprendizaje-automatico.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;2.4: Modelo de aprendizaje automático. Imagen de @prince2023understanding."><img src="img/modelo-aprendizaje-automatico.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Imagen de modelo de aprendizaje automático"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modelo-aprendizaje-automatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.4: Modelo de aprendizaje automático. Imagen de <span class="citation" data-cites="prince2023understanding">Prince (<a href="#ref-prince2023understanding" role="doc-biblioref">2023</a>)</span>.
+Figura&nbsp;2.4: Modelo de aprendizaje automático. Imagen de <span class="citation" data-cites="prince2023understanding">Prince (<a href="02-introduccion-ciencia-datos.html#ref-prince2023understanding" role="doc-biblioref">2023</a>)</span>.
 </figcaption>
 </figure>
 </div>
@@ -745,10 +751,10 @@ Figura&nbsp;2.4: Modelo de aprendizaje automático. Imagen de <span class="citat
 </section>
 <section id="reproducibilidad" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="reproducibilidad"><span class="header-section-number">2.3</span> Reproducibilidad</h2>
-<p>La <a href="https://es.wikipedia.org/wiki/Reproducibilidad_y_repetibilidad">reproducibilidad</a> es la capacidad de un ensayo o experimento de ser reproducido por otros. Más formalmente, en investigación cuantitativa, un análisis se considera reproducible si <em>“el código fuente y los datos utilizados por un investigador para llegar a un resultado están disponibles y son suficientes para que otro investigador, trabajando de manera independiente, pueda llegar al mismo resultado”</em> <span class="citation" data-cites="gandrud_reproducible_2020">Gandrud (<a href="#ref-gandrud_reproducible_2020" role="doc-biblioref">2020</a>)</span>.</p>
-<p>La reproducibilidad, junto con la <a href="https://es.wikipedia.org/wiki/Falsabilidad">falsabilidad</a>, es uno de los pilares del <a href="https://es.wikipedia.org/wiki/M%C3%A9todo_cient%C3%ADfico">método científico</a>. Sin embargo, en años recientes, se ha generado una creciente preocupación debido a que muchos estudios científicos publicados fallan las pruebas de reproducibilidad, dando lugar a una <a href="https://es.wikipedia.org/wiki/Crisis_de_replicaci%C3%B3n">crisis de reproducibilidad o replicabilidad</a> en varias ciencias <span class="citation" data-cites="krugman_opinion_2013">Krugman (<a href="#ref-krugman_opinion_2013" role="doc-biblioref">2013</a>)</span>.</p>
+<p>La <a href="https://es.wikipedia.org/wiki/Reproducibilidad_y_repetibilidad">reproducibilidad</a> es la capacidad de un ensayo o experimento de ser reproducido por otros. Más formalmente, en investigación cuantitativa, un análisis se considera reproducible si <em>“el código fuente y los datos utilizados por un investigador para llegar a un resultado están disponibles y son suficientes para que otro investigador, trabajando de manera independiente, pueda llegar al mismo resultado”</em> <span class="citation" data-cites="gandrud_reproducible_2020">Gandrud (<a href="02-introduccion-ciencia-datos.html#ref-gandrud_reproducible_2020" role="doc-biblioref">2020</a>)</span>.</p>
+<p>La reproducibilidad, junto con la <a href="https://es.wikipedia.org/wiki/Falsabilidad">falsabilidad</a>, es uno de los pilares del <a href="https://es.wikipedia.org/wiki/M%C3%A9todo_cient%C3%ADfico">método científico</a>. Sin embargo, en años recientes, se ha generado una creciente preocupación debido a que muchos estudios científicos publicados fallan las pruebas de reproducibilidad, dando lugar a una <a href="https://es.wikipedia.org/wiki/Crisis_de_replicaci%C3%B3n">crisis de reproducibilidad o replicabilidad</a> en varias ciencias <span class="citation" data-cites="krugman_opinion_2013">Krugman (<a href="02-introduccion-ciencia-datos.html#ref-krugman_opinion_2013" role="doc-biblioref">2013</a>)</span>.</p>
 <p>El concepto de reproducibilidad es cada vez más importante debido, entre otras razones, al aumento exponencial de datos disponibles y a la aplicación de la programación de computadoras, para procesar estos datos, por parte de especialistas de muchas disciplinas.</p>
-<p>Alex Singleton y otros autores han identificado los siguientes retos para la reproducibilidad en ciencia de datos geoespaciales <span class="citation" data-cites="singleton_establishing_2016">Singleton, Spielman, &amp; Brunsdon (<a href="#ref-singleton_establishing_2016" role="doc-biblioref">2016</a>)</span>:</p>
+<p>Alex Singleton y otros autores han identificado los siguientes retos para la reproducibilidad en ciencia de datos geoespaciales <span class="citation" data-cites="singleton_establishing_2016">Singleton, Spielman, &amp; Brunsdon (<a href="02-introduccion-ciencia-datos.html#ref-singleton_establishing_2016" role="doc-biblioref">2016</a>)</span>:</p>
 <ol type="1">
 <li>Los datos deben ser de dominio público y estar disponibles para los investigadores.</li>
 <li>El software utilizado debe ser de código abierto (<em>open source</em>) y estar disponible para ser revisado.</li>
@@ -756,14 +762,14 @@ Figura&nbsp;2.4: Modelo de aprendizaje automático. Imagen de <span class="citat
 <li>El proceso de <a href="https://es.wikipedia.org/wiki/Revisi%C3%B3n_por_pares">revisión por pares (<em>peer review process</em>)</a> y la publicación académica deben requerir la presentación de un modelo de flujo de trabajo e idealmente la disponibilidad de los materiales necesarios para la replicación.</li>
 <li>En los casos en los que la reproducibilidad total no sea posible (ej. datos sensibles), los investigadores deben esforzarse por incluir todos los aspectos que puedan de un marco de trabajo abierto.</li>
 </ol>
-<p>En general, el estándar mínimo de reproducibilidad requiere que los datos y el código fuente estén disponibles para otros investigadores <span class="citation" data-cites="peng_reproducible_2011">Peng (<a href="#ref-peng_reproducible_2011" role="doc-biblioref">2011</a>)</span>. Sin embargo, dependiendo de las circunstancias y recursos disponibles, existe todo un espectro de posibilidades, que se ilustra en la <a href="#fig-espectro-reproducibilidad" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-espectro-reproducibilidad</span></a>.</p>
+<p>En general, el estándar mínimo de reproducibilidad requiere que los datos y el código fuente estén disponibles para otros investigadores <span class="citation" data-cites="peng_reproducible_2011">Peng (<a href="02-introduccion-ciencia-datos.html#ref-peng_reproducible_2011" role="doc-biblioref">2011</a>)</span>. Sin embargo, dependiendo de las circunstancias y recursos disponibles, existe todo un espectro de posibilidades, que se ilustra en la <a href="#fig-espectro-reproducibilidad" class="quarto-xref">Figura&nbsp;<span>2.5</span></a>.</p>
 <div id="fig-espectro-reproducibilidad" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen del espectro de reproducibilidad" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-espectro-reproducibilidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="img/espectro-reproducibilidad.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figura&nbsp;2.5: Espectro de reproducibilidad. Imagen de Anita Graser basada en @peng_reproducible_2011."><img src="img/espectro-reproducibilidad.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Imagen del espectro de reproducibilidad"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-espectro-reproducibilidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.5: Espectro de reproducibilidad. Imagen de <a href="https://www.youtube.com/watch?v=ZjXb53pOor0">Anita Graser</a> basada en <span class="citation" data-cites="peng_reproducible_2011">Peng (<a href="#ref-peng_reproducible_2011" role="doc-biblioref">2011</a>)</span>.
+Figura&nbsp;2.5: Espectro de reproducibilidad. Imagen de <a href="https://www.youtube.com/watch?v=ZjXb53pOor0">Anita Graser</a> basada en <span class="citation" data-cites="peng_reproducible_2011">Peng (<a href="02-introduccion-ciencia-datos.html#ref-peng_reproducible_2011" role="doc-biblioref">2011</a>)</span>.
 </figcaption>
 </figure>
 </div>
@@ -778,28 +784,45 @@ Figura&nbsp;2.5: Espectro de reproducibilidad. Imagen de <a href="https://www.yo
 <h2 data-number="2.5" class="anchored" data-anchor-id="referencias-bibliográficas"><span class="header-section-number">2.5</span> Referencias bibliográficas</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-cetinkaya-rundel_introduction_2021" class="csl-entry" role="listitem">
-Çetinkaya-Rundel, M., &amp; Hardin, J. (2021). <em>Introduction to <span>Modern</span> <span>Statistics</span></em> (1st ed.). OpenIntro, Inc. Recuperado de <a href="https://openintro-ims.netlify.app/">https://openintro-ims.netlify.app/</a>
+Çetinkaya-Rundel, M., &amp; Hardin, J. (2021). <em>Introduction to
+<span>Modern</span> <span>Statistics</span></em> (1st ed.). OpenIntro,
+Inc. Retrieved from <a href="https://openintro-ims.netlify.app/">https://openintro-ims.netlify.app/</a>
 </div>
 <div id="ref-gandrud_reproducible_2020" class="csl-entry" role="listitem">
-Gandrud, C. (2020). <em>Reproducible research with <span>R</span> and <span>RStudio</span></em> (Third edition). Boca Raton, FL: CRC Press.
+Gandrud, C. (2020). <em>Reproducible research with <span>R</span> and
+<span>RStudio</span></em> (Third edition). Boca Raton, FL: CRC Press.
 </div>
 <div id="ref-harrison_hedonic_1978" class="csl-entry" role="listitem">
-Harrison, D., &amp; Rubinfeld, D. L. (1978). Hedonic housing prices and the demand for clean air. <em>Journal of Environmental Economics and Management</em>, <em>5</em>(1), 81-102. <a href="https://doi.org/10.1016/0095-0696(78)90006-2">https://doi.org/10.1016/0095-0696(78)90006-2</a>
+Harrison, D., &amp; Rubinfeld, D. L. (1978). Hedonic housing prices and
+the demand for clean air. <em>Journal of Environmental Economics and
+Management</em>, <em>5</em>(1), 81–102. <a href="https://doi.org/10.1016/0095-0696(78)90006-2">https://doi.org/10.1016/0095-0696(78)90006-2</a>
 </div>
 <div id="ref-krugman_opinion_2013" class="csl-entry" role="listitem">
-Krugman, P. (2013). Opinion <span></span> <span>The</span> <span>Excel</span> <span>Depression</span>. <em>The New York Times</em>. Recuperado de <a href="https://www.nytimes.com/2013/04/19/opinion/krugman-the-excel-depression.html">https://www.nytimes.com/2013/04/19/opinion/krugman-the-excel-depression.html</a>
+Krugman, P. (2013). Opinion <span></span> <span>The</span>
+<span>Excel</span> <span>Depression</span>. <em>The New York Times</em>.
+Retrieved from <a href="https://www.nytimes.com/2013/04/19/opinion/krugman-the-excel-depression.html">https://www.nytimes.com/2013/04/19/opinion/krugman-the-excel-depression.html</a>
 </div>
 <div id="ref-peng_reproducible_2011" class="csl-entry" role="listitem">
-Peng, R. D. (2011). Reproducible <span>Research</span> in <span>Computational</span> <span>Science</span>. <em>Science</em>, <em>334</em>(6060), 1226-1227. <a href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>
+Peng, R. D. (2011). Reproducible <span>Research</span> in
+<span>Computational</span> <span>Science</span>. <em>Science</em>,
+<em>334</em>(6060), 1226–1227. <a href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>
 </div>
 <div id="ref-prince2023understanding" class="csl-entry" role="listitem">
-Prince, S. J. D. (2023). <em>Understanding Deep Learning</em>. The MIT Press. Recuperado de <a href="http://udlbook.com">http://udlbook.com</a>
+Prince, S. J. D. (2023). <em>Understanding deep learning</em>. The MIT
+Press. Retrieved from <a href="http://udlbook.com">http://udlbook.com</a>
 </div>
 <div id="ref-singleton_establishing_2016" class="csl-entry" role="listitem">
-Singleton, A. D., Spielman, S., &amp; Brunsdon, C. (2016). Establishing a framework for <span>Open</span> <span>Geographic</span> <span>Information</span> science. <em>International Journal of Geographical Information Science</em>, <em>30</em>(8), 1507-1521. <a href="https://doi.org/10.1080/13658816.2015.1137579">https://doi.org/10.1080/13658816.2015.1137579</a>
+Singleton, A. D., Spielman, S., &amp; Brunsdon, C. (2016). Establishing
+a framework for <span>Open</span> <span>Geographic</span>
+<span>Information</span> science. <em>International Journal of
+Geographical Information Science</em>, <em>30</em>(8), 1507–1521. <a href="https://doi.org/10.1080/13658816.2015.1137579">https://doi.org/10.1080/13658816.2015.1137579</a>
 </div>
 <div id="ref-wickham_r_2023" class="csl-entry" role="listitem">
-Wickham, H., Çetinkaya-Rundel, M., &amp; Grolemund, G. (2023). <em>R for <span>Data</span> <span>Science</span>: <span>Import</span>, <span>Tidy</span>, <span>Transform</span>, <span>Visualize</span>, and <span>Model</span> <span>Data</span></em> (2nd ed.). O’Reilly Media. Recuperado de <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>
+Wickham, H., Çetinkaya-Rundel, M., &amp; Grolemund, G. (2023). <em>R for
+<span>Data</span> <span>Science</span>: <span>Import</span>,
+<span>Tidy</span>, <span>Transform</span>, <span>Visualize</span>, and
+<span>Model</span> <span>Data</span></em> (2nd ed.). O’Reilly Media.
+Retrieved from <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>
 </div>
 </div>
 
@@ -808,7 +831,7 @@ Wickham, H., Çetinkaya-Rundel, M., &amp; Grolemund, G. (2023). <em>R for <span>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Como ejemplo, puede revisar el problema de la estimación de precios de viviendas en Boston en <span class="citation" data-cites="harrison_hedonic_1978">Harrison &amp; Rubinfeld (<a href="#ref-harrison_hedonic_1978" role="doc-biblioref">1978</a>)</span> (el texto completo está en <a href="https://deepblue.lib.umich.edu/bitstream/handle/2027.42/22636/0000186.pdf">https://deepblue.lib.umich.edu/bitstream/handle/2027.42/22636/0000186.pdf</a>) y acceder a los datos correspondientes en <a href="https://www.kaggle.com/competitions/boston-housing/">Kaggle</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Como ejemplo, puede revisar el problema de la estimación de precios de viviendas en Boston en <span class="citation" data-cites="harrison_hedonic_1978">Harrison &amp; Rubinfeld (<a href="02-introduccion-ciencia-datos.html#ref-harrison_hedonic_1978" role="doc-biblioref">1978</a>)</span> (el texto completo está en <a href="https://deepblue.lib.umich.edu/bitstream/handle/2027.42/22636/0000186.pdf">https://deepblue.lib.umich.edu/bitstream/handle/2027.42/22636/0000186.pdf</a>) y acceder a los datos correspondientes en <a href="https://www.kaggle.com/competitions/boston-housing/">Kaggle</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -1246,7 +1269,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false,"selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

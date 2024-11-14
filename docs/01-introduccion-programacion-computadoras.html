@@ -286,6 +286,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introducción al manejo de datos geoespaciales con R</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-modelos-nichos-ecologicos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelos de nichos ecológicos</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -347,7 +353,7 @@ window.Quarto = {
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="lenguajes-de-máquina"><span class="header-section-number">1.1.1</span> Lenguajes de máquina</h3>
 <p>Las computadoras modernas son electrónicas y utilizan <a href="https://es.wikipedia.org/wiki/Circuito_integrado">circuitos integrados</a> para procesar y almacenar información en forma de señales eléctricas. Esta representación de la información se basa en un <a href="https://es.wikipedia.org/wiki/Sistema_binario">sistema binario</a> (de dos estados): 0 (voltaje bajo) y 1 (voltaje alto).</p>
 <p>En el nivel más básico, las computadoras pueden programarse introduciendo directamente combinaciones de unos y ceros, conocidas como <a href="https://es.wikipedia.org/wiki/Lenguaje_de_m%C3%A1quina">lenguaje de máquina</a> en la <a href="https://es.wikipedia.org/wiki/Unidad_central_de_procesamiento">Unidad Central de Procesamiento (CPU)</a>, el componente de hardware encargado de ejecutar las instrucciones.</p>
-<p>Por ejemplo, la <a href="#fig-helloworld-lenguajemaquina" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-helloworld-lenguajemaquina</span></a> muestra el programa <a href="https://es.wikipedia.org/wiki/Hola_mundo">Hola mundo (<em>Hello World</em>)</a> en lenguaje de máquina. Este programa simplemente imprime la hilera de texto “Hola mundo” en la pantalla. Suele ser usado como introducción al estudio de la programación de computadoras.</p>
+<p>Por ejemplo, la <a href="#fig-helloworld-lenguajemaquina" class="quarto-xref">Figura&nbsp;<span>1.1</span></a> muestra el programa <a href="https://es.wikipedia.org/wiki/Hola_mundo">Hola mundo (<em>Hello World</em>)</a> en lenguaje de máquina. Este programa simplemente imprime la hilera de texto “Hola mundo” en la pantalla. Suele ser usado como introducción al estudio de la programación de computadoras.</p>
 <div id="fig-helloworld-lenguajemaquina" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen de lenguaje de máquina correspondiente a la implementación del programa Hola mundo en el lenguaje C" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-helloworld-lenguajemaquina-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -424,7 +430,7 @@ imc = \frac{masa}{estatura^2}
 <section id="modelo-entrada---procesamiento---salida" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="modelo-entrada---procesamiento---salida"><span class="header-section-number">1.2</span> Modelo Entrada - Procesamiento - Salida</h2>
 <p>Las computadoras trabajan con un modelo de “Entrada - Procesamiento - Salida”: reciben datos de entrada (ej. números), los procesan (ej. realizan cálculos aritméticos) y generan salidas (ej. resultados de los cálculos).</p>
-<p>El modelo “Entrada - Procesamiento - Salida” es un concepto fundamental en análisis de sistemas de información y desarrollo de programas. Su esquema se presenta en la <a href="#fig-modelo-entrada-procesamiento-salida" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-modelo-entrada-procesamiento-salida</span></a>.</p>
+<p>El modelo “Entrada - Procesamiento - Salida” es un concepto fundamental en análisis de sistemas de información y desarrollo de programas. Su esquema se presenta en la <a href="#fig-modelo-entrada-procesamiento-salida" class="quarto-xref">Figura&nbsp;<span>1.2</span></a>.</p>
 <div id="fig-modelo-entrada-procesamiento-salida" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen del modelo Entrada - Procesamiento - Salida" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-modelo-entrada-procesamiento-salida-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -452,7 +458,7 @@ Figura&nbsp;1.2: Modelo “Entrada - Procesamiento - Salida”
 </section>
 <section id="arquitectura-de-von-neumann" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="arquitectura-de-von-neumann"><span class="header-section-number">1.3.2</span> Arquitectura de von Neumann</h3>
-<p>En 1945, el matemático húngaro-estadounidense <a href="https://es.wikipedia.org/wiki/John_von_Neumann">John von Neumann (1903-1957)</a> propuso un concepto conocido como <a href="https://es.wikipedia.org/wiki/Computador_de_programa_almacenado">programa almacenado</a>, en el cual los datos y los programas se almacenan en una estructura llamada memoria, separada de los componentes físicos que ejecutan las instrucciones. Este modelo permite que las computadoras sean más fáciles de programase y reprogramarse y es conocido actualmente como <a href="https://es.wikipedia.org/wiki/Arquitectura_de_Von_Neumann">arquitectura de von Neumann</a>. La arquitectura de von Neumann se ilustra en la <a href="#fig-arquitectura-von-neumann" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-arquitectura-von-neumann</span></a>.</p>
+<p>En 1945, el matemático húngaro-estadounidense <a href="https://es.wikipedia.org/wiki/John_von_Neumann">John von Neumann (1903-1957)</a> propuso un concepto conocido como <a href="https://es.wikipedia.org/wiki/Computador_de_programa_almacenado">programa almacenado</a>, en el cual los datos y los programas se almacenan en una estructura llamada memoria, separada de los componentes físicos que ejecutan las instrucciones. Este modelo permite que las computadoras sean más fáciles de programase y reprogramarse y es conocido actualmente como <a href="https://es.wikipedia.org/wiki/Arquitectura_de_Von_Neumann">arquitectura de von Neumann</a>. La arquitectura de von Neumann se ilustra en la <a href="#fig-arquitectura-von-neumann" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>.</p>
 <div id="fig-arquitectura-von-neumann" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" alt="Imagen de la arquitectura de von Neumann" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-arquitectura-von-neumann-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -921,7 +927,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
