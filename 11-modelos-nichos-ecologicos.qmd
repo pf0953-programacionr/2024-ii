@@ -2,7 +2,7 @@
 
 ## Introducción
 
-Los modelos de nichos ecológicos permiten predecir la distribución potencial de especies en función de datos de presencia y variables ambientales. Puede consultar estas [diapositivas](https://mfvargas.github.io/modelos-nichos-ecologicos/) sobre el tema.
+Los modelos de nichos ecológicos permiten predecir la distribución potencial de especies en función de datos de presencia y variables ambientales (ej. clima, suelo, vegetación, altitud). Puede consultar estas [diapositivas](https://mfvargas.github.io/modelos-nichos-ecologicos/) sobre el tema.
 
 ## Instalación y carga de paquetes
 
@@ -130,7 +130,7 @@ presencia <- st_as_sf(
 )
 ```
 
-### Registros de presencia por país
+### Registros por país
 
 ```{r}
 #| label: grafico-registros-presencia-pais
@@ -161,7 +161,7 @@ ggplotly(grafico_ggplot2, tooltip = "text") |>
   config(locale = 'es')
 ```
 
-### Registros de presencia por año
+### Registros por año
 
 ```{r}
 #| label: grafico-registros-presencia-anio
@@ -196,7 +196,7 @@ ggplotly(grafico_ggplot2, tooltip = "text") |>
   config(locale = 'es')
 ```
 
-### Mapa de registros de presencia
+### Mapa
 
 ```{r}
 #| label: mapa-presencia
@@ -237,9 +237,9 @@ leaflet() |>
     overlayGroups = c("Registros de Bradypus variegatus"))
 ```
 
-## Obtención de datos climáticos
+## Obtención de variables ambientales
 
-Las variables climáticas se obtienen mediante el paquete [geodata](https://github.com/rspatial/geodata), el cual brinda acceso a varios conjuntos de datos geoespaciales. En este caso, se descargan las [variables bioclimáticas](https://www.worldclim.org/data/bioclim.html) de [WorldClim](https://www.worldclim.org/).
+Frecuentemente se utilizan datos bioclimáticos (ej. temperatura, precipitación) como variables ambientales. Pueden obtenerse mediante el paquete [geodata](https://github.com/rspatial/geodata). En este caso, se descargan las [variables bioclimáticas](https://www.worldclim.org/data/bioclim.html) de [WorldClim](https://www.worldclim.org/).
 
 ```{r}
 #| label: obtener-datos-clima
@@ -273,7 +273,7 @@ area_estudio <- ext(
 clima <- crop(clima, area_estudio)
 ```
 
-### Mapa de variables climáticas
+### Mapa
 
 ```{r}
 #| label: mapa-clima
@@ -363,7 +363,7 @@ leaflet() |>
 
 ## Modelización
 
-Para elaborar el modelo de distribución se utiliza el paquete [dismo](https://rspatial.org/raster/sdm/), el cual implementa varios algoritmos de modelado de distribución de especies. Para este ejercicio, se utiliza el algoritmo [Maxent](https://biodiversityinformatics.amnh.org/open_source/maxent/). El algoritmo recibe como entradas un conjunto de datos de presencia de una especie y un conjunto de variables climáticas (en formato raster).
+### Creación de conjuntos de entrenamiento y de evaluación
 
 Primero, se eliminan las coordenadas duplicadas del conjunto de datos de presencia.
 
@@ -372,11 +372,13 @@ Primero, se eliminan las coordenadas duplicadas del conjunto de datos de presenc
 #| warning: false
 #| message: false
 
+# Crear dataframe con columnas de longitud y latitud
 coordenadas_presencia <- data.frame(
   decimalLongitude = presencia$decimalLongitude,
   decimalLatitude = presencia$decimalLatitude
 )
 
+# Eliminar coordenadas duplicadas
 coordenadas_presencia <- unique(coordenadas_presencia)
 ```
 
@@ -390,20 +392,38 @@ Seguidamente se dividen los datos de presencia en dos subconjuntos:
 #| warning: false
 #| message: false
 
-# Dividir los datos en entrenamiento y evaluación
+# Establecer una "semilla" para garantizar que la selección aleatoria sea reproducible
 set.seed(123)
+
+# Cantidad de registros de presencia
 n_presencia <- nrow(coordenadas_presencia)
 
+# Con sample(), se selecciona aleatoriamente una proporción (ej. 0.7) 
+# de los índices de los datos de presencia para el conjunto de entrenamiento
 indices_entrenamiento <- sample(
   1:n_presencia, 
   size = round(0.7 * n_presencia)
 )
 
+# Crear el subconjunto de entrenamiento utilizando los índices seleccionados
 entrenamiento <- coordenadas_presencia[indices_entrenamiento, ]
+
+# Crear el subconjunto de evaluación con los datos restantes
 evaluacion <- coordenadas_presencia[-indices_entrenamiento, ]
 ```
 
-Ahora puede ejecutarse el modelo con Maxent.
+Para elaborar el modelo de distribución se utiliza el paquete [dismo](https://rspatial.org/raster/sdm/), el cual implementa varios algoritmos de modelado de distribución de especies. Cada algoritmo recibe como entradas un conjunto de datos de presencia de una especie y un conjunto de variables climáticas (en formato raster).
+
+### Modelo Maxent
+
+El algoritmo [Maxent](https://doi.org/10.1016/j.ecolmodel.2005.03.026) se basa en el [principio de máxima entropía](https://es.wikipedia.org/wiki/Principio_de_m%C3%A1xima_entrop%C3%ADa), que sugiere que, con información incompleta, la mejor opción es la distribución menos sesgada posible que aún sea consistente con los datos. En este caso, Maxent encuentra la distribución de la especie que maximiza la entropía (es decir, la más uniforme posible) dado un conjunto de restricciones.
+
+La implementación de Maxent que se incluye en el paquete dismo fue programada en el lenguaje [Java](https://es.wikipedia.org/wiki/Java_(lenguaje_de_programaci%C3%B3n)). Por lo tanto, para ejecutarla es necesario instalar:
+
+- El [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/downloads/?er=221886), para ejecutar aplicaciones desarrolladas en Java.
+- El paquete [rJava](https://cran.r-project.org/web/packages/rJava/index.html) para acceder a aplicaciones Java desde R.
+
+#### Generación
 
 ```{r}
 #| label: ejecucion-modelo
@@ -412,48 +432,182 @@ Ahora puede ejecutarse el modelo con Maxent.
 
 # Los datos de clima deben convertirse al formato que usa el paquete raster
 # debido a es este el que acepta el paquete dismo
-clima_raster <- raster::stack(clima)
+clima <- raster::stack(clima)
 
 # Ejecutar el modelo
-modelo_maxent <- maxent(x = clima_raster, p = entrenamiento)
+modelo_maxent <- maxent(x = clima, p = entrenamiento)
 
-# Crear un raster basado en el modelo
-prediccion <- predict(modelo_maxent, clima_raster)
+# Aplicar el modelo entrenado a las variables climáticas 
+# para generar un mapa de idoneidad del hábitat
+prediccion <- predict(modelo_maxent, clima)
 ```
 
-Se evalúa el modelo.
+#### Evaluación
+
+El siguiente bloqu de código genera métricas de desempeño del modelo utilizando los valores predichos en puntos de presencia y ausencia.
 
 ```{r}
 #| label: evaluacion-modelo
 #| warning: false
 #| message: false
 
-# Extraer valores del raster de predicción para los puntos de evaluación de presencias
+# terra::extract() extrae los valores del raster de predicción 
+# en las coordenadas de evaluación
+# eval_pres almacena los valores de idoneidad predichos 
+# en los puntos de evaluación de presencia
 eval_pres <- terra::extract(
   prediccion, 
   evaluacion[, c('decimalLongitude', 'decimalLatitude')]
 )
 
-# Generar puntos aleatorios de ausencia
-ausencias <- randomPoints(mask = clima_raster, n = 1000)
+# Generar puntos aleatorios dentro del área de estudio definida. 
+# Estos puntos se asumen como ausencias de la especie.
+ausencias <- randomPoints(mask = clima, n = 1000)
 
-# Extraer valores del raster de predicción para los puntos de ausencias
+# eval_aus almacena los valores de idoneidad predichos
+# en los puntos de ausencia
 eval_aus <- terra::extract(
   prediccion, 
   ausencias
 )
 
 # Generar estadísticas de evaluación del modelo
-evaluation <- evaluate(p = eval_pres, a = eval_aus)
-
-# Graficación de la curva ROC
-plot(evaluation, 'ROC')
+resultado_evaluacion <- evaluate(p = eval_pres, a = eval_aus)
 ```
 
-El mapa de distribución potencial puede apreciarse en el siguiente mapa.
+Las métricas de desempeño generadas en el bloque de código anterior se basan en la curva ROC y el AUC. La [curva ROC (*Receiver Operating Characteristic*)](https://es.wikipedia.org/wiki/Curva_ROC) es una herramienta gráfica que se utiliza para evaluar el rendimiento de un modelo de clasificación binaria, en este caso, para distinguir entre presencia y ausencia de una especie. El AUC (*Area Under the Curve*) es una métrica derivada de la curva ROC que resume su rendimiento en un solo valor.
+
+Para interpretar la curva ROC y el AUC es necesario comprender los siguientes conceptos:
+
+- **Verdaderos Positivos (*True Positives*, TP)**: son los casos en los que el modelo predice correctamente la presencia de la especie en un área donde la especie realmente está presente.
+- **Falsos Positivos (*False Positives*, FP)**: son los casos en los que el modelo predice la presencia de la especie en un área donde la especie realmente no está presente.
+- **Verdaderos Negativos (*True Negatives*, TN)**: son los casos en los que el modelo predice correctamente la ausencia de la especie en un área donde la especie realmente no está presente.
+- **Falsos Negativos (*False Negatives*, FN)**: son los casos en los que el modelo predice la ausencia de la especie en un área donde la especie realmente está presente.
+
+Las definiciones anteriores se resumen en la siguiente tabla:
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+  }
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Predicción: Presencia</th>
+      <th>Predicción: Ausencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Realidad: Presencia</th>
+      <td>Verdadero Positivo (TP)</td>
+      <td>Falso Negativo (FN)</td>
+    </tr>
+    <tr>
+      <th>Realidad: Ausencia</th>
+      <td>Falso Positivo (FP)</td>
+      <td>Verdadero Negativo (TN)</td>
+    </tr>
+  </tbody>
+</table>
+
+La tabla anterior es una [matriz de confusión](https://es.wikipedia.org/wiki/Matriz_de_confusi%C3%B3n), una herramienta para evaluar el rendimiento de un modelo de clasificación. Resume los resultados de las predicciones del modelo comparándolas con los valores reales conocidos. En el contexto de los modelos de nicho ecológico, nos ayuda a entender cómo el modelo clasifica correctamente o incorrectamente las presencias y ausencias de una especie.
+
+La curva ROC representa la relación entre la Tasa de Verdaderos Positivos (*True Positive Rate*, TPR) y la Tasa de Falsos Positivos (*False Positive Rate*, FPR) para diferentes umbrales de decisión del modelo. 
+
+- TPR (Sensibilidad o *recall*): es la proporción de verdaderos positivos correctamente identificados por el modelo respecto al total de verdaderos positivos reales.
+
+$$\text{TPR} = \frac{\text{Verdaderos Positivos}}{\text{Verdaderos Positivos} + \text{Falsos Negativos}}$$
+
+- FPR: es la proporción de falsos positivos identificados por el modelo respecto al total de negativos reales.
+
+$$\text{FPR} = \frac{\text{Falsos Positivos}}{\text{Falsos Positivos} + \text{Verdaderos Negativos}}$$
+
+Un umbral es un valor específico que se utiliza para convertir las predicciones continuas del modelo en clasificaciones binarias, es decir, en predicciones de presencia o ausencia de una especie. Los modelos como Maxent generan valores continuos que representan la idoneidad del hábitat o la probabilidad de presencia de una especie en cada punto en el espacio. Estos valores oscilan entre 0 (baja idoneidad) y 1 (alta idoneidad).  
+
+Para muchas aplicaciones prácticas, es necesario convertir estos valores continuos en categorías binarias de presencia o ausencia. Es necesario entonces definir un umbral (i.e. "un valor de corte") que determina a partir de qué punto consideramos que la especie está presente.
+
+- Si el valor predicho es mayor o igual que el umbral, se predice presencia.
+- Si el valor predicho es menor que el umbral, se predice ausencia.
+
+Es importante tener el cuenta el efecto que el umbral tiene en las predicciones. Si el umbral es alto, menos áreas serán clasificadas como presencia. Aumenta la especificidad (menos falsos positivos), pero puede disminuir la sensibilidad (más falsos negativos). Por otra parte, si el umbral es bajo, más áreas serán clasificadas como presencia. Aumenta la sensibilidad (menos falsos negativos), pero puede disminuir la especificidad (más falsos positivos).
+
+Cada punto en la curva ROC representa un par (FPR, TPR) para un umbral específico. Al mover el umbral de decisión, cambiamos la sensibilidad y la especificidad del modelo, lo que se refleja en la curva. Una curva que se acerca más al punto superior izquierdo (TPR = 1, FPR = 0) indica un mejor rendimiento, ya que significa alta sensibilidad y baja tasa de falsos positivos. Una línea diagonal desde (0,0) hasta (1,1) representa un modelo que clasifica al azar (AUC = 0.5).
+
+El AUC es el área bajo la curva ROC y proporciona una medida agregada del rendimiento del modelo en todos los umbrales posibles.
+
+- AUC = 1.0: rendimiento perfecto; el modelo clasifica correctamente todas las instancias positivas y negativas.
+- AUC = 0.5: rendimiento aleatorio; el modelo no tiene capacidad discriminativa.
+- AUC < 0.5: rendimiento peor que el azar; indica que el modelo está invertido en su capacidad predictiva.
+
+El siguiente bloque de código muestra la curva ROC y el AUC para el modelo que se generó.
 
 ```{r}
-#| label: mapa-modelo
+#| label: grafico-roc
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Datos para graficar la curva ROC
+datos_roc <- data.frame(
+  FPR = resultado_evaluacion@FPR,
+  TPR = resultado_evaluacion@TPR,
+  Umbral = resultado_evaluacion@t
+)
+
+# Valor AUC
+auc <- resultado_evaluacion@auc
+
+# Gráfico ggplot2
+grafico_ggplot2 <-
+  ggplot(
+    datos_roc, 
+    aes(
+      x = FPR, 
+      y = TPR,
+      u = Umbral
+    )
+  ) +
+  geom_line(
+    color = "blue", 
+    size = 1
+  ) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "red") +
+  labs(title = paste("Curva ROC (AUC =", round(auc, 3), ")"),
+       x = "Tasa de falsos positivos (FPR)",
+       y = "Tasa de verdaderos positivos (TPR)") +
+  theme_minimal()
+
+# Gráfico plotly
+ggplotly(grafico_ggplot2) |> 
+  config(locale = 'es')
+```
+
+El valor de AUC es 0.953, lo que indica un excelente rendimiento del modelo. La curva ROC se eleva rápidamente cerca del eje y, lo que indica que el modelo tiene una alta tasa de verdaderos positivos incluso con bajos niveles de falsos positivos. Este comportamiento es característico de un buen modelo de clasificación.
+
+#### Mapas
+
+Seguidamente se presenta el mapa de idoneidad del hábitat.
+
+```{r}
+#| label: mapa-modelo-continuo
 #| warning: false
 #| message: false
 #| code-fold: true
@@ -545,6 +699,77 @@ leaflet() |>
   hideGroup("Temperatura") |>
   hideGroup("Precipitación")
 ```
+
+El siguiente mapa muestra las áreas en las que se predice presencia y ausencia de acuerdo con un umbral.
+
+```{r}
+#| label: mapa-modelo-binario
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Definir el umbral
+umbral <- 0.5
+
+# Crear el raster binario
+prediccion_binaria <- (prediccion >= umbral) * 1
+
+# Crear la paleta de colores para el raster binario
+colores_prediccion_binaria <- colorFactor(
+  palette = c("transparent", "blue"),  # "transparent" para las áreas no adecuadas
+  domain = c(0, 1),
+  na.color = "transparent"
+)
+
+# Mapa
+leaflet() |>
+  addTiles(group = "Mapa general") |>
+  addProviderTiles(
+    providers$Esri.WorldImagery, 
+    group = "Imágenes satelitales"
+  ) |>
+  addProviderTiles(
+    providers$CartoDB.Positron, 
+    group = "Mapa blanco"
+  ) |>
+  addRasterImage(
+    prediccion_binaria,
+    colors = colores_prediccion_binaria,
+    opacity = 0.6,
+    group = "Modelo de distribución binario",
+  ) |>
+  addCircleMarkers(
+    data = presencia,
+    stroke = FALSE,
+    radius = 3,
+    fillColor = 'red',
+    fillOpacity = 1,
+    popup = paste(
+      paste0("<strong>País: </strong>", presencia$country),
+      paste0("<strong>Localidad: </strong>", presencia$locality),
+      paste0("<strong>Fecha: </strong>", presencia$eventDate),
+      paste0("<strong>Fuente: </strong>", presencia$institutionCode),
+      paste0("<a href='", presencia$occurrenceID, "'>Más información</a>"),
+      sep = '<br/>'
+    ),
+    group = "Registros de Bradypus variegatus"
+  ) |>
+  addLegend(
+    title = "Modelo de distribución binario",
+    labels = c("Ausencia", "Presencia"),
+    colors = c("transparent", "blue"),
+    position = "bottomright",
+    group = "Modelo de distribución binario"
+  ) |>
+  addLayersControl(
+    baseGroups = c("Mapa general", "Imágenes satelitales", "Mapa blanco"),
+    overlayGroups = c(
+      "Modelo de distribución binario",
+      "Registros de Bradypus variegatus"
+    )
+  )
+```
+
 
 ## Recursos de interés
 
