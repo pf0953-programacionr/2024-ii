@@ -28,6 +28,7 @@ book:
         - 09-ggplot2-plotly.qmd
         - 10-introduccion-manejo-datos-geoespaciales.qmd
         - 11-modelos-nichos-ecologicos.qmd
+        - 12-mapas-precipitacion.qmd
 
 bibliography: referencias.bib
 csl: apa-6th-edition.csl

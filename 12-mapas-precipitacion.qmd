@@ -1,0 +1,339 @@
+# Mapas de precipitación
+
+## Introducción
+Este capítulo muestra como elaborar mapas de precipitación con base en datos de diversas fuentes. El contenido está basado en el tutorial de Milos Popovic [How to Create Amazing Precipitation Maps with R in 2D and 3D](https://www.youtube.com/watch?v=9Ex-f66qe2w).
+
+Los datos de precipitación se descargan con el paquete [pRecipe](https://github.com/MiRoVaGo/pRecipe) para un polígono (o polígonos) definido mediante el paquete [giscoR](https://ropengov.github.io/giscoR/).
+
+## Instalación y carga de paquetes
+
+```{r}
+#| label: instalacion-paquetes
+#| eval: false
+
+# Paquete para descargar, visualizar y analizar datos de precipitación
+install.packages("pRecipe")
+
+# Paquete para descargar datos de GISCO (Geographic Information System of the Commission)
+install.packages("giscoR")
+
+# Paquete para calcular intervalos de clasificación para datos numéricos
+install.packages("classInt")
+```
+
+```{r}
+#| label: carga-paquetes
+#| message: false
+
+# Colección de paquetes de Tidyverse
+library(tidyverse)
+
+# Cálculo de intervalos de clasificación
+library(classInt)
+
+# Manejo de datos vectoriales
+library(sf)
+
+# Manejo de datos raster
+library(terra)
+
+# Datos de precipitación
+library(pRecipe)
+
+# Datos de GISCO
+library(giscoR)
+```
+
+## Obtención del polígono del país
+
+En el siguiente bloque se especifica el país (o los países) para el que se van a descargar datos de precipitación.
+
+```{r}
+# Código ISO3 del país
+pais <- "BRA"
+# pais <- c("PAN", "CRI", "NIC")
+```
+
+Se utiliza la función `giscoR::gisco_get_countries()` para obtener el polígono del país.
+
+```{r}
+#| label: obtener-poligono-pais
+#| warning: false
+#| message: false
+
+# Obtener polígono del país
+poligono_pais <- giscoR::gisco_get_countries(
+    country = pais,
+    resolution = "1"
+)
+
+# Desplegar el polígono
+plot(poligono_pais$geometry)
+```
+
+## Obtención de datos de precipitación
+
+Se utiliza la función `pRecipe::download_data()` para la descarga de los datos de precipitación.
+
+```{r}
+#| label: obtener-datos-precipitacion
+#| warning: false
+#| message: false
+#| eval: true
+
+# Descarga
+pRecipe::download_data(
+    dataset = "mswep", # conjunto de datos
+    path = path.expand("~"), # ruta de descarga
+    domain = "raw", # dominio de la descarga
+    timestep = "yearly" # periodo
+)
+
+# Archivo descargado
+list.files(path.expand("~"), pattern = "\\.nc$")
+```
+
+Se recortan los datos de precipitación con el polígono del país.
+
+```{r}
+#| label: recortar-precipitacion
+#| warning: false
+#| message: false
+
+# Lectura y recorte de los datos de precipitación
+# Debe leerse el archivo que se descargó anteriormente
+precipitacion <- 
+  terra::rast( # lectura
+    file.path(path.expand("~"), "mswep_tp_mm_global_197902_202301_025_yearly.nc")
+  ) |>
+  terra::crop(# recorte
+    poligono_pais
+  )
+```
+
+```{r}
+#| label: metadatos-precipitacion
+#| warning: false
+#| message: false
+
+# Metadatos
+precipitacion
+```
+
+Se despliega un mapa básico de los datos de precipitación recortados.
+
+```{r}
+#| label: mapa-precipitacion-00
+#| warning: false
+#| message: false
+
+terra::plot(precipitacion[[1]])
+plot(poligono_pais$geometry, add=TRUE)
+```
+
+
+## Transformación
+
+Los datos raster de precipitación se transforman a una dataframe para que puedan ser visualizados mediante ggplot2.
+
+```{r}
+#| label: transformacion-raster-df
+#| warning: false
+#| message: false
+
+# Cambiar nombres de las bandas
+names(precipitacion) <- 1979:2023
+print(precipitacion)
+
+# Transformar el raster a un dataframe
+# para graficarlo en ggplot2
+precipitacion_df <- 
+  precipitacion |>
+    as.data.frame(xy = TRUE) |>
+    tidyr::pivot_longer( # convertir de "formato largo" a "formato corto"
+        !c("x", "y"),
+        names_to = "year",
+        values_to = "precipitation"
+  ) |>
+  dplyr::filter(year < 2023) # filtrado de datos
+
+print(head(precipitacion_df))
+```
+
+## Visualización
+
+Para visualizar los datos, primero se crea un estilo personalizado para ggplot2.
+
+```{r}
+#| label: crear-estilo-intervalos
+#| warning: false
+#| message: false
+
+# Estilo
+estilo_precipitacion <- function() {
+  theme_minimal() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      legend.position = "right",
+      legend.title = element_text(size = 11, color = "grey10"),
+      legend.text = element_text(size = 10, color = "grey10"),
+      panel.grid.major = element_line(color = NA),
+      panel.grid.minor = element_line(color = NA),
+      plot.background = element_rect(fill = NA, color = NA),
+      legend.background = element_rect(fill = "white", color = NA),
+      panel.border = element_rect(fill = NA, color = NA),
+      plot.margin = unit(c(
+        t = 0,
+        r = 0,
+        b = 0,
+        l = 0
+      ), "lines")
+    )
+}
+
+# Intervalos para las clases del mapa
+intervalos <- classInt::classIntervals(
+    precipitacion_df$precipitation,
+    n = 5,
+    style = "equal"
+)$brks
+
+# Colores para el mapa
+colores <- hcl.colors(
+    n = length(intervalos),
+    palette = "Blues",
+    rev = TRUE
+)
+```
+
+Se genera un panel con un mapa por año.
+
+```{r}
+#| label: crear-panel-mapas-precipitacion-anios
+#| warning: false
+#| message: false
+
+# Generar un panel de mapas
+panel_mapas <- ggplot(data = precipitacion_df) +
+  geom_raster(aes(x = x, y = y, fill = precipitation)) +
+  geom_contour(aes(x = x, y = y, z = precipitation), color = "white") +
+  geom_sf(
+    data = poligono_pais,
+    fill = "transparent",
+    color = "grey10",
+    size = .5
+  ) +
+  scale_fill_gradientn(
+    name = "mm",
+    colors = colores,
+    breaks = intervalos,
+    labels = round(intervalos, 0),
+    limits = c(
+      min(precipitacion_df$precipitation),
+      max(precipitacion_df$precipitation)
+    )
+  ) +
+  facet_wrap( ~ year) +
+  guides(
+    fill = guide_colourbar(
+      direction = "vertical",
+      barheight = unit(50, "mm"),
+      barwidth = unit(5, "mm"),
+      title.position = "top",
+      label.position = "right",
+      title.hjust = .5,
+      label.hjust = .5,
+      ncol = 1,
+      byrow = FALSE
+    )
+  ) +
+  estilo_precipitacion()
+
+# Despliegue
+panel_mapas
+```
+
+Seguidamente, se crea un mapa con el promedio de clasificación para todos los años.
+
+```{r}
+#| label: crear-mapa-precipitacion-promedio
+#| warning: false
+#| message: false
+
+# Cálculo del promedio de precipitación
+precipitacion_promedio_df <- 
+  precipitacion_df |>
+  dplyr::group_by(
+      x, y, .drop = FALSE
+  ) |>
+  dplyr::summarise(
+      promedio = mean(precipitation)
+  )
+print(head(precipitacion_promedio_df))
+
+# Intervalos para las clases del mapa
+intervalos <- 
+  classInt::classIntervals(
+    precipitacion_promedio_df$promedio,
+    n = 5,
+    style = "equal"
+  )$brks
+
+# Colores para el mapa
+colores <- hcl.colors(
+    n = length(intervalos),
+    palette = "Blues",
+    rev = TRUE
+)
+
+# Mapa
+mapa_promedio <-
+  ggplot(data = precipitacion_promedio_df) +
+  geom_raster(aes(x = x, y = y, fill = promedio)) +
+  geom_contour(aes(x = x, y = y, z = promedio), color = "white") +
+  geom_sf(
+    data = poligono_pais,
+    fill = "transparent",
+    color = "grey10",
+    size = .5
+  ) +
+  scale_fill_gradientn(
+    name = "mm",
+    colors = colores,
+    breaks = intervalos,
+    labels = round(intervalos, 0),
+    limits = c(
+      min(precipitacion_promedio_df$promedio),
+      max(precipitacion_promedio_df$promedio)
+    )
+  ) +
+  guides(
+    fill = guide_colourbar(
+      direction = "vertical",
+      barheight = unit(50, "mm"),
+      barwidth = unit(5, "mm"),
+      title.position = "top",
+      label.position = "right",
+      title.hjust = .5,
+      label.hjust = .5,
+      ncol = 1,
+      byrow = FALSE
+    )
+  ) +
+  estilo_precipitacion()
+
+# Despliegue
+mapa_promedio
+```
+
+## Ejercicios
+1. Elabore otros mapas con diferentes polígonos delimitadores y diferentes conjuntos de datos de precipitación.
+2. Elabore mapas interactivos con el paquete tmap o el paquete leaflet.
+
+## Recursos de interés
+
+[How to Create Amazing Precipitation Maps with R in 2D and 3D](https://www.youtube.com/watch?v=9Ex-f66qe2w)

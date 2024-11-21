@@ -905,5 +905,93 @@
       "IV - Graficación estadística en R",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>dplyr - gramática para manipulación de datos</span>"
     ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html",
+    "href": "12-mapas-precipitacion.html",
+    "title": "12  Mapas de precipitación",
+    "section": "",
+    "text": "12.1 Introducción\nEste capítulo muestra como elaborar mapas de precipitación con base en datos de diversas fuentes. El contenido está basado en el tutorial de Milos Popovic How to Create Amazing Precipitation Maps with R in 2D and 3D.\nLos datos de precipitación se descargan con el paquete pRecipe para un polígono (o polígonos) definido mediante el paquete giscoR.",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html#instalación-y-carga-de-paquetes",
+    "href": "12-mapas-precipitacion.html#instalación-y-carga-de-paquetes",
+    "title": "12  Mapas de precipitación",
+    "section": "12.2 Instalación y carga de paquetes",
+    "text": "12.2 Instalación y carga de paquetes\n\n# Paquete para descargar, visualizar y analizar datos de precipitación\ninstall.packages(\"pRecipe\")\n\n# Paquete para descargar datos de GISCO (Geographic Information System of the Commission)\ninstall.packages(\"giscoR\")\n\n# Paquete para calcular intervalos de clasificación para datos numéricos\ninstall.packages(\"classInt\")\n\n\n# Colección de paquetes de Tidyverse\nlibrary(tidyverse)\n\n# Cálculo de intervalos de clasificación\nlibrary(classInt)\n\n# Manejo de datos vectoriales\nlibrary(sf)\n\n# Manejo de datos raster\nlibrary(terra)\n\n# Datos de precipitación\nlibrary(pRecipe)\n\n# Datos de GISCO\nlibrary(giscoR)",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html#obtención-del-polígono-del-país",
+    "href": "12-mapas-precipitacion.html#obtención-del-polígono-del-país",
+    "title": "12  Mapas de precipitación",
+    "section": "12.3 Obtención del polígono del país",
+    "text": "12.3 Obtención del polígono del país\nEn el siguiente bloque se especifica el país (o los países) para el que se van a descargar datos de precipitación.\n\n# Código ISO3 del país\npais &lt;- \"BRA\"\n# pais &lt;- c(\"PAN\", \"CRI\", \"NIC\")\n\nSe utiliza la función giscoR::gisco_get_countries() para obtener el polígono del país.\n\n# Obtener polígono del país\npoligono_pais &lt;- giscoR::gisco_get_countries(\n    country = pais,\n    resolution = \"1\"\n)\n\n# Desplegar el polígono\nplot(poligono_pais$geometry)",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html#obtención-de-datos-de-precipitación",
+    "href": "12-mapas-precipitacion.html#obtención-de-datos-de-precipitación",
+    "title": "12  Mapas de precipitación",
+    "section": "12.4 Obtención de datos de precipitación",
+    "text": "12.4 Obtención de datos de precipitación\nSe utiliza la función pRecipe::download_data() para la descarga de los datos de precipitación.\n\n# Descarga\npRecipe::download_data(\n    dataset = \"mswep\", # conjunto de datos\n    path = path.expand(\"~\"), # ruta de descarga\n    domain = \"raw\", # dominio de la descarga\n    timestep = \"yearly\" # periodo\n)\n\n# Archivo descargado\nlist.files(path.expand(\"~\"), pattern = \"\\\\.nc$\")\n\n[1] \"mswep_tp_mm_global_197902_202301_025_yearly.nc\"\n\n\nSe recortan los datos de precipitación con el polígono del país.\n\n# Lectura y recorte de los datos de precipitación\n# Debe leerse el archivo que se descargó anteriormente\nprecipitacion &lt;- \n  terra::rast( # lectura\n    file.path(path.expand(\"~\"), \"mswep_tp_mm_global_197902_202301_025_yearly.nc\")\n  ) |&gt;\n  terra::crop(# recorte\n    poligono_pais\n  )\n\n\n# Metadatos\nprecipitacion\n\nclass       : SpatRaster \ndimensions  : 156, 181, 45  (nrow, ncol, nlyr)\nresolution  : 0.25, 0.25  (x, y)\nextent      : -74, -28.75, -33.75, 5.25  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 \nsource(s)   : memory\nvarname     : precipitation \nnames       : preci~ion_1,  preci~ion_2,  preci~ion_3,  preci~ion_4,  preci~ion_5, preci~ion_6, ... \nmin values  :       0.000, 4.167708e-02,    0.4929991,    0.2152826,    0.1319321,    9.284902, ... \nmax values  :    8710.541, 5.184138e+03, 9338.0312500, 6341.0307617, 4198.7851562, 6542.886719, ... \nunit        :  mm month-1,   mm month-1,   mm month-1,   mm month-1,   mm month-1,  mm month-1, ... \ntime (days) : 1979-01-01 to 2023-01-01 \n\n\nSe despliega un mapa básico de los datos de precipitación recortados.\n\nterra::plot(precipitacion[[1]])\nplot(poligono_pais$geometry, add=TRUE)",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html#transformación",
+    "href": "12-mapas-precipitacion.html#transformación",
+    "title": "12  Mapas de precipitación",
+    "section": "12.5 Transformación",
+    "text": "12.5 Transformación\nLos datos raster de precipitación se transforman a una dataframe para que puedan ser visualizados mediante ggplot2.\n\n# Cambiar nombres de las bandas\nnames(precipitacion) &lt;- 1979:2023\nprint(precipitacion)\n\nclass       : SpatRaster \ndimensions  : 156, 181, 45  (nrow, ncol, nlyr)\nresolution  : 0.25, 0.25  (x, y)\nextent      : -74, -28.75, -33.75, 5.25  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 \nsource(s)   : memory\nvarname     : precipitation \nnames       :       1979,         1980,         1981,         1982,         1983,        1984, ... \nmin values  :      0.000, 4.167708e-02,    0.4929991,    0.2152826,    0.1319321,    9.284902, ... \nmax values  :   8710.541, 5.184138e+03, 9338.0312500, 6341.0307617, 4198.7851562, 6542.886719, ... \nunit        : mm month-1,   mm month-1,   mm month-1,   mm month-1,   mm month-1,  mm month-1, ... \ntime (days) : 1979-01-01 to 2023-01-01 \n\n# Transformar el raster a un dataframe\n# para graficarlo en ggplot2\nprecipitacion_df &lt;- \n  precipitacion |&gt;\n    as.data.frame(xy = TRUE) |&gt;\n    tidyr::pivot_longer( # convertir de \"formato largo\" a \"formato corto\"\n        !c(\"x\", \"y\"),\n        names_to = \"year\",\n        values_to = \"precipitation\"\n  ) |&gt;\n  dplyr::filter(year &lt; 2023) # filtrado de datos\n\nprint(head(precipitacion_df))\n\n# A tibble: 6 × 4\n      x     y year  precipitation\n  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;\n1 -73.9  5.12 1979          1518.\n2 -73.9  5.12 1980          1140.\n3 -73.9  5.12 1981          2053.\n4 -73.9  5.12 1982          1629.\n5 -73.9  5.12 1983          1490.\n6 -73.9  5.12 1984          1561.",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html#visualización",
+    "href": "12-mapas-precipitacion.html#visualización",
+    "title": "12  Mapas de precipitación",
+    "section": "12.6 Visualización",
+    "text": "12.6 Visualización\nPara visualizar los datos, primero se crea un estilo personalizado para ggplot2.\n\n# Estilo\nestilo_precipitacion &lt;- function() {\n  theme_minimal() +\n    theme(\n      axis.line = element_blank(),\n      axis.title.x = element_blank(),\n      axis.title.y = element_blank(),\n      axis.text.x = element_blank(),\n      axis.text.y = element_blank(),\n      legend.position = \"right\",\n      legend.title = element_text(size = 11, color = \"grey10\"),\n      legend.text = element_text(size = 10, color = \"grey10\"),\n      panel.grid.major = element_line(color = NA),\n      panel.grid.minor = element_line(color = NA),\n      plot.background = element_rect(fill = NA, color = NA),\n      legend.background = element_rect(fill = \"white\", color = NA),\n      panel.border = element_rect(fill = NA, color = NA),\n      plot.margin = unit(c(\n        t = 0,\n        r = 0,\n        b = 0,\n        l = 0\n      ), \"lines\")\n    )\n}\n\n# Intervalos para las clases del mapa\nintervalos &lt;- classInt::classIntervals(\n    precipitacion_df$precipitation,\n    n = 5,\n    style = \"equal\"\n)$brks\n\n# Colores para el mapa\ncolores &lt;- hcl.colors(\n    n = length(intervalos),\n    palette = \"Blues\",\n    rev = TRUE\n)\n\nSe genera un panel con un mapa por año.\n\n# Generar un panel de mapas\npanel_mapas &lt;- ggplot(data = precipitacion_df) +\n  geom_raster(aes(x = x, y = y, fill = precipitation)) +\n  geom_contour(aes(x = x, y = y, z = precipitation), color = \"white\") +\n  geom_sf(\n    data = poligono_pais,\n    fill = \"transparent\",\n    color = \"grey10\",\n    size = .5\n  ) +\n  scale_fill_gradientn(\n    name = \"mm\",\n    colors = colores,\n    breaks = intervalos,\n    labels = round(intervalos, 0),\n    limits = c(\n      min(precipitacion_df$precipitation),\n      max(precipitacion_df$precipitation)\n    )\n  ) +\n  facet_wrap( ~ year) +\n  guides(\n    fill = guide_colourbar(\n      direction = \"vertical\",\n      barheight = unit(50, \"mm\"),\n      barwidth = unit(5, \"mm\"),\n      title.position = \"top\",\n      label.position = \"right\",\n      title.hjust = .5,\n      label.hjust = .5,\n      ncol = 1,\n      byrow = FALSE\n    )\n  ) +\n  estilo_precipitacion()\n\n# Despliegue\npanel_mapas\n\n\n\n\n\n\n\n\nSeguidamente, se crea un mapa con el promedio de clasificación para todos los años.\n\n# Cálculo del promedio de precipitación\nprecipitacion_promedio_df &lt;- \n  precipitacion_df |&gt;\n  dplyr::group_by(\n      x, y, .drop = FALSE\n  ) |&gt;\n  dplyr::summarise(\n      promedio = mean(precipitation)\n  )\nprint(head(precipitacion_promedio_df))\n\n# A tibble: 6 × 3\n# Groups:   x [1]\n      x     y promedio\n  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;\n1 -73.9 -33.6     247.\n2 -73.9 -33.4     229.\n3 -73.9 -33.1     209.\n4 -73.9 -32.9     192.\n5 -73.9 -32.6     176.\n6 -73.9 -32.4     162.\n\n# Intervalos para las clases del mapa\nintervalos &lt;- \n  classInt::classIntervals(\n    precipitacion_promedio_df$promedio,\n    n = 5,\n    style = \"equal\"\n  )$brks\n\n# Colores para el mapa\ncolores &lt;- hcl.colors(\n    n = length(intervalos),\n    palette = \"Blues\",\n    rev = TRUE\n)\n\n# Mapa\nmapa_promedio &lt;-\n  ggplot(data = precipitacion_promedio_df) +\n  geom_raster(aes(x = x, y = y, fill = promedio)) +\n  geom_contour(aes(x = x, y = y, z = promedio), color = \"white\") +\n  geom_sf(\n    data = poligono_pais,\n    fill = \"transparent\",\n    color = \"grey10\",\n    size = .5\n  ) +\n  scale_fill_gradientn(\n    name = \"mm\",\n    colors = colores,\n    breaks = intervalos,\n    labels = round(intervalos, 0),\n    limits = c(\n      min(precipitacion_promedio_df$promedio),\n      max(precipitacion_promedio_df$promedio)\n    )\n  ) +\n  guides(\n    fill = guide_colourbar(\n      direction = \"vertical\",\n      barheight = unit(50, \"mm\"),\n      barwidth = unit(5, \"mm\"),\n      title.position = \"top\",\n      label.position = \"right\",\n      title.hjust = .5,\n      label.hjust = .5,\n      ncol = 1,\n      byrow = FALSE\n    )\n  ) +\n  estilo_precipitacion()\n\n# Despliegue\nmapa_promedio",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html#recursos-de-interés",
+    "href": "12-mapas-precipitacion.html#recursos-de-interés",
+    "title": "12  Mapas de precipitación",
+    "section": "12.8 Recursos de interés",
+    "text": "12.8 Recursos de interés\nHow to Create Amazing Precipitation Maps with R in 2D and 3D",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
+  },
+  {
+    "objectID": "12-mapas-precipitacion.html#ejercicios",
+    "href": "12-mapas-precipitacion.html#ejercicios",
+    "title": "12  Mapas de precipitación",
+    "section": "12.7 Ejercicios",
+    "text": "12.7 Ejercicios\n\nElabore otros mapas con diferentes polígonos delimitadores y diferentes conjuntos de datos de precipitación.\nElabore mapas interactivos con el paquete tmap o el paquete leaflet.",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
+    ]
   }
 ]
