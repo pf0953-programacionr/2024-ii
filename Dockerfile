@@ -46,6 +46,21 @@ RUN R -e "devtools::install_version('tmap', version = '3.3-4', repos = 'http://c
 # Instalación del paquete tmap, versión 4 (recomendada en https://github.com/r-tmap/tmap)
 # RUN R -e "remotes::install_github('r-tmap/tmap')"
 
+# Instalación del paquete pRecipe, versión 3.0.1-3
+RUN R -e "devtools::install_version('pRecipe', version = '3.0.1-3', repos = 'http://cran.us.r-project.org')"
+
+# Instalación del paquete giscoR, versión 0.6.0
+RUN R -e "devtools::install_version('giscoR', version = '0.6.0', repos = 'http://cran.us.r-project.org')"
+
+# Instalación del paquete rgeoboundaries, versión 1.3
+RUN R -e "devtools::install_version('rgeoboundaries', version = '1.3', repos = 'http://cran.us.r-project.org')"
+
+# Instalación del paquete rayshader, versión 0.37.3
+RUN R -e "devtools::install_version('rayshader', version = '0.37.3', repos = 'http://cran.us.r-project.org')"
+
+# Instalación del paquete classInt, versión 0.4-10
+RUN R -e "devtools::install_version('classInt', version = '0.4-10', repos = 'http://cran.us.r-project.org')"
+
 
 # Se limpia el cache de apt-get para reducir el tamaño de la imagen
 RUN apt-get clean && \
