@@ -993,5 +993,159 @@
       "IV - Graficación estadística en R",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Mapas de precipitación</span>"
     ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "",
+    "text": "13.1 Introducción",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#instalación-y-carga-de-paquetes",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#instalación-y-carga-de-paquetes",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.2 Instalación y carga de paquetes",
+    "text": "13.2 Instalación y carga de paquetes\nSe utilizan varios paquetes para manejar datos geoespaciales y para ejecutar la modelización.\n\n# Paquete para acceder datos en GBIF\ninstall.packages(\"rgbif\")\n\n# Paquete para acceder datos geoespaciales\ninstall.packages(\"geodata\")\n\n# Paquete para mapas interactivos\ninstall.packages(\"leaflet\")\n\n# Paquete para modelado de distribución de especies\ninstall.packages(\"dismo\")\n\n\n# Colección de paquetes de Tidyverse\nlibrary(tidyverse)\n\n# Estilos para ggplot2\nlibrary(ggthemes)\n\n# Paletas de colores de RColorBrewer\nlibrary(RColorBrewer)\n\n# Paletas de colores de viridis\nlibrary(viridisLite)\n\n# Gráficos interactivos\nlibrary(plotly)\n\n# Manejo de datos vectoriales\nlibrary(sf)\n\n# Manejo de datos raster\nlibrary(terra)\n\n# Manejo de datos raster\nlibrary(raster)\n\n# Mapas interactivos\nlibrary(leaflet)\n\n# Acceso a datos en GBIF\nlibrary(rgbif)\n\n# Datos geoespaciales\nlibrary(geodata)\n\n# Modelado de distribución de especies\nlibrary(dismo)",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-datos-de-presencia",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-datos-de-presencia",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.4 Obtención de datos de presencia",
+    "text": "13.4 Obtención de datos de presencia\n\n# Consultar el API de GBIF\nrespuesta &lt;- occ_search(\n  scientificName = especie, \n  hasCoordinate = TRUE,\n  hasGeospatialIssue = FALSE,\n  limit = 10000\n)\n\n# Extraer datos de presencia\npresencia &lt;- respuesta$data\n\nSe puede guardar el dataframe con los datos de presencia en un archivo CSV, para no tener que repetir la consulta al API de GBIF.\n\n# Guardar los datos de presencia en un archivo CSV\nwrite_csv(presencia, 'presencia.csv')\n\nEl siguiente bloque debe ejecutarse si se desea leer los datos desde el archivo CSV.\n\n# Leer en un dataframe los datos de presencia de un archivo CSV\npresencia &lt;- read_csv('presencia.csv')\n\n# Crear un objeto sf a partir del dataframe\npresencia &lt;- st_as_sf(\n  presencia,\n  coords = c(\"decimalLongitude\", \"decimalLatitude\"),\n  remove = FALSE, # conservar las columnas de las coordenadas\n  crs = 4326\n)",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-variables-ambientales",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-variables-ambientales",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.4 Obtención de variables ambientales",
+    "text": "13.4 Obtención de variables ambientales\nFrecuentemente se utilizan datos bioclimáticos (ej. temperatura, precipitación) como variables ambientales. Pueden obtenerse mediante el paquete geodata. En este caso, se descargan las variables bioclimáticas de WorldClim.\n\n# Consulta a WorldClim\nclima &lt;- worldclim_global(var = 'bio', res = 10, path = tempdir())\n\n# Nombres de las variables climáticas\nnames(clima)\n\n [1] \"wc2.1_10m_bio_1\"  \"wc2.1_10m_bio_2\"  \"wc2.1_10m_bio_3\"  \"wc2.1_10m_bio_4\" \n [5] \"wc2.1_10m_bio_5\"  \"wc2.1_10m_bio_6\"  \"wc2.1_10m_bio_7\"  \"wc2.1_10m_bio_8\" \n [9] \"wc2.1_10m_bio_9\"  \"wc2.1_10m_bio_10\" \"wc2.1_10m_bio_11\" \"wc2.1_10m_bio_12\"\n[13] \"wc2.1_10m_bio_13\" \"wc2.1_10m_bio_14\" \"wc2.1_10m_bio_15\" \"wc2.1_10m_bio_16\"\n[17] \"wc2.1_10m_bio_17\" \"wc2.1_10m_bio_18\" \"wc2.1_10m_bio_19\"\n\n\nSeguidamente, se “recortan” las capas raster climáticas provenientes de WorldClim para así cubrir solamente el área en la que se encuentra presente la especie.\n\n# Definir la extensión del área de estudio\narea_estudio &lt;- ext(\n  min(presencia$decimalLongitude) - 5, \n  max(presencia$decimalLongitude) + 5,\n  min(presencia$decimalLatitude) - 5, \n  max(presencia$decimalLatitude) + 5\n)\n\n# Recortar las variables bioclimáticas al área de estudio\nclima &lt;- crop(clima, area_estudio)\n\n\n13.4.1 Mapa\n\n\nCódigo\n# Paleta de colores de temperatura\ncolores_temperatura &lt;- colorNumeric(\n  # palette = \"inferno\",\n  # palette = \"magma\",\n  palette = rev(brewer.pal(11, \"RdYlBu\")),\n  values(clima$wc2.1_10m_bio_1),\n  na.color = \"transparent\"\n)\n\n# Paleta de colores de precipitación\ncolores_precipitacion &lt;- colorNumeric(\n  # palette = \"viridis\",\n  # palette = \"YlGnBu\",  \n  palette = \"Blues\",\n  values(clima$wc2.1_10m_bio_12),\n  na.color = \"transparent\"\n)\n\n# Mapa\nleaflet() |&gt;\n  addTiles(group = \"Mapa general\") |&gt;\n  addProviderTiles(\n    providers$Esri.WorldImagery, \n    group = \"Imágenes satelitales\"\n  ) |&gt;  \n  addProviderTiles(\n    providers$CartoDB.Positron, \n    group = \"Mapa blanco\"\n  ) |&gt;\n  addRasterImage( # capa raster de temperatura\n    clima$wc2.1_10m_bio_1,\n    colors = colores_temperatura, # paleta de colores\n    opacity = 0.6,\n    group = \"Temperatura\",\n  ) |&gt;\n  addRasterImage( # capa raster de precipitación\n    clima$wc2.1_10m_bio_12,\n    colors = colores_precipitacion, # paleta de colores\n    opacity = 0.6,\n    group = \"Precipitación\",\n  ) |&gt;\n  addCircleMarkers(\n    # capa de registros de presencia (puntos)\n    data = presencia,\n    stroke = F,\n    radius = 3,\n    fillColor = 'red',\n    fillOpacity = 1,\n    popup = paste(\n      paste0(\"&lt;strong&gt;País: &lt;/strong&gt;\", presencia$country),\n      paste0(\"&lt;strong&gt;Localidad: &lt;/strong&gt;\", presencia$locality),\n      paste0(\"&lt;strong&gt;Fecha: &lt;/strong&gt;\", presencia$eventDate),\n      paste0(\"&lt;strong&gt;Fuente: &lt;/strong&gt;\", presencia$institutionCode),\n      paste0(\"&lt;a href='\", presencia$occurrenceID, \"'&gt;Más información&lt;/a&gt;\"),\n      sep = '&lt;br/&gt;'\n    ),\n    group = \"Registros de Bradypus variegatus\"\n  ) |&gt;  \n  addLegend(\n    title = \"Temperatura\",\n    values = values(clima$wc2.1_10m_bio_1),\n    pal = colores_temperatura,\n    position = \"bottomleft\",\n    group = \"Temperatura\"\n  ) |&gt;\n  addLegend(\n    title = \"Precipitación\",\n    values = values(clima$wc2.1_10m_bio_12),\n    pal = colores_precipitacion,\n    position = \"bottomleft\",\n    group = \"Precipitación\"\n  ) |&gt;  \n  addLayersControl(\n    # control de capas\n    baseGroups = c(\"Mapa general\", \"Imágenes satelitales\", \"Mapa blanco\"),\n    overlayGroups = c(\"Temperatura\", \"Precipitación\", \"Registros de Bradypus variegatus\")\n  ) |&gt;\n  hideGroup(\"Precipitación\")",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#modelización",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#modelización",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.8 Modelización",
+    "text": "13.8 Modelización\n\n13.8.1 Creación de conjuntos de entrenamiento y de evaluación\nSe eliminan las coordenadas duplicadas del conjunto de datos de presencia.\n\n# Crear dataframe con columnas de longitud y latitud\ncoordenadas_presencia &lt;- data.frame(\n  decimalLongitude = presencia$decimalLongitude,\n  decimalLatitude = presencia$decimalLatitude\n)\n\n# Eliminar coordenadas duplicadas\ncoordenadas_presencia &lt;- unique(coordenadas_presencia)\n\nSe dividen los datos de presencia en dos subconjuntos:\n\nEntrenamiento: para desarrollar el modelo.\nEvaluación: para evaluar el modelo.\n\n\n# Establecer una \"semilla\" para garantizar que la selección aleatoria sea reproducible\nset.seed(123)\n\n# Cantidad de registros de presencia\nn_presencia &lt;- nrow(coordenadas_presencia)\n\n# Con sample(), se selecciona aleatoriamente una proporción (ej. 0.7) \n# de los índices de los datos de presencia para el conjunto de entrenamiento\nindices_entrenamiento &lt;- sample(\n  1:n_presencia, \n  size = round(proporcion_entrenamiento * n_presencia)\n)\n\n# Crear el subconjunto de entrenamiento utilizando los índices seleccionados\nentrenamiento &lt;- coordenadas_presencia[indices_entrenamiento, ]\n\n# Crear el subconjunto de evaluación con los datos restantes\nevaluacion &lt;- coordenadas_presencia[-indices_entrenamiento, ]\n\n\n\n13.8.2 Modelo con clima actual\n\n# Los datos de clima deben convertirse al formato que usa el paquete raster\n# debido a es este el que acepta el paquete dismo\nclima_actual &lt;- raster::stack(clima_actual)\n\n# Generar el modelo\nmodelo_actual &lt;- maxent(x = clima_actual, p = entrenamiento)\n\n# Aplicar el modelo entrenado al clima actual\nprediccion_actual &lt;- predict(modelo_actual, clima_actual)\n\n\n\n13.8.3 Modelo con clima futuro\n\n# Convertir variables climáticas futuras al formato raster stack\nclima_futuro_raster &lt;- raster::stack(clima_futuro)\n\n# Asegurar que las variables tengan los mismos nombres y orden\nnames(clima_futuro_raster) &lt;- names(clima_actual)\n\n# Proyectar el modelo al clima futuro\nprediccion_futuro &lt;- predict(modelo_actual, clima_futuro_raster)\n\n\n\n13.8.4 Diferencia\nPara visualizar los cambios en la distribución potencial de la especie, podemos restar el modelo futuro menos el actual.\n\n# Calcular la diferencia\ndiferencia &lt;- prediccion_futuro - prediccion_actual\n\n\n\nCódigo\n# Paleta de colores del modelo con clima actual\ncolores_modelo_actual &lt;- colorNumeric(\n  palette = c(\"white\", \"black\"),\n  values(prediccion_actual),\n  na.color = \"transparent\"\n)\n\n# Paleta de colores del modelo con clima futuro\ncolores_modelo_futuro &lt;- colorNumeric(\n  palette = c(\"white\", \"black\"),\n  values(prediccion_futuro),\n  na.color = \"transparent\"\n)\n\n# Crear paleta de colores para la diferencia\npaleta_diferencia &lt;- colorNumeric(\n  palette = c(\"red\", \"white\", \"blue\"),\n  domain = c(min(values(diferencia), na.rm = TRUE), max(values(diferencia), na.rm = TRUE)),\n  na.color = \"transparent\"\n)\n\n# Mapa de la diferencia\nleaflet() |&gt;\n  addTiles(group = \"Mapa general\") |&gt;\n  addProviderTiles(\n    providers$Esri.WorldImagery, \n    group = \"Imágenes satelitales\"\n  ) |&gt;  \n  addProviderTiles(\n    providers$CartoDB.Positron, \n    group = \"Mapa blanco\"\n  ) |&gt;\n  addRasterImage(\n    prediccion_actual,\n    colors = colores_modelo_actual,\n    opacity = 0.6,\n    group = \"Modelo con clima actual\",\n  ) |&gt;\n  addRasterImage(\n    prediccion_futuro,\n    colors = colores_modelo_futuro,\n    opacity = 0.6,\n    group = \"Modelo con clima futuro\",\n  ) |&gt;  \n  addRasterImage(\n    diferencia,\n    colors = paleta_diferencia,\n    opacity = 0.6,\n    group = \"Diferencia\",\n  ) |&gt;  \n  addLegend(\n    title = \"Modelo con clima actual\",\n    values = values(prediccion_actual),\n    pal = colores_modelo_actual,\n    position = \"bottomright\",\n    group = \"Modelo con clima actual\"\n  ) |&gt;    \n  addLegend(\n    title = \"Modelo con clima futuro\",\n    values = values(prediccion_futuro),\n    pal = colores_modelo_futuro,\n    position = \"bottomright\",\n    group = \"Modelo con clima futuro\"\n  ) |&gt;     \n  addLegend(\n    title = \"Diferencia\",\n    values = values(diferencia),\n    pal = paleta_diferencia,\n    position = \"bottomleft\",\n    group = \"Diferencia\"\n  ) |&gt;  \n  addLayersControl(\n    # control de capas\n    baseGroups = c(\"Mapa general\", \"Imágenes satelitales\", \"Mapa blanco\"),\n    overlayGroups = c(\n      \"Modelo con clima actual\",\n      \"Modelo con clima futuro\",\n      \"Diferencia\"\n    )\n  ) |&gt;\n  hideGroup(\"Modelo con clima actual\") |&gt;\n  hideGroup(\"Modelo con clima futuro\")\n\n\n\n\n\n\nEn el mapa, las áreas en rojo indican una disminución en la idoneidad del hábitat, mientras que las áreas en azul indican un aumento.",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#proyección-del-modelo-a-escenarios-de-clima-futuro-del-ipcc",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#proyección-del-modelo-a-escenarios-de-clima-futuro-del-ipcc",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.9 Proyección del modelo a escenarios de clima futuro del IPCC",
+    "text": "13.9 Proyección del modelo a escenarios de clima futuro del IPCC\nEl Panel Intergubernamental sobre Cambio Climático (IPCC) proporciona proyecciones de cambio climático basadas en diferentes escenarios de emisiones de gases de efecto invernadero. Estos escenarios se denominan Trayectorias Socioeconómicas Compartidas (SSP, por sus siglas en inglés). Cada SSP está asociado con un nivel de forzamiento radiativo expresado en vatios por metro cuadrado (W/m²) para el año 2100.\nEn este ejemplo, utilizaremos el escenario SSP5-8.5, que representa un escenario de altas emisiones sin esfuerzos significativos para mitigar el cambio climático, resultando en un forzamiento radiativo de 8.5 W/m² para 2100.\n\n13.9.1 Proyección del modelo al clima futuro\nAplicaremos el modelo Maxent entrenado con los datos actuales a las variables climáticas futuras.\n\n# Convertir variables climáticas futuras al formato raster stack\nclima_futuro_raster &lt;- raster::stack(clima_futuro)\n\n# Asegurar que las variables tengan los mismos nombres y orden\nnames(clima_futuro_raster) &lt;- names(clima_actual)\n\n# Proyectar el modelo al clima futuro\nprediccion_futuro &lt;- predict(modelo_actual, clima_futuro_raster)\n\n\n\n13.9.2 Mapa de la proyección futura\n\n\nCódigo\n# Mapa\nleaflet() |&gt;\n  addTiles(group = \"Mapa general\") |&gt;\n  addProviderTiles(\n    providers$Esri.WorldImagery, \n    group = \"Imágenes satelitales\"\n  ) |&gt;  \n  addProviderTiles(\n    providers$CartoDB.Positron, \n    group = \"Mapa blanco\"\n  ) |&gt;\n  addRasterImage( # capa raster del modelo de distribución futuro\n    prediccion_futuro,\n    colors = colores_modelo,\n    opacity = 0.6,\n    group = \"Modelo de distribución futuro\",\n  ) |&gt;  \n  addCircleMarkers(\n    # capa de registros de presencia (puntos)\n    data = presencia,\n    stroke = F,\n    radius = 3,\n    fillColor = 'red',\n    fillOpacity = 1,\n    popup = paste(\n      paste0(\"&lt;strong&gt;País: &lt;/strong&gt;\", presencia$country),\n      paste0(\"&lt;strong&gt;Localidad: &lt;/strong&gt;\", presencia$locality),\n      paste0(\"&lt;strong&gt;Fecha: &lt;/strong&gt;\", presencia$eventDate),\n      paste0(\"&lt;strong&gt;Fuente: &lt;/strong&gt;\", presencia$institutionCode),\n      paste0(\"&lt;a href='\", presencia$occurrenceID, \"'&gt;Más información&lt;/a&gt;\"),\n      sep = '&lt;br/&gt;'\n    ),\n    group = \"Registros de Bradypus variegatus\"\n  ) |&gt;  \n  addLegend(\n    title = \"Modelo de distribución futuro\",\n    values = values(prediccion_futuro),\n    pal = colores_modelo,\n    position = \"bottomright\",\n    group = \"Modelo de distribución futuro\"\n  ) |&gt;  \n  addLayersControl(\n    # control de capas\n    baseGroups = c(\"Mapa general\", \"Imágenes satelitales\", \"Mapa blanco\"),\n    overlayGroups = c(\n      \"Modelo de distribución futuro\",\n      \"Registros de Bradypus variegatus\"\n    )\n  )\n\n\n\n\n\n\n\n\n13.9.3 Comparación entre el modelo actual y futuro\nPara visualizar los cambios en la distribución potencial de la especie, podemos restar el modelo futuro menos el actual.\n\n# Calcular la diferencia\ndiferencia &lt;- prediccion_futuro - prediccion_actual\n\n# Crear paleta de colores para la diferencia\npaleta_diferencia &lt;- colorNumeric(\n  palette = c(\"red\", \"white\", \"blue\"),\n  domain = c(min(values(diferencia), na.rm = TRUE), max(values(diferencia), na.rm = TRUE)),\n  na.color = \"transparent\"\n)\n\n# Mapa de la diferencia\nleaflet() |&gt;\n  addTiles(group = \"Mapa general\") |&gt;\n  addProviderTiles(\n    providers$Esri.WorldImagery, \n    group = \"Imágenes satelitales\"\n  ) |&gt;  \n  addProviderTiles(\n    providers$CartoDB.Positron, \n    group = \"Mapa blanco\"\n  ) |&gt;\n  addRasterImage(\n    diferencia,\n    colors = paleta_diferencia,\n    opacity = 0.6,\n    group = \"Diferencia de modelos\",\n  ) |&gt;  \n  addLegend(\n    title = \"Cambio en idoneidad\",\n    values = values(diferencia),\n    pal = paleta_diferencia,\n    position = \"bottomright\",\n    group = \"Diferencia de modelos\"\n  ) |&gt;  \n  addLayersControl(\n    # control de capas\n    baseGroups = c(\"Mapa general\", \"Imágenes satelitales\", \"Mapa blanco\"),\n    overlayGroups = c(\n      \"Diferencia de modelos\"\n    )\n  )\n\n\n\n\n\nEn el mapa, las áreas en rojo indican una disminución en la idoneidad del hábitat, mientras que las áreas en azul indican un aumento.",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#recursos-de-interés",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#recursos-de-interés",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.9 Recursos de interés",
+    "text": "13.9 Recursos de interés\nPhillips, S. J., Anderson, R. P., & Schapire, R. E. (2006). Maximum entropy modeling of species geographic distributions. Ecological Modelling, 190(3-4), 231-259. https://doi.org/10.1016/j.ecolmodel.2005.03.026",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-datos-de-clima-actual",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-datos-de-clima-actual",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.6 Obtención de datos de clima actual",
+    "text": "13.6 Obtención de datos de clima actual\n\n# Obtener datos climáticos actuales\nclima_actual &lt;- worldclim_global(\n  var = 'bio', \n  res = resolucion, \n  path = tempdir()\n)\n\n# Recortar los datos climáticos para el área de estudio\nclima_actual &lt;- crop(clima_actual, area_estudio)\n\n# Desplegar nombres de las variables climáticas\nnames(clima_actual)\n\n [1] \"wc2.1_10m_bio_1\"  \"wc2.1_10m_bio_2\"  \"wc2.1_10m_bio_3\"  \"wc2.1_10m_bio_4\" \n [5] \"wc2.1_10m_bio_5\"  \"wc2.1_10m_bio_6\"  \"wc2.1_10m_bio_7\"  \"wc2.1_10m_bio_8\" \n [9] \"wc2.1_10m_bio_9\"  \"wc2.1_10m_bio_10\" \"wc2.1_10m_bio_11\" \"wc2.1_10m_bio_12\"\n[13] \"wc2.1_10m_bio_13\" \"wc2.1_10m_bio_14\" \"wc2.1_10m_bio_15\" \"wc2.1_10m_bio_16\"\n[17] \"wc2.1_10m_bio_17\" \"wc2.1_10m_bio_18\" \"wc2.1_10m_bio_19\"",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-datos-de-clima-futuro",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#obtención-de-datos-de-clima-futuro",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.7 Obtención de datos de clima futuro",
+    "text": "13.7 Obtención de datos de clima futuro\n\n# Obtener datos climáticos para escenario futuro\nclima_futuro &lt;- cmip6_world(\n  var = \"bioc\",\n  res = resolucion,\n  ssp = ssp,\n  model = gcm,\n  time = \"2041-2060\",\n  path = tempdir()\n)\n\n# Recortar los datos climáticos para el área de estudio\nclima_futuro &lt;- crop(clima_futuro, area_estudio)\n\n# Desplegar nombres de las variables\nnames(clima_futuro)\n\n [1] \"bio01\" \"bio02\" \"bio03\" \"bio04\" \"bio05\" \"bio06\" \"bio07\" \"bio08\" \"bio09\"\n[10] \"bio10\" \"bio11\" \"bio12\" \"bio13\" \"bio14\" \"bio15\" \"bio16\" \"bio17\" \"bio18\"\n[19] \"bio19\"",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#instalación-y-carga-de-paquetes-1",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#instalación-y-carga-de-paquetes-1",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.3 Instalación y carga de paquetes",
+    "text": "13.3 Instalación y carga de paquetes\nSe utilizan varios paquetes para manejar datos geoespaciales y para ejecutar la modelización.\n\n# Nombre de la especie\nespecie &lt;- \"Bradypus variegatus\"",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#parámetros-generales",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#parámetros-generales",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.2 Parámetros generales",
+    "text": "13.2 Parámetros generales\n\n# Nombre de la especie\nespecie &lt;- \"Bradypus variegatus\"\n\n# Desplazamiento (offset) para delimitar el área de estudio\ndesplazamiento = 5\n\n# Resolución espacial de los datos climáticos\nresolucion = 10\n\n# SSP\nssp &lt;- \"585\"\n\n# GCM\ngcm &lt;- \"HadGEM3-GC31-LL\"\n\n# Proporción de datos de entreamiento a utilizar en el modelo\nproporcion_entrenamiento = 0.7",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#delimitación-del-área-de-estudio",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#delimitación-del-área-de-estudio",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.5 Delimitación del área de estudio",
+    "text": "13.5 Delimitación del área de estudio\n\n# Delimitar la extensión del área de estudio\narea_estudio &lt;- ext(\n  min(presencia$decimalLongitude) - desplazamiento, \n  max(presencia$decimalLongitude) + desplazamiento,\n  min(presencia$decimalLatitude) - desplazamiento, \n  max(presencia$decimalLatitude) + desplazamiento\n)",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#carga-de-paquetes",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#carga-de-paquetes",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "13.3 Carga de paquetes",
+    "text": "13.3 Carga de paquetes\n\n# Colección de paquetes de Tidyverse\nlibrary(tidyverse)\n\n# Estilos para ggplot2\nlibrary(ggthemes)\n\n# Paletas de colores de RColorBrewer\nlibrary(RColorBrewer)\n\n# Paletas de colores de viridis\nlibrary(viridisLite)\n\n# Gráficos interactivos\nlibrary(plotly)\n\n# Manejo de datos vectoriales\nlibrary(sf)\n\n# Manejo de datos raster\nlibrary(terra)\n\n# Manejo de datos raster\nlibrary(raster)\n\n# Mapas interactivos\nlibrary(leaflet)\n\n# Acceso a datos en GBIF\nlibrary(rgbif)\n\n# Acceso a datos climáticos\nlibrary(geodata)\n\n# Modelado de distribución de especies\nlibrary(dismo)",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
+  },
+  {
+    "objectID": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#introducción",
+    "href": "13-modelos-nichos-ecologicos-proyeccion-clima-futuro.html#introducción",
+    "title": "13  Modelos de nichos ecológicos - proyección a escenarios de clima futuro",
+    "section": "",
+    "text": "13.1.1 Trayectorias socioeconómicas compartidas (SSP)\nEl Panel Intergubernamental sobre Cambio Climático (IPCC, por sus siglas en inglés) proporciona proyecciones de cambio climático basadas en diferentes escenarios de emisiones de gases de efecto invernadero (GEI). Estos escenarios se denominan Trayectorias Socioeconómicas Compartidas (SSP, por sus siglas en inglés). Cada SSP está asociada con un nivel de forzamiento radiativo expresado en vatios por metro cuadrado (W/m²) para el año 2100.\nAlgunos ejemplos de SSP son:\n\nSSP1-2.6: Escenario sostenible (bajas emisiones, economía verde).\nSSP2-4.5: Escenario intermedio (desarrollo moderado con algunas reducciones de emisiones).\nSSP3-7.0: Escenario de desarrollo desigual (altas emisiones).\nSSP5-8.5: Escenario de altas emisiones (crecimiento económico dependiente de combustibles fósiles).\n\n\n\n13.1.2 Modelos generales de circulación (GCM)\nUn Modelo General de Circulación (GCM, por sus siglas en inglés) es una herramienta computacional que simula el sistema climático de la Tierra a nivel global. Representa matemáticamente los procesos físicos que gobiernan la atmósfera, los océanos, la criósfera y la biosfera. Utiliza ecuaciones basadas en la dinámica de fluidos y la termodinámica para modelar el transporte de energía, humedad y masa a través del planeta.\nAlgunos ejemplos de GCM son:\n\nACCESS-CM2 (de CSIRO).\nGISS-E2-1-G (de la NASA).\nMPI-ESM1-2-HR (del Instituto Max Planck).\n\nEstos modelos son desarrollados por distintas instituciones alrededor del mundo para simular el clima pasado, presente y futuro. Varían en complejidad y resolución. Se ejecutan con diferentes SSP para explorar cómo el sistema climático responderá a los cambios en las emisiones y otros factores socioeconómicos.\nEn este documento, se genera el modelo de nicho ecológico de una especie y se proyecta a un escenario de clima futuro.",
+    "crumbs": [
+      "IV - Graficación estadística en R",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Modelos de nichos ecológicos - proyección a escenarios de clima futuro</span>"
+    ]
   }
 ]

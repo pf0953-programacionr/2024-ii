@@ -1,0 +1,404 @@
+# Modelos de nichos ecológicos - proyección a escenarios de clima futuro
+
+## Introducción
+
+### Trayectorias socioeconómicas compartidas (SSP)
+
+El [Panel Intergubernamental sobre Cambio Climático](https://es.wikipedia.org/wiki/Grupo_Intergubernamental_de_Expertos_sobre_el_Cambio_Clim%C3%A1tico) (IPCC, por sus siglas en inglés) proporciona proyecciones de cambio climático basadas en diferentes escenarios de emisiones de gases de efecto invernadero (GEI). Estos escenarios se denominan [Trayectorias Socioeconómicas Compartidas](https://es.wikipedia.org/wiki/Trayectorias_socioecon%C3%B3micas_compartidas) (SSP, por sus siglas en inglés). Cada SSP está asociada con un nivel de forzamiento radiativo expresado en vatios por metro cuadrado (W/m²) para el año 2100.
+
+Algunos ejemplos de SSP son:
+
+- SSP1-2.6: Escenario sostenible (bajas emisiones, economía verde).
+- SSP2-4.5: Escenario intermedio (desarrollo moderado con algunas reducciones de emisiones).
+- SSP3-7.0: Escenario de desarrollo desigual (altas emisiones).
+- SSP5-8.5: Escenario de altas emisiones (crecimiento económico dependiente de combustibles fósiles).
+
+### Modelos generales de circulación (GCM)
+
+Un [Modelo General de Circulación](https://es.wikipedia.org/wiki/Modelos_de_circulaci%C3%B3n_general) (GCM, por sus siglas en inglés) es una herramienta computacional que simula el sistema climático de la Tierra a nivel global. Representa matemáticamente los procesos físicos que gobiernan la atmósfera, los océanos, la criósfera y la biosfera. Utiliza ecuaciones basadas en la dinámica de fluidos y la termodinámica para modelar el transporte de energía, humedad y masa a través del planeta.
+
+Algunos ejemplos de GCM son:
+
+- ACCESS-CM2 (de CSIRO).
+- GISS-E2-1-G (de la NASA).
+- MPI-ESM1-2-HR (del Instituto Max Planck).
+
+Estos modelos son desarrollados por distintas instituciones alrededor del mundo para simular el clima pasado, presente y futuro. Varían en complejidad y resolución. Se ejecutan con diferentes SSP para explorar cómo el sistema climático responderá a los cambios en las emisiones y otros factores socioeconómicos.
+
+En este documento, se genera el modelo de nicho ecológico de una especie y se proyecta a un escenario de clima futuro.
+
+## Parámetros generales
+
+```{r}
+#| label: parametros-generales
+
+# Nombre de la especie
+especie <- "Bradypus variegatus"
+
+# Desplazamiento (offset) para delimitar el área de estudio
+desplazamiento = 5
+
+# Resolución espacial de los datos climáticos
+resolucion = 10
+
+# SSP
+ssp <- "585"
+
+# GCM
+gcm <- "HadGEM3-GC31-LL"
+
+# Proporción de datos de entreamiento a utilizar en el modelo
+proporcion_entrenamiento = 0.7
+```
+
+## Carga de paquetes
+
+```{r}
+#| label: cargar-paquetes
+#| message: false
+#| warning: false
+
+# Colección de paquetes de Tidyverse
+library(tidyverse)
+
+# Estilos para ggplot2
+library(ggthemes)
+
+# Paletas de colores de RColorBrewer
+library(RColorBrewer)
+
+# Paletas de colores de viridis
+library(viridisLite)
+
+# Gráficos interactivos
+library(plotly)
+
+# Manejo de datos vectoriales
+library(sf)
+
+# Manejo de datos raster
+library(terra)
+
+# Manejo de datos raster
+library(raster)
+
+# Mapas interactivos
+library(leaflet)
+
+# Acceso a datos en GBIF
+library(rgbif)
+
+# Acceso a datos climáticos
+library(geodata)
+
+# Modelado de distribución de especies
+library(dismo)
+```
+
+## Obtención de datos de presencia
+
+```{r}
+#| label: obtener-datos-presencia
+#| warning: false
+#| message: false
+#| eval: false
+
+# Consultar el API de GBIF
+respuesta <- occ_search(
+  scientificName = especie, 
+  hasCoordinate = TRUE,
+  hasGeospatialIssue = FALSE,
+  limit = 10000
+)
+
+# Extraer datos de presencia
+presencia <- respuesta$data
+```
+
+Se puede guardar el dataframe con los datos de presencia en un archivo CSV, para no tener que repetir la consulta al API de GBIF.
+
+```{r}
+#| label: guardar-datos-presencia
+#| warning: false
+#| message: false
+#| eval: false
+
+# Guardar los datos de presencia en un archivo CSV
+write_csv(presencia, 'presencia.csv')
+```
+
+El siguiente bloque debe ejecutarse si se desea leer los datos desde el archivo CSV.
+
+```{r}
+#| label: leer-datos-presencia
+#| warning: false
+#| message: false
+#| eval: true
+
+# Leer en un dataframe los datos de presencia de un archivo CSV
+presencia <- read_csv('presencia.csv')
+
+# Crear un objeto sf a partir del dataframe
+presencia <- st_as_sf(
+  presencia,
+  coords = c("decimalLongitude", "decimalLatitude"),
+  remove = FALSE, # conservar las columnas de las coordenadas
+  crs = 4326
+)
+```
+
+## Delimitación del área de estudio
+
+```{r}
+#| label: definir-area-estudio
+#| warning: false
+#| message: false
+
+# Delimitar la extensión del área de estudio
+area_estudio <- ext(
+  min(presencia$decimalLongitude) - desplazamiento, 
+  max(presencia$decimalLongitude) + desplazamiento,
+  min(presencia$decimalLatitude) - desplazamiento, 
+  max(presencia$decimalLatitude) + desplazamiento
+)
+```
+
+## Obtención de datos de clima actual
+
+```{r}
+#| label: obtener-datos-clima-actual
+#| warning: false
+#| message: false
+
+# Obtener datos climáticos actuales
+clima_actual <- worldclim_global(
+  var = 'bio', 
+  res = resolucion, 
+  path = tempdir()
+)
+
+# Recortar los datos climáticos para el área de estudio
+clima_actual <- crop(clima_actual, area_estudio)
+
+# Desplegar nombres de las variables climáticas
+names(clima_actual)
+```
+
+## Obtención de datos de clima futuro
+
+```{r}
+#| label: obtener-datos-clima-futuro
+#| warning: false
+#| message: false
+
+# Obtener datos climáticos para escenario futuro
+clima_futuro <- cmip6_world(
+  var = "bioc",
+  res = resolucion,
+  ssp = ssp,
+  model = gcm,
+  time = "2041-2060",
+  path = tempdir()
+)
+
+# Recortar los datos climáticos para el área de estudio
+clima_futuro <- crop(clima_futuro, area_estudio)
+
+# Desplegar nombres de las variables
+names(clima_futuro)
+```
+
+## Modelización
+
+### Creación de conjuntos de entrenamiento y de evaluación
+
+Se eliminan las coordenadas duplicadas del conjunto de datos de presencia.
+
+```{r}
+#| label: preparar-datos
+#| warning: false
+#| message: false
+
+# Crear dataframe con columnas de longitud y latitud
+coordenadas_presencia <- data.frame(
+  decimalLongitude = presencia$decimalLongitude,
+  decimalLatitude = presencia$decimalLatitude
+)
+
+# Eliminar coordenadas duplicadas
+coordenadas_presencia <- unique(coordenadas_presencia)
+```
+
+Se dividen los datos de presencia en dos subconjuntos:
+
+- Entrenamiento: para desarrollar el modelo.
+- Evaluación: para evaluar el modelo.
+
+```{r}
+#| label: separar-datos
+#| warning: false
+#| message: false
+
+# Establecer una "semilla" para garantizar que la selección aleatoria sea reproducible
+set.seed(123)
+
+# Cantidad de registros de presencia
+n_presencia <- nrow(coordenadas_presencia)
+
+# Con sample(), se selecciona aleatoriamente una proporción (ej. 0.7) 
+# de los índices de los datos de presencia para el conjunto de entrenamiento
+indices_entrenamiento <- sample(
+  1:n_presencia, 
+  size = round(proporcion_entrenamiento * n_presencia)
+)
+
+# Crear el subconjunto de entrenamiento utilizando los índices seleccionados
+entrenamiento <- coordenadas_presencia[indices_entrenamiento, ]
+
+# Crear el subconjunto de evaluación con los datos restantes
+evaluacion <- coordenadas_presencia[-indices_entrenamiento, ]
+```
+
+### Modelo con clima actual
+
+```{r}
+#| label: generar-modelo-clima-actual
+#| warning: false
+#| message: false
+
+# Los datos de clima deben convertirse al formato que usa el paquete raster
+# debido a es este el que acepta el paquete dismo
+clima_actual <- raster::stack(clima_actual)
+
+# Generar el modelo
+modelo_actual <- maxent(x = clima_actual, p = entrenamiento)
+
+# Aplicar el modelo entrenado al clima actual
+prediccion_actual <- predict(modelo_actual, clima_actual)
+```
+
+### Modelo con clima futuro
+
+```{r}
+#| label: generar-modelo-clima-futuro
+#| warning: false
+#| message: false
+
+# Convertir variables climáticas futuras al formato raster stack
+clima_futuro_raster <- raster::stack(clima_futuro)
+
+# Asegurar que las variables tengan los mismos nombres y orden
+names(clima_futuro_raster) <- names(clima_actual)
+
+# Proyectar el modelo al clima futuro
+prediccion_futuro <- predict(modelo_actual, clima_futuro_raster)
+```
+
+### Diferencia
+
+Para visualizar los cambios en la distribución potencial de la especie, podemos restar el modelo futuro menos el actual.
+
+```{r}
+#| label: diferencia-modelos
+#| warning: false
+#| message: false
+
+# Calcular la diferencia
+diferencia <- prediccion_futuro - prediccion_actual
+```
+
+```{r}
+#| label: mapa-diferencia-modelos
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Paleta de colores del modelo con clima actual
+colores_modelo_actual <- colorNumeric(
+  palette = c("white", "black"),
+  values(prediccion_actual),
+  na.color = "transparent"
+)
+
+# Paleta de colores del modelo con clima futuro
+colores_modelo_futuro <- colorNumeric(
+  palette = c("white", "black"),
+  values(prediccion_futuro),
+  na.color = "transparent"
+)
+
+# Crear paleta de colores para la diferencia
+paleta_diferencia <- colorNumeric(
+  palette = c("red", "white", "blue"),
+  domain = c(min(values(diferencia), na.rm = TRUE), max(values(diferencia), na.rm = TRUE)),
+  na.color = "transparent"
+)
+
+# Mapa de la diferencia
+leaflet() |>
+  addTiles(group = "Mapa general") |>
+  addProviderTiles(
+    providers$Esri.WorldImagery, 
+    group = "Imágenes satelitales"
+  ) |>  
+  addProviderTiles(
+    providers$CartoDB.Positron, 
+    group = "Mapa blanco"
+  ) |>
+  addRasterImage(
+    prediccion_actual,
+    colors = colores_modelo_actual,
+    opacity = 0.6,
+    group = "Modelo con clima actual",
+  ) |>
+  addRasterImage(
+    prediccion_futuro,
+    colors = colores_modelo_futuro,
+    opacity = 0.6,
+    group = "Modelo con clima futuro",
+  ) |>  
+  addRasterImage(
+    diferencia,
+    colors = paleta_diferencia,
+    opacity = 0.6,
+    group = "Diferencia",
+  ) |>  
+  addLegend(
+    title = "Modelo con clima actual",
+    values = values(prediccion_actual),
+    pal = colores_modelo_actual,
+    position = "bottomright",
+    group = "Modelo con clima actual"
+  ) |>    
+  addLegend(
+    title = "Modelo con clima futuro",
+    values = values(prediccion_futuro),
+    pal = colores_modelo_futuro,
+    position = "bottomright",
+    group = "Modelo con clima futuro"
+  ) |>     
+  addLegend(
+    title = "Diferencia",
+    values = values(diferencia),
+    pal = paleta_diferencia,
+    position = "bottomleft",
+    group = "Diferencia"
+  ) |>  
+  addLayersControl(
+    # control de capas
+    baseGroups = c("Mapa general", "Imágenes satelitales", "Mapa blanco"),
+    overlayGroups = c(
+      "Modelo con clima actual",
+      "Modelo con clima futuro",
+      "Diferencia"
+    )
+  ) |>
+  hideGroup("Modelo con clima actual") |>
+  hideGroup("Modelo con clima futuro")
+```
+
+En el mapa, las áreas en rojo indican una disminución en la idoneidad del hábitat, mientras que las áreas en azul indican un aumento.
+
+## Recursos de interés
+
+Phillips, S. J., Anderson, R. P., & Schapire, R. E. (2006). Maximum entropy modeling of species geographic distributions. *Ecological Modelling*, **190**(3-4), 231-259. [https://doi.org/10.1016/j.ecolmodel.2005.03.026](https://doi.org/10.1016/j.ecolmodel.2005.03.026)
